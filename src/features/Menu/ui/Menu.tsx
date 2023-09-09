@@ -52,7 +52,7 @@ const Menu: FC<MenuProps> = ({}) => {
             </div>
 
             <Modal open={isOpen}>
-                <div className="absolute top-0 left-0 w-screen h-screen bg-fon">
+                <div className="absolute top-0 left-0 w-screen h-screen bg-fon z-50">
                     <div className="flex flex-col gap-y-5 pt-5 pl-7 pr-7">
                         <div onClick={modalToggle} className="p-2 cursor-pointer">
                             <Image src={cross} height={16} width={16} alt='Закрыть меню'/>
