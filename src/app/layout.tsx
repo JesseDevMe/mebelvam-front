@@ -15,9 +15,9 @@ export default function RootLayout({
           `${roboto.variable} ${montserrat.variable} ${roboto.className} bg-fon font-roboto
            text-sm leading-5`
       }>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col max-w-[1520px] m-auto relative">
                 <Header/>
-                <main className="px-2.5 md:px-5 flex-grow">
+                <main className="flex-grow">
                     {children}
                 </main>
             <NavBarM/>

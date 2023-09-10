@@ -47,9 +47,17 @@ const Menu: FC<MenuProps> = ({}) => {
 
     return (
         <>
-            <div onClick={modalToggle} className="p-2 cursor-pointer">
+            <div onClick={modalToggle} className="p-2 cursor-pointer lg:hidden">
                 <Image src={burger} height={16} width={24} alt='Меню'/>
             </div>
+
+            <nav className="hidden lg:flex gap-x-7 ">
+                <a href="#">Каталог</a>
+                <a href="#">О нас</a>
+                <a href="#">Отзывы</a>
+                <a href="#">Сотрудничество</a>
+                <a href="#">Акции</a>
+            </nav>
 
             <Modal open={isOpen}>
                 <div className="absolute top-0 left-0 w-screen h-screen bg-fon z-50">
@@ -59,7 +67,7 @@ const Menu: FC<MenuProps> = ({}) => {
                         </div>
                         <nav className="flex flex-col gap-y-5">
                             {navList.map((navLink) =>
-                                <Link className="pb-2.5 border-b-[1px]" href={navLink.link}>
+                                <Link key={navLink.name} className="pb-2.5 border-b-[1px]" href={navLink.link}>
                                     {navLink.name}
                                 </Link>
                             )}

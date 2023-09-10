@@ -19,7 +19,7 @@ const Header = () => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
 
     return (
-        <header className="px-2.5 md:px-5 top-0 left-0 w-full bg-[rgba(242,242,241,0.90)]">
+        <header className="px-2.5 md:px-5 lg:px-10 xl:px-20 lg:absolute top-0 left-0 z-50 w-full bg-[rgba(242,242,241,0.90)]">
             <div className="hidden md:flex justify-between items-center pt-5 pb-2.5 border-b-2 border-dark">
                 <a href="tel:+79788155828">+7(978)815-58-28</a>
 
@@ -43,14 +43,24 @@ const Header = () => {
             </div>
 
             <div className="py-1.5 flex justify-between items-center gap-x-2">
-                <div className={`flex items-center justify-between grow-[1] md:grow-0 ${isSearchOpen ? 'grow-0' : ''}`}>
+                <div className={`flex items-center justify-between grow md:grow-0 ${isSearchOpen ? 'grow-0' : ''}`}>
                     <Menu/>
-                    <Link className={`pr-3 translate-x-[20px] + ${isSearchOpen ? 'max-[410px]:hidden' : ''}`} href='/'>
+                    <Link
+                        className={`pr-3 translate-x-[20px] + ${isSearchOpen ? 'max-[410px]:hidden' : ''} lg:hidden`}
+                        href='/'
+                    >
                         <Image src={logo} height={30} width={40} alt="Мебель Вам"/>
                     </Link>
                 </div>
 
-                <div className="grow-[1] flex items-center justify-end gap-x-5">
+                <Link
+                    className="hidden lg:block"
+                    href='/'
+                >
+                    <Image src={logo} height={48} width={65} alt="Мебель Вам"/>
+                </Link>
+
+                <div className="grow lg:grow-0 flex items-center justify-end gap-x-5">
                     <Search isOpen={isSearchOpen} setIsOpen={setIsSearchOpen}/>
 
                     <Link className="hidden md:block" href="#">
