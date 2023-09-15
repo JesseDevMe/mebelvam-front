@@ -13,7 +13,7 @@ module.exports = {
             colors: {
                 'fon': '#FDFDFD',
                 'dark': '#292A2D',
-
+                'light': '#F2F2F1',
             },
         },
     },

@@ -17,16 +17,16 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                 count={3}
             >
                 <div className="flex h-[300px] md:h-[410px] lg:h-[700px]">
-                    <div className="relative flex-shrink-0 w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
+                    <div className="select-none relative flex-shrink-0 w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
                         <Image fill className="object-cover -z-10" src={bg_slide1} alt=""/>
 
-                        <div className="text-fon font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
-                        xl:px-20 mt-[150px] md:mt-[220px] lg:mt-[450px] lg:max-w-2xl md:text-[16px]"
+                        <div className="max-w-[300px] text-light font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
+                        xl:px-20 absolute bottom-5 md:bottom-11 lg:bottom-20 lg:max-w-2xl md:text-[16px]"
                         >
                             <h2 className="text-xl md:text-3xl lg:text-5xl font-semibold">Мебель Вам</h2>
-                            <p className="font-light font-roboto md:font-montserrat max-w-[200px] md:max-w-none">Интернет-магазин мебели в Севастополе</p>
+                            <p className="font-light font-roboto md:font-montserrat max-w-[240px] md:max-w-[370px] lg:max-w-[500px]">Интернет-магазин мебели в Севастополе</p>
                             <a
-                                className="w-fit py-2 px-3.5 md:py-4 md:px-12 md:mt-5 lg:mt-0 text-dark bg-fon border-solid border-[1px]
+                                className="w-fit py-2 px-3.5 md:py-4 md:px-12 md:mt-5 lg:mt-0 text-dark bg-light border-solid border-[1px]
                                     rounded border-[rgba(41,42,45,0.15)] font-semibold"
                                href="#"
                             >
@@ -35,14 +35,14 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                         </div>
                     </div>
 
-                    <div className="relative flex-shrink-0 w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
+                    <div className="select-none relative flex-shrink-0 w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
                         <Image fill className="object-cover -z-10" src={bg_slide2} alt=""/>
 
-                        <div className="text-fon font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
-                        xl:px-20 mt-[150px] md:mt-[220px] lg:mt-[450px] lg:max-w-2xl md:text-[16px]"
+                        <div className="text-light font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
+                        xl:px-20 absolute bottom-5 md:bottom-11 lg:bottom-20 md:text-[16px] max-w-[240px] md:max-w-[370px] lg:max-w-[500px]"
                         >
-                            <h2 className="text-xl md:text-3xl lg:text-5xl font-semibold">Мебель Вам</h2>
-                            <p className="font-light font-roboto md:font-montserrat max-w-[200px] md:max-w-none">Интернет-магазин мебели в Севастополе</p>
+                            <h2 className="text-xl lg:text-3xl font-semibold">Бесплатный <br/>
+                                <span className="text-[14px] md:text-xl md:font-medium lg:text-3xl">вызов замерщика</span></h2>
                             <a
                                 className="w-fit py-2 px-3.5 md:py-4 md:px-12 md:mt-5 lg:mt-0 text-dark bg-fon border-solid border-[1px]
                                     rounded border-[rgba(41,42,45,0.15)] font-semibold"
@@ -53,14 +53,15 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                         </div>
                     </div>
 
-                    <div className="relative flex-shrink-0 w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
+                    <div className="select-none relative flex-shrink-0 w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
                         <Image fill className="object-cover -z-10" src={bg_slide3} alt=""/>
 
-                        <div className="text-fon font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
-                        xl:px-20 mt-[150px] md:mt-[220px] lg:mt-[450px] lg:max-w-2xl md:text-[16px]"
+                        <div className="text-light font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
+                        xl:px-20 absolute bottom-5 md:bottom-11 lg:bottom-20 max-w-[250px] md:max-w-[370px] lg:max-w-[500px] md:text-[16px]"
                         >
-                            <h2 className="text-xl md:text-3xl lg:text-5xl font-semibold">Мебель Вам</h2>
-                            <p className="font-light font-roboto md:font-montserrat max-w-[200px] md:max-w-none">Интернет-магазин мебели в Севастополе</p>
+                            <h2 className="text-xl lg:text-3xl font-semibold">Бесплатная доставка<br/>
+                                <span className="text-[14px] md:text-xl md:font-medium">
+                                при заказе от 7000 р.</span></h2>
                             <a
                                 className="w-fit py-2 px-3.5 md:py-4 md:px-12 md:mt-5 lg:mt-0 text-dark bg-fon border-solid border-[1px]
                                     rounded border-[rgba(41,42,45,0.15)] font-semibold"
@@ -73,6 +74,8 @@ const Welcome: FC<WelcomeProps> = ({}) => {
 
                 </div>
             </Slider>
+
+            <p className="bg-dark py-3.5 md:py-5 lg:py-7 px-2.5 md:px-5 lg:px-10 xl:px-20 text-[#E1E1E1] text-[12px] font-light text-center leading-4">Мебель доставляется в разобранном виде  в плоских упаковках. В комплекте идет вся необходимая фурнитура, крепеж и схема сборки, собирается как конструктор</p>
         </div>
     );
 };

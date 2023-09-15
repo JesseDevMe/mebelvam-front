@@ -14,7 +14,7 @@ interface FooterProps {
 const Footer: FC<FooterProps> = ({}) => {
 
     return (
-        <div className="bg-[rgb(242,242,241)] text-[12px] pt-7 pb-20 md:pb-7 font-light px-5 md:px-5 lg:px-10 xl:px-20
+        <div className="bg-light text-[12px] pt-7 pb-20 md:pb-7 font-light px-5 md:px-5 lg:px-10 xl:px-20
                     grid grid-rows-[repeat(3,auto)] sm:grid sm:grid-cols-3 sm:grid-rows-none justify-center justify-items-center text-center gap-y-3.5 gap-x-5 leading-4"
         >
             <div className="order-1 max-w-[400px]">

@@ -27,11 +27,11 @@ const Slider: FC<SliderProps> = ({children, count}) => {
     useEffect(()=> {
         id = setTimeout(() => {
             nextSlide();
-
-            return () => {
-                clearTimeout(id);
-            }
         }, 7000)
+
+        return () => {
+            clearTimeout(id);
+        }
     }, [curSlideN])
 
 
@@ -95,7 +95,7 @@ const Slider: FC<SliderProps> = ({children, count}) => {
 
     return (
         <div className="overflow-hidden relative">
-            <div ref={swiperRef} className="transition-transform duration-500" style={{transform: 'translate(-' + (curSlideN * 100 - 100) + '%)'}}>
+            <div ref={swiperRef} className="transition-transform duration-500 will-change-transform" style={{transform: 'translate(-' + (curSlideN * 100 - 100) + '%)'}}>
                 {children}
             </div>
 

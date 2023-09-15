@@ -4,6 +4,8 @@ import {Header} from '../widgets/Header'
 import {NavBarM} from "@/widgets/NavBarM";
 import {Footer} from "@/widgets/Footer";
 
+// px-2.5 md:px-5 lg:px-10 xl:px-20
+
 export default function RootLayout({
   children,
 }: {
