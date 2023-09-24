@@ -4,44 +4,66 @@ import logo from "@/../public/header/logo.svg"
 import Link from "next/link";
 import {Menu} from "@/features/Menu";
 import {Search} from "@/features/Search";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import heart from "@/../public/header/heart.svg";
 import account from "@/../public/header/personal_account.svg";
 import cart from "@/../public/header/icon_basket.svg";
-import vk from "@/../public/header/VK.svg";
-import telegram from "@/../public/header/Telegram.svg";
-import whatsapp from "@/../public/header/WhatsApp.svg";
-import viber from "@/../public/header/Viber.svg";
-import mail from "@/../public/header/Mail_ru.svg";
 
 
 const Header = () => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [isHeaderOpen, setIsHeaderOpen] = useState(true);
+
+    const prevScroll = useRef(0)
+    useEffect(() => {
+        prevScroll.current = window.scrollY;
+        let currentScroll: number;
+        let offset = 0;
+
+        const intervalId = setInterval(() => {
+            if (offset < 0) offset = 0;
+        }, 500);
+
+        function onScroll(e: Event) {
+            currentScroll = window.scrollY;
+
+            if (currentScroll < 180) {
+                setIsHeaderOpen(true);
+                return () => {
+                    window.removeEventListener('scroll', onScroll);
+                    clearInterval(intervalId);
+                };
+            }
+
+            if (isHeaderOpen && prevScroll.current < currentScroll) {
+                offset += currentScroll - prevScroll.current;
+
+                if (offset > 180) {
+                    setIsHeaderOpen(false);
+                }
+            }
+
+            if (!isHeaderOpen && prevScroll.current > currentScroll) {
+                offset -= prevScroll.current - currentScroll;
+
+                if (offset < -180) {
+                    setIsHeaderOpen(true);
+                }
+            }
+
+            prevScroll.current = currentScroll
+        }
+
+        window.addEventListener('scroll', onScroll)
+
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            clearInterval(intervalId);
+        }
+    }, [isHeaderOpen])
 
     return (
-        <header className="px-2.5 md:px-5 lg:px-10 xl:px-20 lg:absolute top-0 left-0 z-50 w-full bg-[rgba(242,242,241,0.90)]">
-            <div className="hidden md:flex justify-between items-center pt-5 pb-2.5 border-b-2 border-dark">
-                <a href="tel:+79788155828">+7(978)815-58-28</a>
-
-                <div className="flex gap-x-2.5">
-                    <a href="#">
-                        <Image width={24} height={24} src={vk} alt="ВК"/>
-                    </a>
-                    <a href="#">
-                        <Image width={24} height={24} src={telegram} alt="Телеграм"/>
-                    </a>
-                    <a href="#">
-                        <Image width={24} height={24} src={whatsapp} alt="Вотсапп"/>
-                    </a>
-                    <a href="#">
-                        <Image width={24} height={24} src={viber} alt="Вайбер"/>
-                    </a>
-                    <a href="#">
-                        <Image width={24} height={24} src={mail} alt="Почта"/>
-                    </a>
-                </div>
-            </div>
-
+        <header className={`md:sticky md:top-[-1px] transition-transform ${isHeaderOpen ? 'translate-y-0': '-translate-y-full'} px-2.5 md:px-5 lg:px-10 xl:px-20 z-50 w-full bg-[rgba(242,242,241,1)] border-b-[1px]`}>
             <div className="py-1.5 flex justify-between items-center gap-x-2">
                 <div className={`flex items-center justify-between grow md:grow-0 ${isSearchOpen ? 'grow-0' : ''}`}>
                     <Menu/>
@@ -64,18 +86,18 @@ const Header = () => {
                     <Search isOpen={isSearchOpen} setIsOpen={setIsSearchOpen}/>
 
                     <Link className="hidden md:block" href="#">
-                        <Image alt="Избранное" src={heart}/>
+                        <Image alt="Избранное" className="hover:scale-110 transition-transform" src={heart}/>
                     </Link>
 
                     <Link className="hidden md:block" href="#">
-                        <Image alt="Аккаунт" src={account}/>
+                        <Image alt="Аккаунт" className="hover:scale-110 transition-transform" src={account}/>
                     </Link>
 
                     <Link className="hidden md:flex px-2.5 py-1.5 items-center gap-x-2 border-[1px]
-                            border-solid border-dark rounded"
+                            border-solid border-dark rounded hover:scale-110 transition-transform"
                           href="#"
                     >
-                        <Image alt="Корзина" src={cart}/>
+                        <Image alt="Корзина"  src={cart}/>
                         <span>(2)</span>
                     </Link>
                 </div>

@@ -7,12 +7,12 @@ import favorites from '@/../public/NavMobile/favorites.svg'
 export const links: Link[] = [
     {
         name: 'Главная',
-        link: '#',
+        link: '/',
         img: home
     },
     {
         name: 'Каталог',
-        link: '#',
+        link: '/catalog',
         img: catalog
     },
     {

@@ -1,18 +1,17 @@
 'use client'
-import {FC, ReactNode, useEffect, useMemo, useRef, useState} from "react";
+import {FC, ReactNode, useEffect, useRef, useState} from "react";
 
-interface SliderProps {
-    children: ReactNode;
-    count: number;
+interface CardSliderProps {
+    children: ReactNode[];
 }
 
-const Slider: FC<SliderProps> = ({children, count}) => {
+const CardSlider: FC<CardSliderProps> = ({ children }) => {
     const [curSlideN, setCurSlideN] = useState(1);
+    const slidesCount = children.length;
     const swiperRef = useRef<HTMLDivElement>(null)
 
-
     function nextSlide() {
-        if (curSlideN >= count) {
+        if (curSlideN >= slidesCount) {
             setCurSlideN(1);
         } else setCurSlideN(curSlideN + 1);
     }
@@ -20,19 +19,10 @@ const Slider: FC<SliderProps> = ({children, count}) => {
     function prevSlide() {
         if (curSlideN > 1) {
             setCurSlideN(curSlideN - 1);
+        } else {
+            setCurSlideN(slidesCount)
         }
     }
-
-    let id: ReturnType<typeof setTimeout>;
-    useEffect(()=> {
-        id = setTimeout(() => {
-            nextSlide();
-        }, 7000)
-
-        return () => {
-            clearTimeout(id);
-        }
-    }, [curSlideN])
 
 
     useEffect(()=> {
@@ -44,10 +34,12 @@ const Slider: FC<SliderProps> = ({children, count}) => {
         let x2 = 0;
 
         function onTouchStart(e: TouchEvent) {
+            e.stopPropagation();
             x1 = e.targetTouches[0].clientX;
         }
         function onTouchEnd(e:TouchEvent) {
             x2 = e.changedTouches[0].clientX;
+            e.stopPropagation();
 
             if ((x1 - x2) > 50) {
                 nextSlide();
@@ -58,9 +50,11 @@ const Slider: FC<SliderProps> = ({children, count}) => {
             }
         }
         function onMouseDown(e:MouseEvent) {
+            e.stopPropagation();
             x1 = e.clientX;
         }
         function onMouseUp(e:MouseEvent) {
+            e.stopPropagation();
             x2 = e.clientX;
 
             if ((x1 - x2) > 50) {
@@ -88,30 +82,27 @@ const Slider: FC<SliderProps> = ({children, count}) => {
         }
     }, [curSlideN])
 
-    function progressHandler(slideNumber: number) {
-        clearTimeout(id);
-        setCurSlideN(slideNumber);
-    }
 
     return (
-        <div className="overflow-hidden relative">
-            <div ref={swiperRef} className="transition-transform duration-500 will-change-transform" style={{transform: 'translate(-' + (curSlideN * 100 - 100) + '%)'}}>
-                {children}
+        <div className="w-full relative">
+            <div className="overflow-hidden w-full">
+                <div ref={swiperRef} className="flex transition-transform will-change-transform"
+                     style={{transform: 'translate(-' + (curSlideN * 100 - 100) + '%)'}}>
+                    {...children}
+                </div>
             </div>
-
-            <div className="hidden absolute bottom-4 left-1/2 -translate-x-1/2 md:flex gap-x-2">
+            <div className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-full flex gap-x-1">
                 {
-                    [...new Array(count)].map((elem, index) =>
-                        <div key={index} onClick={() => progressHandler(index + 1)} className="w-[74px] h-7 flex justify-center items-center cursor-pointer">
-                            <div className={`w-16 h-1 rounded-[3px] ${index + 1 === curSlideN ? 'bg-dark' : 'bg-fon'}`}>
-
+                    [...new Array(slidesCount)].map((elem, index) =>
+                        <div key={index} onClick={() => setCurSlideN(index + 1)} className="w-[34px] h-5 flex justify-center items-center cursor-pointer">
+                            <div className={`w-[30px] h-0.5 ${index + 1 === curSlideN ? 'bg-dark' : 'bg-[#DADADA]'}`}>
                             </div>
                         </div>)
                 }
-
             </div>
         </div>
+
     );
 };
 
-export default Slider;
+export default CardSlider;

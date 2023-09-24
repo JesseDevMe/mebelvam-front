@@ -102,20 +102,20 @@ const SliderRL: FC<SliderRlProps> = ({children, count}) => {
                 {children}
             </div>
 
-            <button onClick={prevSlide} className="absolute top-1/2 left-5 -translate-y-1/2 hidden md:block z-[60]">
+            <button onClick={prevSlide} className="absolute top-1/2 left-5 -translate-y-1/2 hidden md:block z-[40]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="42" height="40" viewBox="0 0 42 40" fill="none">
                     <path d="M12 10C12 10 2 19.2993 2 20C2 20.7007 12 30 12 30" stroke="#292A2D" strokeOpacity="0.3" strokeWidth="3" strokeLinecap="round"/>
                 </svg>
             </button>
 
-            <button onClick={nextSlide} className="absolute top-1/2 right-5 -translate-y-1/2 hidden md:block z-[60]">
+            <button onClick={nextSlide} className="absolute top-1/2 right-5 -translate-y-1/2 hidden md:block z-[40]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="42" height="40" viewBox="0 0 42 40" fill="none">
                     <path d="M30 30C30 30 40 20.7007 40 20C40 19.2993 30 10 30 10" stroke="#292A2D" strokeOpacity="0.3" strokeWidth="3" strokeLinecap="round"/>
                 </svg>
             </button>
 
             <div className="absolute right-0 top-0 w-1/4 h-full bg-[linear-gradient(270deg,rgba(253,253,253,.8)7%,rgba(253,253,253,0)70%)]
-                        z-50"></div>
+                        z-[30]"></div>
         </div>
     );
 };

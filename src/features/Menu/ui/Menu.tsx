@@ -18,15 +18,15 @@ interface NavLink {
 const navList: NavLink[] = [
     {
         name: 'Каталог',
-        link: '#',
+        link: '/catalog',
     },
     {
         name: 'О нас',
-        link: '#aboutus',
+        link: '/#aboutus',
     },
     {
         name: 'Отзывы',
-        link: '#feedback',
+        link: '/#feedback',
     },
     {
         name: 'Сотрудничество',
@@ -53,19 +53,19 @@ const Menu: FC<MenuProps> = ({}) => {
 
             <nav className="hidden lg:flex gap-x-7 ">
                 {navList.map(nav =>
-                    <Link onClick={() => setIsOpen(false)} href={nav.link}>{nav.name}</Link>
+                    <Link className="hover:text-accent transition-colors" onClick={() => setIsOpen(false)} href={nav.link}>{nav.name}</Link>
                 )}
             </nav>
 
             <Modal open={isOpen}>
-                <div className="fixed top-0 left-0 w-screen h-screen md:w-[360px] bg-fon z-50">
+                <div className="fixed top-0 left-0 w-screen h-screen md:w-[360px] bg-fon z-[70]">
                     <div className="flex flex-col gap-y-5 pt-5 pl-7 pr-7">
                         <div onClick={modalToggle} className="p-2 cursor-pointer">
                             <Image src={cross} height={16} width={16} alt='Закрыть меню'/>
                         </div>
                         <nav className="flex flex-col gap-y-5">
                             {navList.map((navLink) =>
-                                <Link onClick={() => setIsOpen(false)} key={navLink.name} className="pb-2.5 border-b-[1px]" href={navLink.link}>
+                                <Link onClick={() => setIsOpen(false)} key={navLink.name} className="pb-2.5 border-b-[1px] hover:text-accent transition-colors" href={navLink.link}>
                                     {navLink.name}
                                 </Link>
                             )}

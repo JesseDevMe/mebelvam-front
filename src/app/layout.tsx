@@ -3,6 +3,7 @@ import {montserrat, roboto} from "../../public/fonts/fonts";
 import {Header} from '../widgets/Header'
 import {NavBarM} from "@/widgets/NavBarM";
 import {Footer} from "@/widgets/Footer";
+import {PreHeader} from "@/widgets/PreHeader";
 
 // px-2.5 md:px-5 lg:px-10 xl:px-20
 
@@ -18,10 +19,11 @@ export default function RootLayout({
            text-sm leading-5`
       }>
         <div className="min-h-screen flex flex-col max-w-[1520px] m-auto relative">
-                <Header/>
-                <main className="flex-grow">
-                    {children}
-                </main>
+            <PreHeader/>
+            <Header/>
+            <main className="flex-grow">
+                {children}
+            </main>
             <NavBarM/>
             <Footer/>
         </div>

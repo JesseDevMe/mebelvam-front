@@ -14,6 +14,7 @@ module.exports = {
                 'fon': '#FDFDFD',
                 'dark': '#292A2D',
                 'light': '#F2F2F1',
+                'accent': '#A50B34',
             },
         },
     },

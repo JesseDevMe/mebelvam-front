@@ -1,20 +1,33 @@
 import {FC} from "react";
 import {CatalogGrid} from "@/widgets/CatalogGrid";
-import {CatalogCard} from "@/entities/CatalogCard";
-import collections_img from "../../../../public/Pages/Home/Catalog/cat1.jpeg";
-import sells from "../../../../public/Pages/Home/Catalog/sells.jpg";
+import {CatalogRouter} from "@/shared/CatalogRouter";
 import {Category, fetchCategories} from "@/entities/Category";
+import { CatalogCard } from "@/entities/CatalogCard"
+import collections_img from "../../../public/Pages/Home/Catalog/cat1.jpeg";
+import sells from "../../../public/Pages/Home/Catalog/sells.jpg";
+import {FurnitureCard} from "@/entities/FurnitureCard";
 
-interface CatalogProps {
+interface PageProps {
 
 }
 
-const Catalog: FC<CatalogProps> = async ({}) => {
+// const routes: Route[] = [
+//     {
+//         name: 'Главная',
+//         path: '/',
+//     },
+//     {
+//         name: 'Каталог',
+//         path: '/catalog',
+//     },
+// ]
+
+const Page: FC<PageProps> = async ({}) => {
     const categories: Category[] = await fetchCategories();
 
     return (
-        <div className="bg-light py-8 px-2.5 md:px-5 lg:px-10 xl:px-20 font-montserrat">
-            <h2 className="text-xl font-semibold text-center">Каталог</h2>
+        <div className="bg-fon pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 font-montserrat">
+            <CatalogRouter/>
             <CatalogGrid>
                 <>
                     <CatalogCard
@@ -51,4 +64,4 @@ const Catalog: FC<CatalogProps> = async ({}) => {
     );
 };
 
-export default Catalog;
+export default Page;

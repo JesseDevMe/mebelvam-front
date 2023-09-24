@@ -19,15 +19,15 @@ const Consultation: FC<ConsultationProps> = ({}) => {
             <h2 className="font-montserrat text-xl lg:text-3xl font-semibold text-center">Получите консультацию</h2>
             <p className="mt-5 lg:mt-8 text-center">Оставьте заявку прямо сейчас, менеджер нашего интернет-магазина свяжется с Вами </p>
             <form className="flex flex-col mx-auto max-w-[436px] gap-y-4 mt-5 lg:mt-12">
-                <input className="py-3.5 px-5 bg-transparent border-dark border-2 rounded" type="text" placeholder="Имя"/>
-                <input className="py-3.5 px-5 bg-transparent border-dark border-2 rounded" type="tel" placeholder="Телефон"/>
+                <input className="py-3.5 px-5 bg-transparent border-dark border-2 rounded outline-0 focus:border-accent" type="text" placeholder="Имя"/>
+                <input className="py-3.5 px-5 bg-transparent border-dark border-2 rounded outline-0 focus:border-accent" type="tel" placeholder="Телефон"/>
                 <div className="flex gap-x-3.5 font-light text-[12px] items-start">
                     <input type="checkbox" id="poli" name="poli"/>
                     <label htmlFor="poli">Я принимаю условия <a href="" className="underline">Пользовательского соглашения</a> и даю своё согласие на
                         обработку моей персональной информации на условиях, определенных <a href="" className="underline">Политикой
                             конфиденциальности</a>.</label>
                 </div>
-                <button className="w-fit mx-auto py-3.5 px-12 bg-dark rounded text-light font-montserrat text-base font-semibold" type="submit">Оставить заявку</button>
+                <button className="w-fit mx-auto py-3.5 px-12 bg-dark rounded text-light font-montserrat text-base font-semibold transition-colors hover:bg-black" type="submit">Оставить заявку</button>
             </form>
             <div className="flex flex-col gap-y-4 items-center mt-5 font-montserrat text-base">
                 <p className="text-center font-semibold">
