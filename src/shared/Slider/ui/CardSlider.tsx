@@ -1,108 +1,65 @@
 'use client'
 import {FC, ReactNode, useEffect, useRef, useState} from "react";
+import {Swiper, SwiperRef, SwiperSlide} from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import './../style/style.css'
+import Image from "next/image";
 
 interface CardSliderProps {
-    children: ReactNode[];
+    imagesUrl: string[];
 }
 
-const CardSlider: FC<CardSliderProps> = ({ children }) => {
-    const [curSlideN, setCurSlideN] = useState(1);
-    const slidesCount = children.length;
-    const swiperRef = useRef<HTMLDivElement>(null)
-
-    function nextSlide() {
-        if (curSlideN >= slidesCount) {
-            setCurSlideN(1);
-        } else setCurSlideN(curSlideN + 1);
-    }
-
-    function prevSlide() {
-        if (curSlideN > 1) {
-            setCurSlideN(curSlideN - 1);
-        } else {
-            setCurSlideN(slidesCount)
-        }
-    }
-
-
-    useEffect(()=> {
-        if (!swiperRef.current) {
-            return;
-        }
-
-        let x1 = 0;
-        let x2 = 0;
-
-        function onTouchStart(e: TouchEvent) {
-            e.stopPropagation();
-            x1 = e.targetTouches[0].clientX;
-        }
-        function onTouchEnd(e:TouchEvent) {
-            x2 = e.changedTouches[0].clientX;
-            e.stopPropagation();
-
-            if ((x1 - x2) > 50) {
-                nextSlide();
-            }
-
-            if ((x1 - x2) < -50) {
-                prevSlide();
-            }
-        }
-        function onMouseDown(e:MouseEvent) {
-            e.stopPropagation();
-            x1 = e.clientX;
-        }
-        function onMouseUp(e:MouseEvent) {
-            e.stopPropagation();
-            x2 = e.clientX;
-
-            if ((x1 - x2) > 50) {
-                nextSlide();
-            }
-
-            if ((x1 - x2) < -50) {
-                prevSlide();
-            }
-        }
-
-        swiperRef.current.addEventListener('touchstart', onTouchStart)
-        swiperRef.current.addEventListener('touchend', onTouchEnd)
-        swiperRef.current.addEventListener('mousedown', onMouseDown)
-        swiperRef.current.addEventListener('mouseup', onMouseUp)
-
-        return () => {
-            if (!swiperRef.current) {
-                return;
-            }
-            swiperRef.current.removeEventListener('touchstart', onTouchStart)
-            swiperRef.current.removeEventListener('touchend', onTouchEnd)
-            swiperRef.current.removeEventListener('mousedown', onMouseDown)
-            swiperRef.current.removeEventListener('mouseup', onMouseUp)
-        }
-    }, [curSlideN])
+const CardSlider: FC<CardSliderProps> = ({ imagesUrl }) => {
+    const swiperRef = useRef<SwiperRef>(null);
+    const [curSlideIndex, setCurSlideIndex] = useState(0);
 
 
     return (
-        <div className="w-full relative">
-            <div className="overflow-hidden w-full">
-                <div ref={swiperRef} className="flex transition-transform will-change-transform"
-                     style={{transform: 'translate(-' + (curSlideN * 100 - 100) + '%)'}}>
-                    {...children}
-                </div>
-            </div>
-            <div className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-full flex gap-x-1">
+        <div className="flex gap-7">
+            <div className="hidden lg:flex flex-col gap-2.5">
                 {
-                    [...new Array(slidesCount)].map((elem, index) =>
-                        <div key={index} onClick={() => setCurSlideN(index + 1)} className="w-[34px] h-5 flex justify-center items-center cursor-pointer">
-                            <div className={`w-[30px] h-0.5 ${index + 1 === curSlideN ? 'bg-dark' : 'bg-[#DADADA]'}`}>
-                            </div>
-                        </div>)
+                    imagesUrl.map( (imageUrl, index) =>
+                        <div
+                            onClick={() => swiperRef.current?.swiper.slideTo(index)}
+                            key={index}
+                            className={`relative w-[78px] h-[78px] will-change-transform transition-transform cursor-pointer ${index === curSlideIndex ? 'border-2 border-dark' : ' hover:scale-110'}`}
+                        >
+                            <Image fill className="object-cover" src={imageUrl} alt=''/>
+                        </div>
+                    )
                 }
             </div>
-        </div>
 
-    );
+            <Swiper
+                ref={swiperRef}
+                onActiveIndexChange={(swiper) => setCurSlideIndex(swiper.activeIndex)}
+                className="!overflow-y-visible grow"
+                modules={[Pagination, Navigation]}
+                slidesPerView={1}
+                pagination={{
+                    clickable: true,
+                    bulletClass: 'bullet-card',
+                    bulletActiveClass: 'activeBulletCard',
+                    horizontalClass: 'horizontal-card',
+                }}
+            >
+
+                {
+                    imagesUrl.map((imageUrl, index) =>
+                        <SwiperSlide key={index}>
+                            <div key={imageUrl}
+                                 className="w-full relative shrink-0 aspect-square md:aspect-video lg:aspect-square overflow-hidden">
+                                <Image draggable={false} fill style={{objectFit: 'contain'}} src={imageUrl} alt=""/>
+                            </div>
+                        </SwiperSlide>
+                    )
+                }
+            </Swiper>
+        </div>
+    )
 };
 
 export default CardSlider;

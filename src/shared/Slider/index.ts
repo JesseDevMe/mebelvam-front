@@ -1,5 +1,4 @@
-import Slider from "./ui/Slider";
-import SliderRL from "./ui/SliderRL";
+import MiniCardSlider from "./ui/MiniCardSlider";
 import CardSlider from "./ui/CardSlider";
 
-export { Slider, SliderRL, CardSlider };
+export { MiniCardSlider, CardSlider };

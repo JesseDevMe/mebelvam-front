@@ -4,4 +4,5 @@ export interface Subcategory {
     slug: string;
     name: string;
     imgUrl: string;
+    categoryId: number;
 }

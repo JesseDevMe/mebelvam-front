@@ -1,3 +1,4 @@
-import shuffle from "@/shared/Utils/ArrayShuffle";
+import shuffle from "./ArrayShuffle";
+import { getParamsString } from "./UrlParser";
 
-export {shuffle}
+export {shuffle, getParamsString };

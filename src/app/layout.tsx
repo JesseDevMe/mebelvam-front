@@ -12,21 +12,24 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body className={
-          `${roboto.variable} ${montserrat.variable} ${roboto.className} bg-fon font-roboto
-           text-sm leading-5`
-      }>
-        <div className="min-h-screen flex flex-col max-w-[1520px] m-auto relative">
-            <PreHeader/>
-            <Header/>
-            <main className="flex-grow">
-                {children}
-            </main>
-            <NavBarM/>
-            <Footer/>
-        </div>
+    return (
+        <html lang="en">
+        <body className={
+            `${roboto.variable} ${montserrat.variable} ${roboto.className} bg-fon font-roboto
+            text-sm leading-5`
+        }>
+
+              <div className="min-h-screen flex flex-col">
+                  <PreHeader/>
+                  <Header/>
+
+                  <main className="flex-grow ">
+                      {children}
+                  </main>
+                  <NavBarM/>
+
+                  <Footer/>
+            </div>
       </body>
     </html>
   )

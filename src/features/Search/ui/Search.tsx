@@ -28,7 +28,7 @@ const Search: FC<SearchProps> = ({isOpen, setIsOpen}) => {
                 </span>
                 <input
                     placeholder="Искать"
-                    className="px-1.5 outline-0" type="text"
+                    className="px-1.5 outline-0 bg-fon" type="text"
                 />
             </div>
 

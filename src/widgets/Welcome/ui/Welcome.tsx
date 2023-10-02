@@ -1,9 +1,14 @@
-import {FC} from "react";
-import {Slider} from "@/shared/Slider";
+'use client'
+import {FC, useRef} from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Image from "next/image";
 import bg_slide1 from "@/../public/Pages/Home/Welcome/bg1.jpeg"
 import bg_slide2 from "@/../public/Pages/Home/Welcome/bg2.jpeg"
 import bg_slide3 from "@/../public/Pages/Home/Welcome/bg3.jpeg"
+import { Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import './../styles/style.css'
 
 interface WelcomeProps {
 
@@ -12,12 +17,19 @@ interface WelcomeProps {
 const Welcome: FC<WelcomeProps> = ({}) => {
 
     return (
-        <div>
-            <Slider
-                count={3}
+        <div className="max-w-[1520px] w-full mx-auto">
+            <Swiper
+                modules={[Pagination,Autoplay]}
+                autoplay={{delay: 5000, disableOnInteraction: false}}
+                slidesPerView={1}
+                pagination={{
+                    clickable: true,
+                    bulletClass: 'bullet',
+                    bulletActiveClass: 'activeBullet',
+                }}
             >
-                <div className="flex h-[300px] md:h-[410px] lg:h-[700px]">
-                    <div className="select-none relative flex-shrink-0 w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
+                <SwiperSlide>
+                    <div className="h-[300px] md:h-[410px] lg:h-[700px] select-none relative w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
                         <Image fill className="object-cover -z-10" src={bg_slide1} alt=""/>
 
                         <div className="max-w-[300px] text-light font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
@@ -28,14 +40,15 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                             <a
                                 className="w-fit py-2 px-3.5 md:py-4 md:px-12 md:mt-5 lg:mt-0 text-dark bg-light border-solid border-[1px]
                                     rounded border-[rgba(41,42,45,0.15)] font-semibold transition-colors hover:bg-fon"
-                               href="#"
+                                href="#"
                             >
                                 Каталог товаров
                             </a>
                         </div>
                     </div>
-
-                    <div className="select-none relative flex-shrink-0 w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="h-[300px] md:h-[410px] lg:h-[700px] select-none relative w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
                         <Image fill className="object-cover -z-10" src={bg_slide2} alt=""/>
 
                         <div className="text-light font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
@@ -52,8 +65,9 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                             </a>
                         </div>
                     </div>
-
-                    <div className="select-none relative flex-shrink-0 w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
+                </SwiperSlide>
+                <SwiperSlide>
+                    <div className="h-[300px] md:h-[410px] lg:h-[700px] select-none relative w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
                         <Image fill className="object-cover -z-10" src={bg_slide3} alt=""/>
 
                         <div className="text-light font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
@@ -71,13 +85,11 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                             </a>
                         </div>
                     </div>
+                </SwiperSlide>
+            </Swiper>
 
-                </div>
-            </Slider>
-
-            <p className="bg-dark py-3.5 md:py-5 lg:py-7 px-2.5 md:px-5 lg:px-10 xl:px-20 text-[#E1E1E1] text-[12px] font-light text-center leading-4">Мебель доставляется в разобранном виде  в плоских упаковках. В комплекте идет вся необходимая фурнитура, крепеж и схема сборки, собирается как конструктор</p>
+            <p className="bg-dark py-3.5 md:py-5 lg:py-7 px-2.5 md:px-5 lg:px-10 xl:px-20 text-[#E1E1E1] text-[12px] font-light text-center leading-4 min-[1520px]:rounded-b-[10px]">Мебель доставляется в разобранном виде  в плоских упаковках. В комплекте идет вся необходимая фурнитура, крепеж и схема сборки, собирается как конструктор</p>
         </div>
     );
 };
-
 export default Welcome;

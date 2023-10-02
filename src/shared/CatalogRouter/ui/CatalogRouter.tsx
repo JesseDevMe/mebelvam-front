@@ -6,26 +6,38 @@ interface CatalogRouterProps {
     routes?: Route[]
 }
 
-const CatalogRouter: FC<CatalogRouterProps> = ({ routes }) => {
+const CatalogRouter: FC<CatalogRouterProps> = ({ routes = [] }) => {
+    let fullPath: string = '';
+
+    const fullRoutes: Route[] = [
+        {
+            name: 'Главная',
+            path: '/'
+        },
+        {
+            name: 'Каталог',
+            path: 'catalog'
+        },
+        ...routes
+    ]
 
     return (
-        <ul className="flex gap-x-3.5 font-roboto mb-7 ml-5">
-            <li className="border-r-[1px] border-dark pr-2.5 last:border-none">
-                <Link href="/">Главная</Link>
-            </li>
+        <div className="mt-2 mb-7 md:mt-7 md:mb-9 lg:mb-12 font-roboto">
+            <ul className="flex gap-x-3.5 mb-7 flex-wrap gap-y-2">
+                {
+                    fullRoutes.map((route, index) => {
+                        if (route.isAbsolute === true) {
+                            fullPath = route.path;
+                        } else fullPath += route.path;
 
-            <li className="border-r-[1px] border-dark pr-2.5 last:border-none">
-                <Link href="/catalog">Каталог</Link>
-            </li>
+                        return <li key={route.name + index} className='hidden border-r border-dark pr-2.5 last:border-none [&:nth-last-child(-n+2)]:block md:block hover:text-accent'>
+                            <Link replace={true} href={fullPath}>{route.name}</Link>
+                        </li>
+                    })
+                }
+            </ul>
 
-            {
-                routes?.map((route) =>
-                    <li key={route.name} className="border-r-[1px] border-dark pr-2.5 last:border-none">
-                        <Link href={route.path}>{route.name}</Link>
-                    </li>
-                )
-            }
-        </ul>
+        </div>
     );
 };
 

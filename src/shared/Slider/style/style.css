@@ -1,0 +1,51 @@
+.bullet-mini {
+    display: inline-block;
+    box-sizing: content-box;
+    width: 30px;
+    height: 2px;
+    border-radius: 3px;
+    background-color: #DADADA;
+    background-clip: content-box;
+    margin: 0 5px;
+    padding: 10px 0;
+}
+
+.activeBulletMini {
+    background-color: rgb(41 42 45);
+}
+
+.horizontal-mini {
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: -30px !important;
+}
+
+.bullet-card {
+    display: inline-block;
+    box-sizing: content-box;
+    width: 30px;
+    height: 2px;
+    border-radius: 3px;
+    background-color: #DADADA;
+    background-clip: content-box;
+    margin: 0 5px;
+    padding: 10px 0;
+}
+
+.activeBulletCard {
+    background-color: rgb(41 42 45);
+}
+
+.horizontal-card {
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: -36px !important;
+}
+
+@media screen and (min-width: 1024px) {
+    .horizontal-card {
+        display: none;
+    }
+}

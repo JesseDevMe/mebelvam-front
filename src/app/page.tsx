@@ -17,15 +17,16 @@ interface PageProps {
 
 const Page: FC<PageProps> = ({}) => {
 
+  //   max-w-[1520px] w-full mx-auto
   return (
-      <>
+      <div>
           <Welcome/>
           <HotOffer/>
           <Catalog/>
           <Feedback/>
           <AboutUs/>
           <Consultation/>
-      </>
+      </div>
   );
 };
 

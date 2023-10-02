@@ -63,47 +63,50 @@ const Header = () => {
     }, [isHeaderOpen])
 
     return (
-        <header className={`md:sticky md:top-[-1px] transition-transform ${isHeaderOpen ? 'translate-y-0': '-translate-y-full'} px-2.5 md:px-5 lg:px-10 xl:px-20 z-50 w-full bg-[rgba(242,242,241,1)] border-b-[1px]`}>
-            <div className="py-1.5 flex justify-between items-center gap-x-2">
-                <div className={`flex items-center justify-between grow md:grow-0 ${isSearchOpen ? 'grow-0' : ''}`}>
-                    <Menu/>
+        <div className={`md:sticky md:top-[-1px] bg-[rgba(242,242,241,0.7)] md:backdrop-blur transition-transform ${isHeaderOpen ? 'translate-y-0' : '-translate-y-full'} shadow-[0px_16px_15px_-22px_rgba(0,0,0,0.1)] z-50`}>
+            <header className={`px-2.5 md:px-5 lg:px-10 xl:px-20 w-full max-w-[1520px] mx-auto`}>
+                <div className="py-1.5 flex justify-between items-center gap-x-2">
+                    <div className={`flex items-center justify-between grow md:grow-0 ${isSearchOpen ? 'grow-0' : ''}`}>
+                        <Menu/>
+                        <Link
+                            className={`pr-3 translate-x-[20px] + ${isSearchOpen ? 'max-[410px]:hidden' : ''} lg:hidden`}
+                            href='/'
+                        >
+                            <Image src={logo} height={30} width={40} alt="Мебель Вам"/>
+                        </Link>
+                    </div>
+
                     <Link
-                        className={`pr-3 translate-x-[20px] + ${isSearchOpen ? 'max-[410px]:hidden' : ''} lg:hidden`}
+                        className="hidden lg:block"
                         href='/'
                     >
-                        <Image src={logo} height={30} width={40} alt="Мебель Вам"/>
-                    </Link>
-                </div>
-
-                <Link
-                    className="hidden lg:block"
-                    href='/'
-                >
-                    <Image src={logo} height={48} width={65} alt="Мебель Вам"/>
-                </Link>
-
-                <div className="grow lg:grow-0 flex items-center justify-end gap-x-5">
-                    <Search isOpen={isSearchOpen} setIsOpen={setIsSearchOpen}/>
-
-                    <Link className="hidden md:block" href="#">
-                        <Image alt="Избранное" className="hover:scale-110 transition-transform" src={heart}/>
+                        <Image src={logo} height={48} width={65} alt="Мебель Вам"/>
                     </Link>
 
-                    <Link className="hidden md:block" href="#">
-                        <Image alt="Аккаунт" className="hover:scale-110 transition-transform" src={account}/>
-                    </Link>
+                    <div className="grow lg:grow-0 flex items-center justify-end gap-x-5">
+                        <Search isOpen={isSearchOpen} setIsOpen={setIsSearchOpen}/>
 
-                    <Link className="hidden md:flex px-2.5 py-1.5 items-center gap-x-2 border-[1px]
+                        <Link className="hidden md:block" href="#">
+                            <Image alt="Избранное" className="hover:scale-110 transition-transform" src={heart}/>
+                        </Link>
+
+                        <Link className="hidden md:block" href="#">
+                            <Image alt="Аккаунт" className="hover:scale-110 transition-transform" src={account}/>
+                        </Link>
+
+                        <Link className="hidden md:flex px-2.5 py-1.5 items-center gap-x-2 border-[1px]
                             border-solid border-dark rounded hover:scale-110 transition-transform"
-                          href="#"
-                    >
-                        <Image alt="Корзина"  src={cart}/>
-                        <span>(2)</span>
-                    </Link>
-                </div>
+                              href="#"
+                        >
+                            <Image alt="Корзина"  src={cart}/>
+                            <span>(2)</span>
+                        </Link>
+                    </div>
 
-            </div>
-        </header>
+                </div>
+            </header>
+        </div>
+
 
     );
 };

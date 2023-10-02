@@ -26,7 +26,7 @@ const Page: FC<PageProps> = async ({}) => {
     const categories: Category[] = await fetchCategories();
 
     return (
-        <div className="bg-fon pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 font-montserrat">
+        <div className="max-w-[1520px] w-full mx-auto bg-fon pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 font-montserrat">
             <CatalogRouter/>
             <CatalogGrid>
                 <>
