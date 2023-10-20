@@ -35,7 +35,7 @@ const Modal: FC<ModalProps> = ({open = false, setClose, children}) => {
 
 
     return (
-        <div ref={modalRef} className={`fixed top-0  w-[86vw] h-[105vh] md:w-2/5 md:shadow-[15px_10px_15px_-3px_rgba(0,0,0,0.1)]
+        <div ref={modalRef} className={`fixed top-0 border-r w-[70vw] h-[105vh] md:w-2/5
                         bg-fon z-[70] transition-all duration-300 ${open? '-left-1' : '-left-full'} lg:hidden`}>
             {children}
         </div>

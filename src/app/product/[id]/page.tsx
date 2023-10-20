@@ -35,9 +35,11 @@ const Page: FC<PageProps> = async ({ params }) => {
 
     return (
         <div className="pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 max-w-[1520px] w-full mx-auto">
-            <CatalogRouter
+            <div className="lg:mt-10 lg:mb-[55px]">
+                <CatalogRouter
                 routes={routes}
-            />
+                />
+            </div>
 
             <div className="flex flex-col gap-y-12 gap-x-7 lg:grid lg:grid-cols-2">
                 <CardSlider imagesUrl={furniture.imagesUrl}/>

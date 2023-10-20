@@ -4,9 +4,8 @@ export interface FurnitureMini {
     id: number;
     name: string;
     price: number;
-    size: string;
-    manufacturer: string;
-    materials?: string[];
+    colors: string[];
+    sizes: string[];
     imagesUrl: string[];
 }
 

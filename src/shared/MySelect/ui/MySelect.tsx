@@ -56,7 +56,7 @@ const MySelect: FC<MySelectProps> = ({ options, changeHandler }) => {
             </div>
             <div
                 className={`${isListOpen ? 'flex' : 'hidden'} flex-col absolute -right-1 -left-1 translate-y-[10px] bg-fon overflow-hidden rounded-[7px]
-                shadow-[0px_0px_15px_-6px_rgba(0,0,0,0.1)] z-50 border`}
+                shadow-[0px_0px_15px_-6px_rgba(0,0,0,0.1)] z-[20] border`}
             >
                 {
                     options.map( (option) =>

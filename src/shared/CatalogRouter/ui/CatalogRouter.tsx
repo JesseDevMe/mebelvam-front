@@ -22,8 +22,8 @@ const CatalogRouter: FC<CatalogRouterProps> = ({ routes = [] }) => {
     ]
 
     return (
-        <div className="mt-2 mb-7 md:mt-7 md:mb-9 lg:mb-12 font-roboto">
-            <ul className="flex gap-x-3.5 mb-7 flex-wrap gap-y-2">
+        <div className="mt-2 mb-7 md:mb-9 lg:mb-0 md:mt-4 lg:mt-0 font-roboto col-span-2 lg:col-span-1 lg:self-center">
+            <ul className="flex gap-x-3.5 flex-wrap gap-y-2">
                 {
                     fullRoutes.map((route, index) => {
                         if (route.isAbsolute === true) {
@@ -31,7 +31,7 @@ const CatalogRouter: FC<CatalogRouterProps> = ({ routes = [] }) => {
                         } else fullPath += route.path;
 
                         return <li key={route.name + index} className='hidden border-r border-dark pr-2.5 last:border-none [&:nth-last-child(-n+2)]:block md:block hover:text-accent'>
-                            <Link replace={true} href={fullPath}>{route.name}</Link>
+                            <Link href={fullPath}>{route.name}</Link>
                         </li>
                     })
                 }

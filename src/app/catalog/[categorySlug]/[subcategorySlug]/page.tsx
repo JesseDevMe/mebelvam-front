@@ -1,15 +1,17 @@
-import {FC} from "react";
+import {FC, Suspense} from "react";
 import {FurnituresPage} from "@/widgets/FurnituresPage";
 import {CatalogRouter} from "@/shared/CatalogRouter";
 import {fetchSubcategory} from "@/entities/Subcategory";
-import {fetchFurnituresBySub} from "@/entities/Furniture";
 import {fetchCategory} from "@/entities/Category/model";
+import {Filters} from "@/widgets/Filters";
+import useCustomFiltersStore from "@/widgets/Filters/store/useCustomFiltersStore";
 
 interface PageProps {
     params: {
         categorySlug: string,
         subcategorySlug: string,
-    }
+    },
+
 }
 
 const Page: FC<PageProps> = async ({params}) => {
@@ -32,7 +34,6 @@ const Page: FC<PageProps> = async ({params}) => {
 
     if (subcategory.slug != slugTokens.join('-')) return <div>Ничаго не найдено5</div>;
 
-    const furnitures = await fetchFurnituresBySub(subcategoryId);
 
     const routes = [
         {
@@ -47,13 +48,20 @@ const Page: FC<PageProps> = async ({params}) => {
 
     return (
         <div className="max-w-[1520px] w-full mx-auto bg-fon pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 font-montserrat">
-            <CatalogRouter
-                routes={routes}
-            />
+            <div className="grid grid-cols-2 lg:mt-10 lg:mb-[55px]">
+                <CatalogRouter
+                    routes={routes}
+                />
+
+                <Filters
+                    subcategoryId={subcategoryId}
+                />
+            </div>
 
             <FurnituresPage
-                furnitures={furnitures}
+            subcategoryId={subcategoryId}
             />
+
         </div>
     );
 };

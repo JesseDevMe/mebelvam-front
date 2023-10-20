@@ -5,4 +5,5 @@ export interface Subcategory {
     name: string;
     imgUrl: string;
     categoryId: number;
+    count?: number;
 }

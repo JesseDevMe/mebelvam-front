@@ -6,6 +6,7 @@ import { CatalogCard } from "@/entities/CatalogCard"
 import collections_img from "../../../public/Pages/Home/Catalog/cat1.jpeg";
 import sells from "../../../public/Pages/Home/Catalog/sells.jpg";
 import {FurnitureCard} from "@/entities/FurnitureCard";
+import {fetchStrapi} from "@/shared/API";
 
 interface PageProps {
 
@@ -25,9 +26,26 @@ interface PageProps {
 const Page: FC<PageProps> = async ({}) => {
     const categories: Category[] = await fetchCategories();
 
+    // /furnitures?filters[subcategory][category][id]=1&pagination[pageSize]=1&fields[0]=meta
+
+    for (const category of categories) {
+        const res = await fetchStrapi(`/furnitures?filters[subcategory][category][id]=${category.id}&pagination[pageSize]=1&fields[0]=meta`);
+
+        if (!res.ok) {
+            throw new Error('Category metadata fetch error')
+        }
+
+        const { meta } = await res.json();
+
+
+        category.count = meta.pagination.total;
+    }
+
     return (
         <div className="max-w-[1520px] w-full mx-auto bg-fon pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 font-montserrat">
-            <CatalogRouter/>
+            <div className="lg:mt-10 lg:mb-[55px]">
+                <CatalogRouter/>
+            </div>
             <CatalogGrid>
                 <>
                     <CatalogCard
@@ -43,7 +61,7 @@ const Page: FC<PageProps> = async ({}) => {
                             <CatalogCard
                                 id={category.id}
                                 name={category.name}
-                                count={0}
+                                count={category.count}
                                 imgUrl={category.imgUrl}
                                 slug={category.slug}
                                 key={category.name}

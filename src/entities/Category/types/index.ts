@@ -3,4 +3,5 @@ export interface Category {
     slug: string;
     name: string;
     imgUrl: string;
+    count?: number
 }

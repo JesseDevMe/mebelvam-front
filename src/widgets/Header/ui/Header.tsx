@@ -16,6 +16,7 @@ const Header = () => {
 
     const prevScroll = useRef(0)
     useEffect(() => {
+
         prevScroll.current = window.scrollY;
         let currentScroll: number;
         let offset = 0;
@@ -25,6 +26,8 @@ const Header = () => {
         }, 500);
 
         function onScroll(e: Event) {
+            if (window.innerWidth < 768) return;
+
             currentScroll = window.scrollY;
 
             if (currentScroll < 180) {
@@ -63,7 +66,7 @@ const Header = () => {
     }, [isHeaderOpen])
 
     return (
-        <div className={`md:sticky md:top-[-1px] bg-[rgba(242,242,241,0.7)] md:backdrop-blur transition-transform ${isHeaderOpen ? 'translate-y-0' : '-translate-y-full'} shadow-[0px_16px_15px_-22px_rgba(0,0,0,0.1)] z-50`}>
+        <div className={`md:sticky md:top-[-1px] bg-[rgba(242,242,241,0.7)] md:backdrop-blur transition-transform ${isHeaderOpen ? 'translate-y-0' : '-translate-y-full'} z-50`}>
             <header className={`px-2.5 md:px-5 lg:px-10 xl:px-20 w-full max-w-[1520px] mx-auto`}>
                 <div className="py-1.5 flex justify-between items-center gap-x-2">
                     <div className={`flex items-center justify-between grow md:grow-0 ${isSearchOpen ? 'grow-0' : ''}`}>

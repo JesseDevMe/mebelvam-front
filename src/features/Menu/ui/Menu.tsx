@@ -30,7 +30,7 @@ const navList: NavLink[] = [
     },
     {
         name: 'Сотрудничество',
-        link: '#',
+        link: '/partners',
     },
     {
         name: 'Акции',
