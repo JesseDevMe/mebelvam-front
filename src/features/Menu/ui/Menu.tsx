@@ -34,7 +34,7 @@ const navList: NavLink[] = [
     },
     {
         name: 'Акции',
-        link: '#',
+        link: '/catalog/promos',
     },
 ]
 

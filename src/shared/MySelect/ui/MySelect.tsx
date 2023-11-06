@@ -1,10 +1,12 @@
 'use client'
 import React, {Dispatch, FC, ReactNode, SetStateAction, useEffect, useRef, useState} from "react";
-import {variant} from "@/entities/Furniture";
+import Image from "next/image";
+import saleSvg from "@/../public/Pages/Furniture/sale.svg"
 
 type option = {
     name: string;
     value: any;
+    isSale?: boolean;
 }
 
 interface MySelectProps {
@@ -65,7 +67,7 @@ const MySelect: FC<MySelectProps> = ({ options, changeHandler }) => {
                         onClick={() => optionHandler(option)}
                         className="py-2 px-3 active:bg-gray-200 hover:bg-light border-b last:border-none cursor-pointer"
                     >
-                        {option.name}
+                        {option.name} {option.isSale && <Image className="inline-block ml-2.5" width={24} height={24} src={saleSvg} alt='Скидка'/>}
                     </div>
                     )
                 }

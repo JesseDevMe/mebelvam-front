@@ -18,6 +18,7 @@ const ClearFilters: FC<ClearFiltersProps> = ({}) => {
     const clearSizes = useSizesStore(state => state.clear);
     const clearPrice = usePriceStore(state => state.clear);
     const clearManufacturer = useDefaultFiltersStore(state => state.clearManufacturer)
+    const clearColor = useDefaultFiltersStore(state => state.clearColors)
 
     const setIsOpen = useCustomFiltersStore(state => state.setIsOpen);
 
@@ -28,6 +29,7 @@ const ClearFilters: FC<ClearFiltersProps> = ({}) => {
         clearSizes();
         clearPrice();
         clearManufacturer();
+        clearColor();
         setIsOpen(false);
     }
 

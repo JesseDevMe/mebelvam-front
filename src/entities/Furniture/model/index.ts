@@ -1,5 +1,5 @@
 import {fetchStrapi} from "@/shared/API";
-import {Furniture, FurnitureMini, Furnitures, variant} from "@/entities/Furniture";
+import {attr, Furniture, FurnitureMini, Furnitures, FurnitureWithVariant, variant} from "@/entities/Furniture";
 import {min_max} from "@/widgets/Filters/store/useSizesStore";
 
 function getFiltersUrl(customFilters: string[][]): string {
@@ -22,6 +22,7 @@ export type Params = {
     depth?: min_max;
     price?: min_max;
     manufacturer?: string[];
+    color?: string[];
 }
 
 const defaultParams: Params = {
@@ -40,10 +41,10 @@ export async function fetchFurnituresBySub(subcategoryId: number, params: Params
     const depthQuery = params.depth && `&filters[variants][attributes][depth][$between][0]=${params.depth.min}&filters[variants][attributes][depth][$between][1]=${params.depth.max}`;
 
     const priceQuery = params.price && `&filters[variants][attributes][price][$between][0]=${params.price.min}&filters[variants][attributes][price][$between][1]=${params.price.max}`;
-    const manufacturerQuery = params.manufacturer && params.manufacturer.map((manufacturerId, index) => `&filters[manufacturer][id][$in][${index}]=${manufacturerId}`).join();
+    const manufacturerQuery = params.manufacturer && params.manufacturer.map((manufacturerId, index) => `&filters[manufacturer][id][$in][${index}]=${manufacturerId}`).join('');
+    const colorQuery = params.color && params.color.map((colorId, index) => `&filters[colors][id][$in][${index}]=${colorId}`).join('');
 
-
-    const res = await fetchStrapi(`/furnitures?fields[0]=name&fields[1]=under_price&filters[subcategory][id]=${subcategoryId}&populate[0]=images&populate[1]=variants.attributes&pagination[page]=${params.page}&pagination[pageSize]=25${filtersQuery}${widthQuery ? widthQuery : ''}${heightQuery ? heightQuery : ''}${depthQuery ? depthQuery : ''}${priceQuery ? priceQuery : ''}${manufacturerQuery ? manufacturerQuery : ''}${params.sort ? '&sort=under_price:' + params.sort : ''}`);
+    const res = await fetchStrapi(`/furnitures?fields[0]=name&fields[1]=under_price&filters[subcategory][id]=${subcategoryId}&populate[0]=images&populate[1]=variants.attributes&pagination[page]=${params.page}&pagination[pageSize]=25${filtersQuery}${widthQuery ? widthQuery : ''}${heightQuery ? heightQuery : ''}${depthQuery ? depthQuery : ''}${priceQuery ? priceQuery : ''}${manufacturerQuery ? manufacturerQuery : ''}${params.color ? colorQuery : ''}${params.sort ? '&sort=under_price:' + params.sort : ''}`);
 
     if (!res.ok) {
         throw new Error('furnitures fetch error');
@@ -60,18 +61,10 @@ export async function fetchFurnituresBySub(subcategoryId: number, params: Params
             sizes: furniture.attributes.variants.flatMap((variant: any): string[] => variant.attributes.map((attribute: any):string => `${attribute.width}x${attribute.height}${attribute.depth ? 'x' + attribute.depth : ''}`)).filter((value: string, index: number, array: string[]) => array.indexOf(value) === index),
             price: Number(furniture.attributes.under_price),
             imagesUrl: furniture.attributes.images.data.map((image:any): string => process.env.STRAPI_URL + image.attributes.url),
+            firstVariantId: furniture.attributes.variants[0].id,
+            firstAttrId: furniture.attributes.variants[0].attributes[0].id,
         }
     })
-
-    // const uniqueSizesSet = new Set<string>();
-    // const filteredFurnitures = furnitures.filter((furniture): boolean => {
-    //     if (!uniqueSizesSet.has(furniture.size + furniture.id)) {
-    //         uniqueSizesSet.add(furniture.size + furniture.id);
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // });
 
     return {
         data: furnitures,
@@ -96,6 +89,7 @@ export async function fetchFurniture(id: number): Promise<Furniture> {
         manufacturer: data.attributes.manufacturer.data.attributes.name,
         materials: data.attributes.materials.data.map((material: any): string => material.attributes.title),
         imagesUrl: data.attributes.images.data.map((image:any): string => process.env.STRAPI_URL + image.attributes.url),
+        collectionId: data.attributes.collection.data?.id,
         subcategory: {
             id: data.attributes.subcategory.data.id,
             name: data.attributes.subcategory.data.attributes.title,
@@ -108,10 +102,13 @@ export async function fetchFurniture(id: number): Promise<Furniture> {
         },
         variants: data.attributes.variants.map( (variant_e:any): variant => {
             return {
+                id: variant_e.id,
                 color: variant_e.color,
-                attributes: variant_e.attributes.map( (attribute:any) => {
+                attributes: variant_e.attributes.map( (attribute:any): attr => {
                     return {
+                        id: attribute.id,
                         price: attribute.price,
+                        old_price: attribute.old_price,
                         width: attribute.width,
                         height: attribute.height,
                         depth: attribute.depth,
@@ -122,4 +119,66 @@ export async function fetchFurniture(id: number): Promise<Furniture> {
     }
 
     return furniture;
+}
+
+export async function fetchFurnitures(ids: string[] | null | undefined): Promise<FurnitureMini[]> {
+    if (!ids) return [];
+
+    const idQuery = ids.map((id, index) => `&filters[id][$in][${index}]=${id}`).join('')
+
+    const res = await fetchStrapi(`/furnitures?fields[0]=name&fields[1]=under_price&populate[images][fields][0]=url&populate[variants][populate]=attributes${idQuery}`);
+
+    if (!res.ok) throw new Error('furnitures by ids fetch error');
+
+    const { data } = await res.json();
+
+    const furnitures: FurnitureMini[] = data.map((furniture: any): FurnitureMini => {
+        return {
+            id: furniture.id,
+            name: furniture.attributes.name,
+            colors: furniture.attributes.variants.map((variant: any): string => variant.color),
+            sizes: furniture.attributes.variants.flatMap((variant: any): string[] => variant.attributes.map((attribute: any):string => `${attribute.width}x${attribute.height}${attribute.depth ? 'x' + attribute.depth : ''}`)).filter((value: string, index: number, array: string[]) => array.indexOf(value) === index),
+            price: Number(furniture.attributes.under_price),
+            imagesUrl: furniture.attributes.images.data.map((image:any): string => process.env.STRAPI_URL + image.attributes.url),
+            firstVariantId: furniture.attributes.variants[0].id,
+            firstAttrId: furniture.attributes.variants[0].attributes[0].id,
+        }
+    })
+
+    return furnitures;
+}
+
+
+export async function fetchFurnituresWithVariants(ids: number[] | null | undefined): Promise<FurnitureWithVariant[]> {
+    if (!ids) return [];
+
+    const idQuery = ids.map((id, index) => `&filters[id][$in][${index}]=${id}`).join('')
+
+    const res = await fetchStrapi(`/furnitures?fields[0]=name&populate[images][fields][0]=url&populate[variants][populate]=attributes${idQuery}`);
+
+    if (!res.ok) throw new Error('furnitures with variants fetch by ids error');
+
+    const { data } = await res.json();
+
+    const furnitures: FurnitureWithVariant[] = data.map((furniture: any): FurnitureWithVariant => {
+        return {
+            id: furniture.id,
+            name: furniture.attributes.name,
+            imageUrl: process.env.STRAPI_URL + furniture.attributes.images.data[0].attributes.url,
+            variants: furniture.attributes.variants.map((variant: any): variant => ({
+                id: variant.id,
+                color: variant.color,
+                attributes: variant.attributes.map((attr: any): attr => ({
+                    id: attr.id,
+                    price: attr.price,
+                    old_price: attr.old_price,
+                    width: attr.width,
+                    height: attr.height,
+                    depth: attr.depth,
+                }))
+            }))
+        }
+    })
+
+    return furnitures;
 }

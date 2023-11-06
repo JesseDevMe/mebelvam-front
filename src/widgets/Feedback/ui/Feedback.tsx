@@ -16,7 +16,7 @@ const Feedback: FC<FeedbackProps> = ({}) => {
                 <Image src={bg} fill style={{objectFit: "cover", zIndex: -1}} alt=""/>
                 <h2 className="text-center text-xl font-montserrat font-semibold">Отзывы</h2>
 
-                <div className="mt-5 px-7 md:pl-12 lg:px-20 flex gap-x-7 overflow-hidden snap-mandatory snap-x
+                <div className="mt-5 px-7 md:pl-12 lg:px-20 flex gap-x-7 overflow-auto snap-mandatory snap-x
                             scroll-smooth will-change-scroll pb-8 select-none">
                     {
                         comments.map((comment) =>

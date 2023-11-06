@@ -7,9 +7,10 @@ interface DefaultFilterProps {
     storeValues: string[],
     addToStore: (value: string) => void,
     removeFromStore: (value: string) => void,
+    colors?: boolean;
 }
 
-const DefaultFilter: FC<DefaultFilterProps> = ({ title, values, storeValues, addToStore, removeFromStore }) => {
+const DefaultFilter: FC<DefaultFilterProps> = ({ title, values, storeValues, addToStore, removeFromStore, colors }) => {
     const [isOpen, setIsOpen] = useState(false);
     const filterRef = useRef<HTMLDivElement>(null);
 
@@ -53,7 +54,7 @@ const DefaultFilter: FC<DefaultFilterProps> = ({ title, values, storeValues, add
             </h3>
             <ul className={`flex flex-col gap-y-4 bg-fon overflow-hidden transition-[max-height] md:transition-none duration-300 
                     ease-[cubic-bezier(1,0,1,0.5)] before:w-full ${isOpen ? 'max-h-[3000px]' : 'max-h-0 !ease-[cubic-bezier(0,1,0.5,1)] md:hidden'}
-                    md:absolute md:left-0 md:-bottom-3 md:z-10 md:translate-y-full md:border md:rounded md:px-2.5 md:py-4 md:before:content-none`
+                    md:absolute md:left-0 md:-bottom-3 md:translate-y-full md:w-fit md:max-w-[250px] md:whitespace-nowrap md:overflow-y-auto md:max-h-[300px] scrollbar [scrollbar-width:thin] [scrollbar-color:_#cccccc_#f0f0f0] md:z-10 md:border md:rounded md:pl-2.5 md:pr-7 md:py-4 md:before:content-none`
             }
             >
 
@@ -63,21 +64,22 @@ const DefaultFilter: FC<DefaultFilterProps> = ({ title, values, storeValues, add
 
                         return <li key={value.value}>
                             <label className="flex gap-x-2.5 items-center cursor-pointer">
-                            <span className="w-5 h-5 relative border border-dark rounded-[5px]">
-                                <input
-                                    className="absolute left-0 top-0 w-full h-full appearance-none cursor-pointer" type="checkbox"
-                                    checked={isChecked}
-                                    onChange={() => handleCheckChange(isChecked, value.value)}
-                                />
-                                <div className={`${isChecked ? 'flex' : 'hidden'} w-full h-full justify-center items-center bg-dark`}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="14"
-                                         viewBox="0 0 12 14" fill="none">
-                                      <path
-                                          d="M1 6.53846L5.24782 12.3024C5.47623 12.6124 5.95454 12.5587 6.10857 12.2058L11 1"
-                                          stroke="#F2F2F1" strokeWidth="1.5" strokeLinecap="round"/>
-                                    </svg>
-                                </div>
-                            </span>
+                                <span className="w-5 h-5 relative border border-dark rounded-[5px]">
+                                    <input
+                                        className="absolute left-0 top-0 w-full h-full appearance-none cursor-pointer" type="checkbox"
+                                        checked={isChecked}
+                                        onChange={() => handleCheckChange(isChecked, value.value)}
+                                    />
+                                    <div className={`${isChecked ? 'flex' : 'hidden'} w-full h-full justify-center items-center bg-dark`}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="14"
+                                             viewBox="0 0 12 14" fill="none">
+                                          <path
+                                              d="M1 6.53846L5.24782 12.3024C5.47623 12.6124 5.95454 12.5587 6.10857 12.2058L11 1"
+                                              stroke="#F2F2F1" strokeWidth="1.5" strokeLinecap="round"/>
+                                        </svg>
+                                    </div>
+                                </span>
+                                {colors && <span className="w-4 h-4 border rounded-full" style={{background: value.colorHash}}></span>}
                                 <span>{value.name}</span>
                             </label>
                         </li>

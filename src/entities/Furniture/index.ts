@@ -1,4 +1,4 @@
-import { fetchFurnituresBySub, fetchFurniture } from "./model";
+import { fetchFurnituresBySub, fetchFurniture, fetchFurnitures } from "./model";
 
-export type { FurnitureMini, Furniture, variant, attr, Furnitures } from './types'
-export { fetchFurnituresBySub, fetchFurniture };
+export type { FurnitureMini, Furniture, variant, attr, Furnitures, FurnitureWithVariant } from './types'
+export { fetchFurnituresBySub, fetchFurniture, fetchFurnitures };

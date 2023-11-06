@@ -4,6 +4,7 @@ import {Header} from '../widgets/Header'
 import {NavBarM} from "@/widgets/NavBarM";
 import {Footer} from "@/widgets/Footer";
 import {PreHeader} from "@/widgets/PreHeader";
+import {LogInModal} from "@/features/LogInModal";
 
 // px-2.5 md:px-5 lg:px-10 xl:px-20
 
@@ -27,8 +28,8 @@ export default function RootLayout({
                       {children}
                   </main>
                   <NavBarM/>
-
                   <Footer/>
+                  <LogInModal/>
             </div>
       </body>
     </html>

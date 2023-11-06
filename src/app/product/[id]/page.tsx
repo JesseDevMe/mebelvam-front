@@ -1,9 +1,7 @@
 import {FC} from "react";
-import {fetchFurniture, Furniture, variant} from "@/entities/Furniture";
-import Image from "next/image";
+import {fetchFurniture, Furniture} from "@/entities/Furniture";
 import {CatalogRouter, Route} from "@/shared/CatalogRouter";
 import {CardSlider} from "@/shared/Slider";
-import {MySelect} from "@/shared/MySelect";
 import {CardInfo} from "@/widgets/CardInfo";
 import {CardAddCart} from "@/features/CardAddCart";
 import {CardSwitch} from "@/features/CardSwitch";
@@ -43,12 +41,9 @@ const Page: FC<PageProps> = async ({ params }) => {
 
             <div className="flex flex-col gap-y-12 gap-x-7 lg:grid lg:grid-cols-2">
                 <CardSlider imagesUrl={furniture.imagesUrl}/>
-                <div className="flex flex-col gap-y-12 lg:justify-between">
-                    <CardInfo furniture={furniture}/>
-                    <CardAddCart/>
-                </div>
+                <CardInfo furniture={furniture}/>
             </div>
-            <div className="flex flex-col gap-12 mt-12 lg:flex-row justify-between">
+            <div className="flex flex-col gap-12 mt-[50px] lg:flex-row justify-between">
                 <CardSwitch
                 furniture={furniture}
                 />

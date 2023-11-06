@@ -59,7 +59,8 @@ const Filter: FC<FilterProps> = ({ title, slug, values }) => {
             </h3>
             <ul className={`flex flex-col gap-y-4 bg-fon overflow-hidden transition-[max-height] md:transition-none duration-300 
                     ease-[cubic-bezier(1,0,1,0.5)] before:w-full ${isOpen ? 'max-h-[3000px]' : 'max-h-0 !ease-[cubic-bezier(0,1,0.5,1)] md:hidden'}
-                    md:absolute md:left-0 md:-bottom-3 md:z-10 md:translate-y-full md:border md:rounded md:px-2.5 md:py-4 md:before:content-none`
+                    md:absolute md:left-0 md:-bottom-3 md:z-10 md:translate-y-full md:w-fit md:max-w-[250px] md:whitespace-nowrap md:overflow-y-auto md:max-h-[300px] md:border md:rounded md:pl-2.5 md:pr-7 md:py-4 md:before:content-none
+                    scrollbar [scrollbar-width:thin] [scrollbar-color:_#cccccc_#f0f0f0]`
                 }
             >
 

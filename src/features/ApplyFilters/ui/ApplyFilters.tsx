@@ -23,6 +23,7 @@ const ApplyFilters: FC<ApplyFiltersProps> = ({}) => {
     const depthFilter = useSizesStore(state => state.depth);
     const priceFilter = usePriceStore(state => state.price);
     const manufacturerFilter = useDefaultFiltersStore(state => state.manufacturersId);
+    const colorFilter = useDefaultFiltersStore(state => state.colorsId);
 
     const setIsOpen = useCustomFiltersStore(state => state.setIsOpen);
 
@@ -39,6 +40,7 @@ const ApplyFilters: FC<ApplyFiltersProps> = ({}) => {
         depthFilter && params.set('depth', depthFilter.min + '-' + depthFilter.max);
         priceFilter && params.set('price', priceFilter.min + '-' + priceFilter.max);
         manufacturerFilter.length > 0 ? params.set('manufacturer', manufacturerFilter.join(',')) : params.delete('manufacturer');
+        colorFilter.length > 0 ? params.set('color', colorFilter.join(',')) : params.delete('color');
         router.push(pathname + '?' + params.toString());
         setIsOpen(false);
     }

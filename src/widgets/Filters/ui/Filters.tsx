@@ -14,6 +14,7 @@ import {ManufacturerFilter} from "@/features/ManufacturerFilter";
 import useDefaultFiltersStore from "@/widgets/Filters/store/useDefaultFiltersStore";
 import {Sort} from "@/features/Sort";
 import usePriceStore from "@/widgets/Filters/store/usePriceStore";
+import {ColorFilter} from "@/features/ColorFilter";
 
 enum FetchStatus {
     LOADING,
@@ -34,7 +35,8 @@ const Filters: FC<FiltersProps> = ({ subcategoryId }) => {
     const initFilterStore = useCustomFiltersStore(state => state.init);
     const initSizesStore = useSizesStore(state => state.init);
     const initManufacturerStore = useDefaultFiltersStore(state => state.initManufacturers);
-    const initPriceStore = usePriceStore(state => state.init)
+    const initColorStore = useDefaultFiltersStore(state => state.initColors);
+    const initPriceStore = usePriceStore(state => state.init);
 
     const searchParams = useSearchParams();
     const customParams = new URLSearchParams(searchParams);
@@ -68,6 +70,10 @@ const Filters: FC<FiltersProps> = ({ subcategoryId }) => {
     useEffect(() => {
         initManufacturerStore(searchParams.get('manufacturer'));
     }, [searchParams.get('manufacturer')]);
+
+    useEffect(() => {
+        initColorStore(searchParams.get('color'));
+    }, [searchParams.get('color')]);
 
     useEffect(() => {
         initPriceStore(searchParams.get('price'))
@@ -120,6 +126,11 @@ const Filters: FC<FiltersProps> = ({ subcategoryId }) => {
                         <ManufacturerFilter
                             subcategoryId={subcategoryId}
                         />
+                    }
+
+                    {
+                        filters?.defaultFilters.color &&
+                        <ColorFilter subcategoryId={subcategoryId}/>
                     }
 
 

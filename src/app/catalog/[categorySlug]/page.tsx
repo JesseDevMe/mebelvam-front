@@ -24,7 +24,7 @@ const Page: FC<PageProps> = async ({ params }) => {
     let subcategories: Subcategory[] = await fetchSubcategories(categoryId);
 
     for (const subcategory of subcategories) {
-        const res = await fetchStrapi(`/furnitures?filters[subcategory][id]=${subcategory.id}&pagination[pageSize]=1&fields[0]=meta`);
+        const res = await fetchStrapi(`/furnitures?filters[subcategory][id]=${subcategory.id}&pagination[pageSize]=1&fields[0]=name`);
 
         if (!res.ok) {
             throw new Error('Subcategory metadata fetch error')

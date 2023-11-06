@@ -1,10 +1,9 @@
-import {FC, Suspense} from "react";
+import {FC} from "react";
 import {FurnituresPage} from "@/widgets/FurnituresPage";
 import {CatalogRouter} from "@/shared/CatalogRouter";
 import {fetchSubcategory} from "@/entities/Subcategory";
 import {fetchCategory} from "@/entities/Category/model";
 import {Filters} from "@/widgets/Filters";
-import useCustomFiltersStore from "@/widgets/Filters/store/useCustomFiltersStore";
 
 interface PageProps {
     params: {

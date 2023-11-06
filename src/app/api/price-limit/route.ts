@@ -14,8 +14,8 @@ export async function GET(request: NextRequest) {
         );
     }
 
-    const ascRes = await fetchStrapi(`/furnitures?fields[0]=meta&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.price:asc&pagination[pageSize]=1`)
-    const descRes = await fetchStrapi(`/furnitures?fields[0]=meta&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.price:desc&pagination[pageSize]=1`)
+    const ascRes = await fetchStrapi(`/furnitures?fields[0]=name&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.price:asc&pagination[pageSize]=1`)
+    const descRes = await fetchStrapi(`/furnitures?fields[0]=name&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.price:desc&pagination[pageSize]=1`)
 
     if (!ascRes.ok || !descRes.ok) {
         throw new Error('price-limit fetch error');

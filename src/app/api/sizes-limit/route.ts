@@ -14,14 +14,14 @@ export async function GET(request: NextRequest) {
         );
     }
 
-    const ascWidthRes = await fetchStrapi(`/furnitures?fields[0]=meta&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.width:asc&pagination[pageSize]=1`);
-    const descWidthRes = await fetchStrapi(`/furnitures?fields[0]=meta&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.width:desc&pagination[pageSize]=1`);
+    const ascWidthRes = await fetchStrapi(`/furnitures?fields[0]=name&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.width:asc&pagination[pageSize]=1`);
+    const descWidthRes = await fetchStrapi(`/furnitures?fields[0]=name&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.width:desc&pagination[pageSize]=1`);
 
-    const ascHeightRes = await fetchStrapi(`/furnitures?fields[0]=meta&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.height:asc&pagination[pageSize]=1`);
-    const descHeightRes = await fetchStrapi(`/furnitures?fields[0]=meta&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.height:desc&pagination[pageSize]=1`);
+    const ascHeightRes = await fetchStrapi(`/furnitures?fields[0]=name&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.height:asc&pagination[pageSize]=1`);
+    const descHeightRes = await fetchStrapi(`/furnitures?fields[0]=name&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.height:desc&pagination[pageSize]=1`);
 
-    const ascDepthRes = await fetchStrapi(`/furnitures?fields[0]=meta&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.depth:asc&pagination[pageSize]=1`);
-    const descDepthRes = await fetchStrapi(`/furnitures?fields[0]=meta&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.depth:desc&pagination[pageSize]=1`);
+    const ascDepthRes = await fetchStrapi(`/furnitures?fields[0]=name&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.depth:asc&pagination[pageSize]=1`);
+    const descDepthRes = await fetchStrapi(`/furnitures?fields[0]=name&populate[0]=variants.attributes&filters[subcategory][id]=${subcategoryId}&sort=variants.attributes.depth:desc&pagination[pageSize]=1`);
 
     if (!ascWidthRes.ok || !descWidthRes.ok || !ascHeightRes.ok || !descHeightRes.ok || !ascDepthRes.ok || !descDepthRes.ok) {
         throw new Error('sizes-limit fetch error');

@@ -6,3 +6,22 @@ body {
     color: #292A2D;
 }
 
+@layer utilities {
+    .scrollbar::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+        border-radius: 5px;
+        background: #f0f0f0;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: #cccccc;
+        border-radius: 5px;
+    }
+
+
+}
+

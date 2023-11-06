@@ -1,4 +1,5 @@
-import {FC, useState} from "react";
+'use client'
+import {FC} from "react";
 
 interface CardDetailsProps {
  sizes: string[];

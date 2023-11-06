@@ -10,9 +10,10 @@ import Image from "next/image";
 
 interface CardSliderProps {
     imagesUrl: string[];
+    aspect?: '4/3' | 'square';
 }
 
-const CardSlider: FC<CardSliderProps> = ({ imagesUrl }) => {
+const CardSlider: FC<CardSliderProps> = ({ imagesUrl, aspect }) => {
     const swiperRef = useRef<SwiperRef>(null);
     const [curSlideIndex, setCurSlideIndex] = useState(0);
 
@@ -51,7 +52,7 @@ const CardSlider: FC<CardSliderProps> = ({ imagesUrl }) => {
                     imagesUrl.map((imageUrl, index) =>
                         <SwiperSlide key={index}>
                             <div key={imageUrl}
-                                 className="w-full relative shrink-0 aspect-square md:aspect-video lg:aspect-square overflow-hidden">
+                                 className={`w-full relative shrink-0 ${aspect === '4/3' ? 'aspect-[4/3] lg:aspect-[4/3]' : 'aspect-square lg:aspect-square'} md:aspect-video overflow-hidden`}>
                                 <Image draggable={false} fill style={{objectFit: 'contain'}} src={imageUrl} alt=""/>
                             </div>
                         </SwiperSlide>

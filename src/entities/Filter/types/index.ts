@@ -15,6 +15,7 @@ export type DefaultFiltersType = {
     height: boolean;
     depth: boolean;
     manufacturer: boolean;
+    color: boolean;
 }
 
 export type FiltersType = {

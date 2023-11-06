@@ -19,6 +19,8 @@ export async function GET(request: NextRequest) {
     searchParams.delete('price');
     const manufacturerTokens = searchParams.get('manufacturer')?.split(',');
     searchParams.delete('manufacturer');
+    const colorTokens = searchParams.get('color')?.split(',');
+    searchParams.delete('color');
     let sort = searchParams.get('sort');
     searchParams.delete('sort');
     // query is "hello" for /api/search?query=hello
@@ -56,7 +58,7 @@ export async function GET(request: NextRequest) {
 
     if (subcategoryId) {
         return Response.json(await fetchFurnituresBySub(Number(subcategoryId),
-            {page: page || '1', sort: sort, customFilters: customArray, width, height, depth, price, manufacturer: manufacturerTokens}
+            {page: page || '1', sort: sort, customFilters: customArray, width, height, depth, price, manufacturer: manufacturerTokens, color: colorTokens}
         ));
     }
 

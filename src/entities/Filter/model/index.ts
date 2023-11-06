@@ -35,6 +35,7 @@ export async function fetchFiltersBySubId(subcategoryId: number): Promise<Filter
         height: defaultData.data.attributes.default_filters?.includes('height') || false,
         depth: defaultData.data.attributes.default_filters?.includes('depth') || false,
         manufacturer: defaultData.data.attributes.default_filters?.includes('manufacturer') || false,
+        color: defaultData.data.attributes.default_filters?.includes('color') || false,
     }
 
     return {

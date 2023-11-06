@@ -7,18 +7,23 @@ export interface FurnitureMini {
     colors: string[];
     sizes: string[];
     imagesUrl: string[];
+    firstVariantId: number;
+    firstAttrId: number;
 }
 
 export type attr = {
+    id: number,
     price: number,
+    old_price?: string | null;
     width: number,
     height: number
     depth?: number,
 }
 
 export type variant = {
+    id: number;
     color: string;
-    attributes: attr[]
+    attributes: attr[];
 }
 
 export interface Furniture {
@@ -29,6 +34,7 @@ export interface Furniture {
     materials?: string[];
     imagesUrl: string[];
     variants: variant[];
+    collectionId?: number;
     subcategory: {
         id: number;
         slug: string;
@@ -43,13 +49,19 @@ export interface Furniture {
 
 export interface Furnitures {
     data: FurnitureMini[];
-    meta:
-        {
-            pagination: {
-                page: number;
-                pageSize: number;
-                pageCount: number;
-                total: number
-            }
+    meta: {
+        pagination: {
+            page: number;
+            pageSize: number;
+            pageCount: number;
+            total: number
         }
+    }
+}
+
+export interface FurnitureWithVariant {
+    id: number;
+    name: string;
+    imageUrl: string;
+    variants: variant[];
 }

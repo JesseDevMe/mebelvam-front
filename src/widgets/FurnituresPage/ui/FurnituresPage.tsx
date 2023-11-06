@@ -1,5 +1,5 @@
 'use client'
-import {FC, useEffect, useState} from "react";
+import {FC, useEffect, useRef, useState} from "react";
 import {FurnitureGrid} from "@/widgets/FurnitureGrid";
 import {FurnitureCard} from "@/entities/FurnitureCard";
 import {Furnitures} from "@/entities/Furniture";
@@ -23,7 +23,6 @@ const FurnituresPage: FC<FurnituresPageProps> = ({ subcategoryId }) => {
     const [fetchStatus, setFetchStatus] = useState<FetchStatus>(FetchStatus.LOADING);
     const [furnitures, setFurnitures] = useState<Furnitures | null>(null);
     const pageCount = furnitures?.meta.pagination.pageCount;
-
 
     useEffect(() => {
         setFetchStatus(FetchStatus.LOADING);
@@ -58,6 +57,8 @@ const FurnituresPage: FC<FurnituresPageProps> = ({ subcategoryId }) => {
                                     sizes={furniture.sizes}
                                     price={furniture.price}
                                     imagesUrl={furniture.imagesUrl}
+                                    firstAttrId={furniture.firstAttrId}
+                                    firstVariantId={furniture.firstVariantId}
                                 />
                             )
                         }
