@@ -4,7 +4,6 @@ import cart from '@/../public/Pages/Cart/cart.svg'
 import Image from "next/image";
 import Link from "next/link";
 import {LogInButton} from "@/features/LogInButton";
-import {FurnitureMini} from "@/entities/Furniture";
 import {getCart} from "@/shared/Utils";
 import {CartFurniture, CartItem} from "@/entities/Cart";
 import {CartCard} from "@/entities/CartCard";
@@ -55,7 +54,7 @@ const Page: FC<PageProps> = ({}) => {
         <div className="pb-12 pt-12 px-2.5 md:px-5 lg:px-10 xl:px-20 max-w-[1520px] w-full mx-auto">
             <h1 className="text-center text-xl font-montserrat font-semibold mb-[30px] md:text-2xl md:text-start">Корзина</h1>
             <div className="flex flex-col gap-7 lg:flex-row">
-                <div className="border rounded bg-fon shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] px-5 py-5 lg:grow"
+                <div className="border rounded bg-fon shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] px-5 py-5 lg:grow h-fit"
                 >
                     {
                         fetchStatus === FetchStatus.LOADING && <div>Загрузка...</div>
@@ -111,14 +110,14 @@ const Page: FC<PageProps> = ({}) => {
                         {fetchStatus === FetchStatus.DONE && furnitures.length > 0 &&
                             <CartTotalInfo/>
                         }
-                        <div className="hidden font-montserrat text-xl font-semibold text-center mt-7 lg:block">
-                            <div className="border rounded bg-fon h-[100px] flex items-center justify-center mt-5">
-                                <p className="max-w-[240px]">Бесплатная доставка от 7 000 руб.</p>
+                        <div className="hidden font-montserrat text-base font-semibold text-center mt-7 lg:block">
+                            <div className="border rounded bg-fon h-[70px] flex items-center justify-center mt-5">
+                                <p className="max-w-[240px]">Бесплатная доставка от <br/> 7 000 руб.</p>
                             </div>
-                            <div className="border rounded bg-fon h-[100px] flex items-center justify-center mt-5">
+                            <div className="border rounded bg-fon h-[70px] flex items-center justify-center mt-5">
                                 Оплата при получении
                             </div>
-                            <div className="border rounded bg-fon h-[100px] flex items-center justify-center mt-5">
+                            <div className="border rounded bg-fon h-[70px] flex items-center justify-center mt-5">
                                 Эскиз кухни бесплатно
                             </div>
                         </div>

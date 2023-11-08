@@ -4,7 +4,8 @@ import Image from "next/image";
 import icon_basket from "../../../../public/Pages/Furniture/icon_basket.svg";
 import incart from "@/../public/Pages/Furniture/incart.svg"
 import {CartItem} from "@/entities/Cart";
-import {addToCart, deleteFromCart, deleteFromCartById, isItemIdInCart, isItemInCart} from "@/shared/Utils";
+import {addToCart, deleteFromCartById, getCart, isItemIdInCart} from "@/shared/Utils";
+import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
 
 interface CartButtonProps {
     furnitureId: number;
@@ -24,6 +25,12 @@ const CartButton: FC<CartButtonProps> = ({ furnitureId, variantId, attrId }) => 
         if (isInCart) {
             deleteFromCartById(furnitureId);
             setIsInCart(isItemIdInCart(furnitureId));
+
+            const token = localStorage.getItem('token')
+            if (token) {
+                const cart = getCart();
+                routesUpdateCart(cart, token).catch()
+            }
         } else {
             const cartItem: CartItem = {
                 id: furnitureId,
@@ -33,6 +40,12 @@ const CartButton: FC<CartButtonProps> = ({ furnitureId, variantId, attrId }) => 
             }
             addToCart(cartItem);
             setIsInCart(isItemIdInCart(furnitureId));
+
+            const token = localStorage.getItem('token')
+            if (token) {
+                const cart = getCart();
+                routesUpdateCart(cart, token).catch()
+            }
         }
 
     }

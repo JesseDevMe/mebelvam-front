@@ -7,6 +7,7 @@ import Link from "next/link";
 import {attr, variant} from "@/entities/Furniture";
 import {addToCart, deleteFromCart, getCart, isItemInCart} from "@/shared/Utils";
 import {CartItem} from "@/entities/Cart";
+import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
 
 interface CardAddCartProps {
     furnitureId: number,
@@ -31,6 +32,12 @@ const CardAddCart: FC<CardAddCartProps> = ({ furnitureId, curAttr, curVariant })
             setCount(count - 1);
             setIsInCart(true);
             window.dispatchEvent(new Event("storage"));
+
+            const token = localStorage.getItem('token')
+            if (token) {
+                const cart = getCart();
+                routesUpdateCart(cart, token).catch()
+            }
         }
     }
 
@@ -39,15 +46,33 @@ const CardAddCart: FC<CardAddCartProps> = ({ furnitureId, curAttr, curVariant })
         setCount(count+1);
         setIsInCart(true);
         window.dispatchEvent(new Event("storage"));
+
+        const token = localStorage.getItem('token')
+        if (token) {
+            const cart = getCart();
+            routesUpdateCart(cart, token).catch()
+        }
     }
 
     function toCartHandler() {
         if (isInCart) {
             deleteFromCart(cartItem);
             setIsInCart(isItemInCart(cartItem));
+
+            const token = localStorage.getItem('token')
+            if (token) {
+                const cart = getCart();
+                routesUpdateCart(cart, token).catch()
+            }
         } else {
             addToCart(cartItem);
             setIsInCart(isItemInCart(cartItem));
+
+            const token = localStorage.getItem('token')
+            if (token) {
+                const cart = getCart();
+                routesUpdateCart(cart, token).catch()
+            }
         }
     }
 

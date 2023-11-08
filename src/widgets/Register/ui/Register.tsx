@@ -3,7 +3,7 @@ import {FC} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useRouter} from "next/navigation";
 import useLogInStore from "@/features/LogInModal/store/useLogInStore";
-import {getFavorites, routesSyncFavorites} from "@/shared/Utils";
+import {getCart, getFavorites, routesSyncCart, routesSyncFavorites} from "@/shared/Utils";
 
 type Inputs = {
     email: string;
@@ -50,13 +50,18 @@ const Register: FC<RegisterProps> = ({ backHandler }) => {
 
                 if (data?.jwt) {
                     localStorage.setItem('token', data.jwt);
-                    const favorites = getFavorites();
 
+                    const favorites = getFavorites();
                     routesSyncFavorites(favorites, data.jwt)
                         .catch(error => console.log(error))
                         .then(data => {
                             localStorage.setItem('favorites', JSON.stringify(data));
                         })
+
+                    const cart = getCart();
+                    routesSyncCart(cart, data.jwt)
+                        .catch(error => console.log(error));
+
                     setClose();
                 }
             })

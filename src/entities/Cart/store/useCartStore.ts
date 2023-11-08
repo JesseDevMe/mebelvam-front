@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import {ReadonlyURLSearchParams} from "next/navigation";
 import {CartFurniture} from "@/entities/Cart";
 
 interface CartState {
@@ -8,7 +7,7 @@ interface CartState {
     remove: (attrId: number) => void;
 }
 
-const useCustomFiltersStore = create<CartState>()((set) => ({
+const useCartStore = create<CartState>()((set) => ({
     furnitures: [],
     setFurnitures: (items) => set((state) =>
         ({
@@ -22,4 +21,4 @@ const useCustomFiltersStore = create<CartState>()((set) => ({
     ),
 }))
 
-export default useCustomFiltersStore;
+export default useCartStore;

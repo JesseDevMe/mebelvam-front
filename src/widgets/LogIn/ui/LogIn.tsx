@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 import useLogInStore from "@/features/LogInModal/store/useLogInStore";
 import {state} from "sucrase/dist/types/parser/traverser/base";
 import Link from "next/link";
-import {getFavorites, routesSyncFavorites} from "@/shared/Utils";
+import {getCart, getFavorites, routesSyncCart, routesSyncFavorites} from "@/shared/Utils";
 
 type Inputs = {
     email: string;
@@ -51,13 +51,17 @@ const LogIn: FC<LogInProps> = ({ resetHandler, registerHandler }) => {
 
                 if (data?.jwt) {
                     localStorage.setItem('token', data.jwt);
-                    const favorites = getFavorites();
 
+                    const favorites = getFavorites();
                     routesSyncFavorites(favorites, data.jwt)
                         .catch(error => console.log(error))
                         .then(data => {
                             localStorage.setItem('favorites', JSON.stringify(data));
                         })
+
+                    const cart = getCart();
+                    routesSyncCart(cart, data.jwt)
+                        .catch(error => console.log(error));
 
                     setClose();
                 }

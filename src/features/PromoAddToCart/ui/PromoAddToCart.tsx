@@ -2,9 +2,10 @@
 import React, {FC, useEffect, useState} from "react";
 import Image from "next/image";
 import icon_basket from "../../../../public/Pages/Furniture/icon_basket.svg";
-import {addToCart, deleteFromCart, deleteFromCartById, isItemIdInCart, isItemInCart} from "@/shared/Utils";
+import {addToCart, deleteFromCart, deleteFromCartById, getCart, isItemIdInCart, isItemInCart} from "@/shared/Utils";
 import {CartItem} from "@/entities/Cart";
 import incart from "../../../../public/Pages/Furniture/incart.svg";
+import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
 
 interface PromoAddToCartProps {
     furnitureId: number;
@@ -27,9 +28,21 @@ const PromoAddToCart: FC<PromoAddToCartProps> = ({ furnitureId, variantId, attrI
         if (isInCart) {
             deleteFromCart(cartItem);
             setIsInCart(isItemInCart(cartItem));
+
+            const token = localStorage.getItem('token')
+            if (token) {
+                const cart = getCart();
+                routesUpdateCart(cart, token).catch()
+            }
         } else {
             addToCart(cartItem);
             setIsInCart(isItemInCart(cartItem));
+
+            const token = localStorage.getItem('token')
+            if (token) {
+                const cart = getCart();
+                routesUpdateCart(cart, token).catch()
+            }
         }
     }
 

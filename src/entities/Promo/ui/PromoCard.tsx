@@ -3,8 +3,6 @@ import {Promo} from "@/entities/Promo";
 import Link from "next/link";
 import {MiniCardSlider} from "@/shared/Slider";
 import Image from "next/image";
-import {CardDetails} from "@/features/CardDetails";
-import icon_basket from "../../../../public/Pages/Furniture/icon_basket.svg";
 import {PromoAddToCart} from "@/features/PromoAddToCart";
 import {FavoritesBtn} from "@/features/FavoritesBtn";
 

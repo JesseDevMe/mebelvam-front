@@ -1,38 +1,21 @@
-'use client'
 import {FC} from "react";
 import {CartFurniture, CartItem} from "@/entities/Cart";
-import Image from "next/image";
-import {CartCounter} from "@/features/CartCounter";
-import {deleteFromCart, getCart} from "@/shared/Utils";
-import useCartStore from "@/entities/Cart/store/useCartStore";
 import Link from "next/link";
-import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
+import Image from "next/image";
+import useOrderStore from "@/entities/Order/store/useOrderStore";
+import {OrderCounter} from "@/features/OrderCounter";
 
-interface CartCardProps extends CartFurniture{
+interface OrderCardProps extends CartFurniture{
 
 }
 
-const CartCard: FC<CartCardProps> = ({ id, name, imageUrl, color, size , price, count, variantId, attrId, oldPrice}) => {
-    const removeFur = useCartStore(state => state.remove);
+const OrderCard: FC<OrderCardProps> = ({ id, name, imageUrl, color, size , price, count, variantId, attrId, oldPrice}) => {
+    const removeFur = useOrderStore(state => state.remove);
 
     function deleteHandler(e: React.MouseEvent) {
         e.stopPropagation();
         e.preventDefault();
-        const cartItem: CartItem = {
-            id: id,
-            count: count,
-            variant_id: variantId,
-            attribute_id: attrId,
-        }
-        deleteFromCart(cartItem);
         removeFur(attrId);
-        window.dispatchEvent(new Event("storage"));
-
-        const token = localStorage.getItem('token')
-        if (token) {
-            const cart = getCart();
-            routesUpdateCart(cart, token).catch()
-        }
     }
 
     return (
@@ -63,7 +46,7 @@ const CartCard: FC<CartCardProps> = ({ id, name, imageUrl, color, size , price, 
                         }}
                         className="mt-1"
                     >
-                        <CartCounter furnitureId={id} variantId={variantId} attrId={attrId} ItemsCount={count}
+                        <OrderCounter attrId={attrId} ItemsCount={count}
                                      price={price} oldPrice={oldPrice}/>
                     </div>
                 </div>
@@ -72,4 +55,4 @@ const CartCard: FC<CartCardProps> = ({ id, name, imageUrl, color, size , price, 
     );
 };
 
-export default CartCard;
+export default OrderCard;

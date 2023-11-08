@@ -1,34 +1,21 @@
-'use client'
-import {FC, useEffect, useState} from "react";
-import {addToCart, getCart} from "@/shared/Utils";
+import {FC} from "react";
 import {CartItem} from "@/entities/Cart";
-import useCartStore from "@/entities/Cart/store/useCartStore";
-import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
+import {addToCart} from "@/shared/Utils";
+import useOrderStore from "@/entities/Order/store/useOrderStore";
 
-interface CartCounterProps {
-    furnitureId: number,
-    variantId: number,
+interface OrderCounterProps {
     attrId: number,
     ItemsCount: number,
     price: number,
     oldPrice?: number,
 }
 
-const CartCounter: FC<CartCounterProps> = ({ furnitureId, variantId, attrId, ItemsCount, price, oldPrice }) => {
-    const furnitures = useCartStore(state => state.furnitures);
-    const setFur = useCartStore(state => state.setFurnitures);
-
-
-    const cartItem: CartItem = {
-        id: furnitureId,
-        count: ItemsCount,
-        variant_id: variantId,
-        attribute_id: attrId,
-    }
+const OrderCounter: FC<OrderCounterProps> = ({ attrId, ItemsCount, price, oldPrice }) => {
+    const furnitures = useOrderStore(state => state.furnitures);
+    const setFur = useOrderStore(state => state.setFurnitures);
 
     function minusHandler() {
         if (ItemsCount > 1) {
-            addToCart({...cartItem, count: ItemsCount - 1})
             setFur([...furnitures.map(fur => {
                 if (fur.attrId !== attrId) return fur;
                 return {
@@ -36,18 +23,10 @@ const CartCounter: FC<CartCounterProps> = ({ furnitureId, variantId, attrId, Ite
                     count: fur.count - 1,
                 }
             })]);
-            window.dispatchEvent(new Event("storage"));
-
-            const token = localStorage.getItem('token')
-            if (token) {
-                const cart = getCart();
-                routesUpdateCart(cart, token).catch()
-            }
         }
     }
 
     function plusHandler() {
-        addToCart({...cartItem, count: ItemsCount + 1});
         setFur([...furnitures.map(fur => {
             if (fur.attrId !== attrId) return fur;
             return {
@@ -55,13 +34,6 @@ const CartCounter: FC<CartCounterProps> = ({ furnitureId, variantId, attrId, Ite
                 count: fur.count + 1,
             }
         })]);
-        window.dispatchEvent(new Event("storage"));
-
-        const token = localStorage.getItem('token')
-        if (token) {
-            const cart = getCart();
-            routesUpdateCart(cart, token).catch()
-        }
     }
 
     return (
@@ -92,4 +64,4 @@ const CartCounter: FC<CartCounterProps> = ({ furnitureId, variantId, attrId, Ite
     );
 };
 
-export default CartCounter;
+export default OrderCounter;
