@@ -1,6 +1,4 @@
-import {type NextRequest, NextResponse} from 'next/server'
-import {fetchFurnitures, fetchFurnituresBySub} from "@/entities/Furniture";
-import {min_max} from "@/widgets/Filters/store/useSizesStore";
+import {type NextRequest} from 'next/server'
 import {fetchStrapi} from "@/shared/API";
 
 
@@ -8,7 +6,6 @@ export async function PUT(request: NextRequest) {
     const { ids }: {ids: number[]} = await request.json();
 
     const authToken = request.headers.get('Authorization');
-
 
     if (!authToken) {
         return Response.json({error: {message: 'Authorization header is empty'}})
@@ -25,7 +22,8 @@ export async function PUT(request: NextRequest) {
     })
 
     if (!userRes.ok) {
-        return Response.json({error: {message: 'User data fetch failed'}});
+        const userData = await userRes.json();
+        return Response.json(userData);
     }
 
     const userData = await userRes.json();
@@ -53,7 +51,8 @@ export async function PUT(request: NextRequest) {
     })
 
     if (!updateRes.ok) {
-        return Response.json({error: {message: 'Favorites PUT to strapi error'}});
+        const updateData = await updateRes.json();
+        return Response.json(updateData);
     }
 
     return Response.json({ids: favoritesId});
@@ -78,7 +77,8 @@ export async function PATCH(request: NextRequest) {
     })
 
     if (!userRes.ok) {
-        return Response.json({error: {message: 'User data fetch failed'}});
+        const userData = await userRes.json();
+        return Response.json(userData);
     }
 
     const userData = await userRes.json();
@@ -95,6 +95,11 @@ export async function PATCH(request: NextRequest) {
             favorites: ids,
         })
     })
+
+    if (!updateRes.ok) {
+        const updateData = await updateRes.json();
+        return Response.json(updateData);
+    }
 
     return Response.json({ids: ids})
 }

@@ -6,6 +6,7 @@ import {Catalog} from "@/widgets/Catalog";
 import {Feedback} from "@/widgets/Feedback";
 import {AboutUs} from "@/widgets/AboutUs";
 import {Consultation} from "@/widgets/Сonsultation";
+import {HotOffersProvider} from "@/widgets/HotOffersProvider";
 export const metadata: Metadata = {
   title: 'Главная страница',
   description: 'Мебельный магазин мебель вам, купить мебель',
@@ -21,7 +22,7 @@ const Page: FC<PageProps> = ({}) => {
   return (
       <div>
           <Welcome/>
-          <HotOffer/>
+          <HotOffersProvider/>
           <Catalog/>
           <Feedback/>
           <AboutUs/>

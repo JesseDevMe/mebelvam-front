@@ -99,6 +99,7 @@ const Page: FC<PageProps> = ({}) => {
                                         oldPrice={furniture.oldPrice}
                                         variantId={furniture.variantId}
                                         attrId={furniture.attrId}
+                                        isModular={furniture.isModular}
                                     />
                                 )
                             }

@@ -4,9 +4,10 @@ import {FC} from "react";
 interface CardDetailsProps {
  sizes: string[];
  colors: string[];
+ isModular?: boolean;
 }
 
-const CardDetails: FC<CardDetailsProps> = ({ sizes, colors }) => {
+const CardDetails: FC<CardDetailsProps> = ({ sizes, colors, isModular = false }) => {
 
     function clickHandler(e: React.MouseEvent) {
         e.stopPropagation();
@@ -24,14 +25,19 @@ const CardDetails: FC<CardDetailsProps> = ({ sizes, colors }) => {
             </svg>
 
             <div className={`hidden z-[15] absolute left-0 top-full min-w-[200px] border border-[#DADADA] rounded bg-fon p-5 shadow-[0px_0px_15px_-6px_rgba(0,0,0,0.1)] group-hover:block group-active:block`}>
-                <ul className="font-light list-disc">
-                    <span className="block font-normal mb-2.5">Размеры:</span>
-                    {
-                        sizes.map(size =>
-                            <li key={size} className="ml-6">{size}</li>
-                        )
-                    }
-                </ul>
+                { !isModular &&
+                    <ul className="font-light list-disc">
+                        <span className="block font-normal mb-2.5">Размеры:</span>
+                        {
+                            sizes.map(size => {
+                                    if (size.length > 0) {
+                                        return <li key={size} className="ml-6">{size}</li>
+                                    }
+                                }
+                            )
+                        }
+                    </ul>
+                }
 
                 <ul className="font-light list-disc mt-3.5">
                     <span className="block font-normal mb-2.5">Цвета:</span>

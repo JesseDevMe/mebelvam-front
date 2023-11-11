@@ -4,6 +4,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {useRouter} from "next/navigation";
 import useLogInStore from "@/features/LogInModal/store/useLogInStore";
 import {getCart, getFavorites, routesSyncCart, routesSyncFavorites} from "@/shared/Utils";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 type Inputs = {
     email: string;
@@ -18,6 +19,7 @@ interface RegisterProps {
 
 const Register: FC<RegisterProps> = ({ backHandler }) => {
     const setClose = useLogInStore(state => state.setClose);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
     const {
         register,
@@ -62,6 +64,7 @@ const Register: FC<RegisterProps> = ({ backHandler }) => {
                     routesSyncCart(cart, data.jwt)
                         .catch(error => console.log(error));
 
+                    setIsAuth(true);
                     setClose();
                 }
             })
@@ -86,7 +89,7 @@ const Register: FC<RegisterProps> = ({ backHandler }) => {
 
             <form className="mt-[30px] flex flex-col items-center w-full max-w-[440px] mx-auto" onSubmit={handleSubmit(onSubmit)}>
                 <input className={`py-3 px-5 border-2 ${errors.email ? 'border-red-500' : 'border-dark'} rounded w-full max-w-[440px]`} type="email" placeholder="E-mail" {...register('email', {required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i})}/>
-                {errors.email?.type === 'required' && <span className="self-start ml-2.5 mt-1 text-red-500">Введите Email</span>}
+                {errors.email?.type === 'required' && <span className="self-start ml-2.5 mt-1 text-red-500">Введите E-mail</span>}
                 {errors.email?.type === 'pattern' && <span className="self-start ml-2.5 mt-1 text-red-500">Введите корректный email</span>}
                 {errors.email?.type === 'email exist' && <span className="self-start ml-2.5 mt-1 text-red-500">Аккаунт с такой почтой уже существует</span>}
 

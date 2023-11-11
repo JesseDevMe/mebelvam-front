@@ -6,12 +6,15 @@ import telegram from "../../../../public/header/Telegram.svg";
 import whatsapp from "../../../../public/header/WhatsApp.svg";
 import viber from "../../../../public/header/Viber.svg";
 import mail from "../../../../public/header/Mail_ru.svg";
+import {fetchStatic} from "@/entities/Static";
+import Link from "next/link";
 
 interface ConsultationProps {
 
 }
 
-const Consultation: FC<ConsultationProps> = ({}) => {
+const Consultation: FC<ConsultationProps> = async ({}) => {
+    const staticInf = await fetchStatic();
 
     return (
         <div className="relative pb-10">
@@ -45,24 +48,24 @@ const Consultation: FC<ConsultationProps> = ({}) => {
                         Или
                         <span className="block font-normal">позвоните по телефону:</span>
                     </p>
-                    <a className="font-semibold" href="tel:+79788155828">+7 (978) 815-58-28</a>
+                    <a className="font-semibold" href={`tel:${staticInf.telephone}`}>{staticInf.telephone}</a>
                     <p>напишите нам в соц. сетях</p>
                     <div className="flex gap-x-2.5">
-                        <a href="#">
+                        <Link target="_blank" href={staticInf.vkLink || ''}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={vk} alt="ВК"/>
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link target="_blank" href={staticInf.telegramLink || ''}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={telegram} alt="Телеграм"/>
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link target="_blank" href={staticInf.whatsAppLink || ''}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={whatsapp} alt="Вотсапп"/>
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link target="_blank" href={staticInf.viberLink || ''}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={viber} alt="Вайбер"/>
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link target="_blank" href={'mailto:' + staticInf.email}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={mail} alt="Почта"/>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div

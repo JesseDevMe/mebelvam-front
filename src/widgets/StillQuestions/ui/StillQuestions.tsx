@@ -1,6 +1,7 @@
 'use client'
 import {FC} from "react";
 import { useForm, SubmitHandler } from "react-hook-form"
+import Link from "next/link";
 
 type Inputs = {
     name: string;
@@ -8,10 +9,10 @@ type Inputs = {
 }
 
 interface StillQuestionsProps {
-
+    telephone: string;
 }
 
-const StillQuestions: FC<StillQuestionsProps> = ({}) => {
+const StillQuestions: FC<StillQuestionsProps> = ({ telephone }) => {
     const {
         register,
         handleSubmit,
@@ -55,7 +56,7 @@ const StillQuestions: FC<StillQuestionsProps> = ({}) => {
                 <div className="flex flex-col font-montserrat font-semibold text-base mt-7">
                     <span>Или</span>
                     <span className="font-roboto font-normal text-sm">позвоните по телефону:</span>
-                    <a className="mt-2.5" href="tel:">+7 (978) подставить</a>
+                    <Link className="mt-2.5" href={`tel:${telephone}`}>{telephone}</Link>
                 </div>
 
                 <input

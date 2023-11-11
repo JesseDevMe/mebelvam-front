@@ -6,6 +6,7 @@ import {CardInfo} from "@/widgets/CardInfo";
 import {CardAddCart} from "@/features/CardAddCart";
 import {CardSwitch} from "@/features/CardSwitch";
 import {StillQuestions} from "@/widgets/StillQuestions";
+import {fetchStatic, StaticInf} from "@/entities/Static";
 
 interface PageProps {
     params: { id: number }
@@ -13,6 +14,7 @@ interface PageProps {
 
 const Page: FC<PageProps> = async ({ params }) => {
     const furniture: Furniture = await fetchFurniture(params.id);
+    const staticInf: StaticInf = await fetchStatic();
 
     const routes: Route[] = [
         {
@@ -44,11 +46,13 @@ const Page: FC<PageProps> = async ({ params }) => {
                 <CardInfo furniture={furniture}/>
             </div>
             <div className="flex flex-col gap-12 mt-[50px] lg:flex-row justify-between">
-                <CardSwitch
-                furniture={furniture}
-                />
-                <div className="flex gap-5 mx-auto lg:mx-0 lg:mt-[54px] lg:w-[300px]">
-                    <StillQuestions/>
+                <div className="grow">
+                    <CardSwitch
+                    furniture={furniture}
+                    />
+                </div>
+                <div className="flex gap-5 mx-auto lg:mx-0 lg:mt-[54px] lg:w-[300px] h-fit">
+                    <StillQuestions telephone={staticInf.telephone}/>
                     <div
                         className="hidden md:flex flex-col gap-2.5 font-montserrat text-base text-center min-w-[220px] lg:hidden">
                         <div className="font-semibold py-7 px-5 border rounded-[5px] bg-fon">

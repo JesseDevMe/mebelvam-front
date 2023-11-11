@@ -8,6 +8,7 @@ import {attr, variant} from "@/entities/Furniture";
 import {addToCart, deleteFromCart, getCart, isItemInCart} from "@/shared/Utils";
 import {CartItem} from "@/entities/Cart";
 import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 interface CardAddCartProps {
     furnitureId: number,
@@ -18,6 +19,7 @@ interface CardAddCartProps {
 const CardAddCart: FC<CardAddCartProps> = ({ furnitureId, curAttr, curVariant }) => {
     const [isInCart, setIsInCart] = useState(false);
     const [count, setCount] = useState(1);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
     const cartItem: CartItem = {
         id: furnitureId,
@@ -36,7 +38,14 @@ const CardAddCart: FC<CardAddCartProps> = ({ furnitureId, curAttr, curVariant })
             const token = localStorage.getItem('token')
             if (token) {
                 const cart = getCart();
-                routesUpdateCart(cart, token).catch()
+                routesUpdateCart(cart, token)
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    })
             }
         }
     }
@@ -50,7 +59,14 @@ const CardAddCart: FC<CardAddCartProps> = ({ furnitureId, curAttr, curVariant })
         const token = localStorage.getItem('token')
         if (token) {
             const cart = getCart();
-            routesUpdateCart(cart, token).catch()
+            routesUpdateCart(cart, token)
+                .then()
+                .catch(error => {
+                    if (error === 401) {
+                        localStorage.removeItem('token');
+                        setIsAuth(false);
+                    }
+                })
         }
     }
 
@@ -62,7 +78,14 @@ const CardAddCart: FC<CardAddCartProps> = ({ furnitureId, curAttr, curVariant })
             const token = localStorage.getItem('token')
             if (token) {
                 const cart = getCart();
-                routesUpdateCart(cart, token).catch()
+                routesUpdateCart(cart, token)
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    })
             }
         } else {
             addToCart(cartItem);
@@ -71,7 +94,14 @@ const CardAddCart: FC<CardAddCartProps> = ({ furnitureId, curAttr, curVariant })
             const token = localStorage.getItem('token')
             if (token) {
                 const cart = getCart();
-                routesUpdateCart(cart, token).catch()
+                routesUpdateCart(cart, token)
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    })
             }
         }
     }

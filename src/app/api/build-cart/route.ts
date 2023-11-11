@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
             count: item.count,
             variantId: curVariant.id,
             attrId: curAttr?.id,
+            isModular: curFur.isModular,
         })
     }
 

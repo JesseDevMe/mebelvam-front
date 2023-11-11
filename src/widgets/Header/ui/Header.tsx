@@ -6,9 +6,8 @@ import {Menu} from "@/features/Menu";
 import {Search} from "@/features/Search";
 import {useEffect, useRef, useState} from "react";
 import heart from "@/../public/header/heart.svg";
-import cart from "@/../public/header/icon_basket.svg";
-import {LogInButton} from "@/features/LogInButton";
 import {HeaderCartBtn} from "@/features/HeaderCartBtn";
+import {AccountLink} from "@/features/AccountLink";
 
 
 const Header = () => {
@@ -90,18 +89,12 @@ const Header = () => {
                     <div className="grow lg:grow-0 flex items-center justify-end gap-x-5">
                         <Search isOpen={isSearchOpen} setIsOpen={setIsSearchOpen}/>
 
-                        <Link className="hidden md:block" href="/favorites">
+                        <Link className="hidden md:block" href={'/favorites'}>
                             <Image alt="Избранное" className="hover:scale-110 transition-transform" src={heart}/>
                         </Link>
 
-
                         <div className="hidden md:block">
-                            <LogInButton>
-                                <svg className="hover:scale-110 transition-transform" width="24" height="26" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12.5" cy="6" r="4.25" stroke="#292A2D" strokeWidth="1.5"/>
-                                    <path d="M22.5 23V20.9737C22.5 20.3288 22.396 19.6881 22.1921 19.0763L21.8675 18.1026C21.0509 15.6526 18.758 14 16.1754 14H12.5H8.82456C6.24197 14 3.94914 15.6526 3.13246 18.1026L2.8079 19.0763C2.60397 19.6881 2.5 20.3288 2.5 20.9737V23" stroke="#292A2D" strokeWidth="1.5" strokeLinecap="round"/>
-                                </svg>
-                            </LogInButton>
+                            <AccountLink/>
                         </div>
 
                         <HeaderCartBtn/>

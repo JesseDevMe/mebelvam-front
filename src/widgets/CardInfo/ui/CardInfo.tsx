@@ -5,6 +5,7 @@ import {MySelect} from "@/shared/MySelect";
 import {addToFavorites, deleteFromFavorites, getFavorites, routesSyncFavorites} from "@/shared/Utils";
 import {routesUpdateFavorites} from "@/shared/Utils/RouteHandlers";
 import {CardAddCart} from "@/features/CardAddCart";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 interface CardInfoProps {
     furniture: Furniture;
@@ -16,6 +17,7 @@ const CardInfo: FC<CardInfoProps> = ({ furniture }) => {
     const [curAttr, setCurAttr] =
         useState(curVariant.attributes[0]);
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
+    const setIsAuth = useUserStore(state => state.setIsAuth)
 
 
     useEffect(() => {
@@ -43,7 +45,13 @@ const CardInfo: FC<CardInfoProps> = ({ furniture }) => {
             if (token) {
                 const favorites = getFavorites();
                 routesUpdateFavorites(favorites, token)
-                    .catch();
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    });
             }
         } else {
             setIsFavorite(true);
@@ -53,7 +61,13 @@ const CardInfo: FC<CardInfoProps> = ({ furniture }) => {
             if (token) {
                 const favorites = getFavorites();
                 routesUpdateFavorites(favorites, token)
-                    .catch();
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    });
             }
         }
     }
@@ -103,22 +117,24 @@ const CardInfo: FC<CardInfoProps> = ({ furniture }) => {
                             changeHandler={variantChangeHandler}
                         />
                     </div>
-                    <div className="flex gap-x-5 items-center">
-                        <span className="font-bold">Размер:</span>
-                        <MySelect
-                            key={curVariant.color}
-                            options={
-                                curVariant.attributes.map((attr) => {
-                                    return {
-                                        name: attr.width + 'x' + attr.height + (attr.depth && 'x' + attr.depth),
-                                        isSale: !!attr.old_price,
-                                        value: attr,
-                                    }
-                                })
-                            }
-                            changeHandler={attrChangeHandler}
-                        />
+                    { !furniture.modules || furniture.modules.length === 0 &&
+                        <div className="flex gap-x-5 items-center">
+                            <span className="font-bold">Размер:</span>
+                            <MySelect
+                                key={curVariant.color}
+                                options={
+                                    curVariant.attributes.map((attr) => {
+                                        return {
+                                            name: attr.width + 'x' + attr.height + (attr.depth && 'x' + attr.depth),
+                                            isSale: !!attr.old_price,
+                                            value: attr,
+                                        }
+                                    })
+                                }
+                                changeHandler={attrChangeHandler}
+                            />
                     </div>
+                    }
                 </div>
                 <div className="">
                     {(furniture.materials && furniture.materials.length > 0 ) &&

@@ -5,12 +5,15 @@ import benefit1 from "@/../public/Pages/Home/AboutUs/benefit1.svg"
 import benefit2 from "@/../public/Pages/Home/AboutUs/benefit2.svg"
 import benefit3 from "@/../public/Pages/Home/AboutUs/benefit3.svg"
 import benefit4 from "@/../public/Pages/Home/AboutUs/benefit4.svg"
+import Link from "next/link";
+import {fetchStatic} from "@/entities/Static";
 
 interface AboutUsProps {
 
 }
 
-const AboutUs: FC<AboutUsProps> = ({}) => {
+const AboutUs: FC<AboutUsProps> = async ({}) => {
+    const staticInf = await fetchStatic();
 
     return (
         <div className="bg-light">
@@ -50,8 +53,10 @@ const AboutUs: FC<AboutUsProps> = ({}) => {
                         упаковку до конца сборки.
                     </p>
                 </div>
-                <div
-                    className="mt-5 flex flex-col items-center md:items-start gap-y-5 lg:col-start-2 lg:row-start-2 lg:row-span-3">
+                <Link
+                    href={staticInf.vkLink || ''}
+                    className="cursor-pointer mt-5 flex flex-col items-center md:items-start gap-y-5 lg:col-start-2 lg:row-start-2 lg:row-span-3"
+                >
                     <div
                         className="ml-10 md:ml-0 lg:ml-11 overflow-hidden relative w-[188px] h-[305px] md:w-[150px] md:h-[240px] lg:w-[254px] lg:h-[410px]">
                         <Image fill src={mockup} alt={""}/>
@@ -59,7 +64,7 @@ const AboutUs: FC<AboutUsProps> = ({}) => {
                     <p className="font-montserrat font-semibold text-base lg:text-xl text-center w-[250px] md:w-[160px] lg:w-[300px] md:text-start lg:text-center">
                         Присоединяйтесь к нам Вконтакте
                     </p>
-                </div>
+                </Link>
                 <div
                     className="col-span-2 lg:col-span-1 flex flex-wrap justify-center min-[1100px]:justify-between gap-5 mt-16 font-montserrat font-semibold md:font-roboto">
                     <div

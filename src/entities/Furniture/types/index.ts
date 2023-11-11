@@ -9,14 +9,15 @@ export interface FurnitureMini {
     imagesUrl: string[];
     firstVariantId: number;
     firstAttrId: number;
+    isModular?: boolean;
 }
 
 export type attr = {
     id: number,
     price: number,
     old_price?: string | null;
-    width: number,
-    height: number
+    width?: number,
+    height?: number
     depth?: number,
 }
 
@@ -24,6 +25,13 @@ export type variant = {
     id: number;
     color: string;
     attributes: attr[];
+}
+
+export type furModule = {
+    id: number;
+    name: string;
+    count: number;
+    imageUrl: string;
 }
 
 export interface Furniture {
@@ -44,7 +52,8 @@ export interface Furniture {
             slug: string;
             name: string;
         }
-    }
+    };
+    modules?: furModule[];
 }
 
 export interface Furnitures {
@@ -64,4 +73,5 @@ export interface FurnitureWithVariant {
     name: string;
     imageUrl: string;
     variants: variant[];
+    isModular?: boolean,
 }

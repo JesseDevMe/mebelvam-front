@@ -18,7 +18,6 @@ interface LogInButtonProps {
 
 const LogInModal: FC<LogInButtonProps> = ({ }) => {
     const isOpen = useLogInStore(state => state.isOpen);
-    const setOpen = useLogInStore(state => state.setOpen);
     const setClose = useLogInStore(state => state.setClose);
     const [curWindow, setCurWindow] = useState<WINDOW>(WINDOW.LOG_IN);
 

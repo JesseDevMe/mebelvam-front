@@ -6,6 +6,7 @@ import useLogInStore from "@/features/LogInModal/store/useLogInStore";
 import {state} from "sucrase/dist/types/parser/traverser/base";
 import Link from "next/link";
 import {getCart, getFavorites, routesSyncCart, routesSyncFavorites} from "@/shared/Utils";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 type Inputs = {
     email: string;
@@ -20,6 +21,7 @@ interface LogInProps {
 
 const LogIn: FC<LogInProps> = ({ resetHandler, registerHandler }) => {
     const setClose = useLogInStore(state => state.setClose);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
     const {
         register,
@@ -62,7 +64,7 @@ const LogIn: FC<LogInProps> = ({ resetHandler, registerHandler }) => {
                     const cart = getCart();
                     routesSyncCart(cart, data.jwt)
                         .catch(error => console.log(error));
-
+                    setIsAuth(true);
                     setClose();
                 }
             })

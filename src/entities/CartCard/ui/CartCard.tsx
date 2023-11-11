@@ -7,13 +7,15 @@ import {deleteFromCart, getCart} from "@/shared/Utils";
 import useCartStore from "@/entities/Cart/store/useCartStore";
 import Link from "next/link";
 import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 interface CartCardProps extends CartFurniture{
 
 }
 
-const CartCard: FC<CartCardProps> = ({ id, name, imageUrl, color, size , price, count, variantId, attrId, oldPrice}) => {
+const CartCard: FC<CartCardProps> = ({ id, name, imageUrl, color, size , price, count, variantId, attrId, oldPrice, isModular}) => {
     const removeFur = useCartStore(state => state.remove);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
     function deleteHandler(e: React.MouseEvent) {
         e.stopPropagation();
@@ -31,7 +33,14 @@ const CartCard: FC<CartCardProps> = ({ id, name, imageUrl, color, size , price, 
         const token = localStorage.getItem('token')
         if (token) {
             const cart = getCart();
-            routesUpdateCart(cart, token).catch()
+            routesUpdateCart(cart, token)
+                .then()
+                .catch(error => {
+                    if (error === 401) {
+                        localStorage.removeItem('token');
+                        setIsAuth(false);
+                    }
+                })
         }
     }
 
@@ -54,8 +63,8 @@ const CartCard: FC<CartCardProps> = ({ id, name, imageUrl, color, size , price, 
                 <h2 className="font-montserrat text-base font-semibold h-[2.9em] line-clamp-2 mr-8">{name}</h2>
                 <div className="mt-7">
                     <p className="mb-1.5">Цвет: {color}</p>
-                    <p className="mb-5">Размер: {size}</p>
-                    <p className="">{price} руб. / шт.</p>
+                    {!isModular && <p>Размер: {size}</p>}
+                    <p className="mt-5">{price} руб. / шт.</p>
                     <div
                         onClick={(e) => {
                             e.preventDefault();

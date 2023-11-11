@@ -59,6 +59,7 @@ const FurnituresPage: FC<FurnituresPageProps> = ({ subcategoryId }) => {
                                     imagesUrl={furniture.imagesUrl}
                                     firstAttrId={furniture.firstAttrId}
                                     firstVariantId={furniture.firstVariantId}
+                                    isModular={furniture.isModular}
                                 />
                             )
                         }

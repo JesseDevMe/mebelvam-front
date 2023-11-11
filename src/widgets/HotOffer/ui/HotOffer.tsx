@@ -1,16 +1,17 @@
 'use client'
-import {FC, useCallback, useEffect, useRef, useState} from "react";
+import {FC, useRef} from "react";
 import { Navigation } from "swiper/modules";
-import {offers} from './../model'
 import Image from "next/image";
-import {Swiper, SwiperSlide, useSwiper} from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
+import {Offer} from "@/widgets/HotOffer/model";
+import Link from "next/link";
 
 interface HotOfferProps {
-
+    offers: Offer[],
 }
 
-const HotOffer: FC<HotOfferProps> = ({}) => {
+const HotOffer: FC<HotOfferProps> = ({ offers }) => {
     const navigationPrevRef = useRef(null)
     const navigationNextRef = useRef(null)
 
@@ -30,12 +31,11 @@ const HotOffer: FC<HotOfferProps> = ({}) => {
                     swiper.params.navigation.nextEl = navigationNextRef.current;
                 }}
                 slidesPerView={'auto'}
-
             >
                 {
                     offers.map((offer, index) =>
                         <SwiperSlide key={offer.title + index} className="!w-fit">
-                            <div key={offer.title} className="flex flex-col-reverse justify-end md:justify-start md:flex-row select-none
+                            <Link href={'/product/' + offer.furnitureId} key={offer.title} className="flex flex-col-reverse justify-end md:justify-start md:flex-row select-none
                                     gap-x-5 lg:gap-x-7 gap-y-2.5 border-r-[1px] px-5 md:px-10 xl:px-[100px] py-7 w-[290px] md:w-[600px] lg:w-[800px] xl:w-[1180px]">
                                 <div className="flex flex-col gap-y-5 justify-center xl:min-w-[350px]">
                                     <h2 className="text-base lg:text-xl font-semibold font-montserrat">{offer.title}</h2>
@@ -49,7 +49,7 @@ const HotOffer: FC<HotOfferProps> = ({}) => {
                                         md:w-[300px] md:h-[225px] lg:w-[500px] lg:h-[300px] xl:w-[600px] xl:h-[400px]">
                                     <Image fill style={{objectFit: 'contain'}} src={offer.imgUrl} alt=""/>
                                 </div>
-                            </div>
+                            </Link>
                         </SwiperSlide>
 
                     )

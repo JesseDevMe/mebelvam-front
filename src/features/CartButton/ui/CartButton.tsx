@@ -6,6 +6,7 @@ import incart from "@/../public/Pages/Furniture/incart.svg"
 import {CartItem} from "@/entities/Cart";
 import {addToCart, deleteFromCartById, getCart, isItemIdInCart} from "@/shared/Utils";
 import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 interface CartButtonProps {
     furnitureId: number;
@@ -15,6 +16,7 @@ interface CartButtonProps {
 
 const CartButton: FC<CartButtonProps> = ({ furnitureId, variantId, attrId }) => {
     const [isInCart, setIsInCart] = useState(false);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
     useEffect(() => {
         setIsInCart(isItemIdInCart(furnitureId));
@@ -29,7 +31,14 @@ const CartButton: FC<CartButtonProps> = ({ furnitureId, variantId, attrId }) => 
             const token = localStorage.getItem('token')
             if (token) {
                 const cart = getCart();
-                routesUpdateCart(cart, token).catch()
+                routesUpdateCart(cart, token)
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    })
             }
         } else {
             const cartItem: CartItem = {
@@ -44,7 +53,14 @@ const CartButton: FC<CartButtonProps> = ({ furnitureId, variantId, attrId }) => 
             const token = localStorage.getItem('token')
             if (token) {
                 const cart = getCart();
-                routesUpdateCart(cart, token).catch()
+                routesUpdateCart(cart, token)
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    })
             }
         }
 

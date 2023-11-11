@@ -17,7 +17,8 @@ export async function GET(request: NextRequest) {
     })
 
     if (!userRes.ok) {
-        return Response.json({error: {message: 'User data fetch failed'}});
+        const userData = await userRes.json();
+        return Response.json(userData);
     }
 
     const userData = await userRes.json();
@@ -53,7 +54,8 @@ export async function PUT(request: NextRequest) {
     })
 
     if (!userRes.ok) {
-        return Response.json({error: {message: 'User data fetch failed'}});
+        const userData = await userRes.json();
+        return Response.json(userData);
     }
 
     const userData = await userRes.json();
@@ -80,7 +82,8 @@ export async function PUT(request: NextRequest) {
     })
 
     if (!updateRes.ok) {
-        return Response.json({error: {message: 'Cart PUT to strapi error'}});
+        const updateData = await updateRes.json();
+        return Response.json(updateData);
     }
 
     return Response.json({status: 'ok'});

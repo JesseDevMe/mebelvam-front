@@ -1,6 +1,6 @@
 import {CartItem} from "@/entities/Cart";
-import {fetchStrapi} from "@/shared/API";
 import {getCart} from "@/shared/Utils";
+import {UserData} from "@/entities/User";
 
 //Favorites
 export async function routesSyncFavorites(ids: number[], token: string) {
@@ -21,8 +21,11 @@ export async function routesSyncFavorites(ids: number[], token: string) {
 
     const data = await res.json();
 
-    if (data.error || !data.ids) {
-        return Promise.reject(data.error || 'push fetch error');
+    if (data.error) {
+        if (data.error.status === 401) {
+            return Promise.reject(401);
+        }
+        return Promise.reject(data.error.message || 'push fetch error');
     }
 
     return data.ids;
@@ -46,7 +49,10 @@ export async function routesUpdateFavorites(ids: number[], token: string) {
 
     const data = await res.json();
 
-    if (data.error || !data.ids) {
+    if (data.error) {
+        if (data.error.status === 401) {
+            return Promise.reject(401);
+        }
         return Promise.reject(data.error.message || 'PATCH fetch error');
     }
 
@@ -72,7 +78,10 @@ export async function routesUpdateCart(items: CartItem[], token: string): Promis
 
     const data = await res.json();
 
-    if (data.error || !data.status) {
+    if (data.error) {
+        if (data.error.status === 401) {
+            return Promise.reject(401);
+        }
         return Promise.reject(data.error.message || 'PUT fetch error');
     }
 
@@ -91,6 +100,14 @@ export async function routesSyncCart(items: CartItem[], token: string) {
     }
 
     const userData = await userRes.json();
+
+    if (userData.error) {
+        if (userData.error.status === 401) {
+            return Promise.reject(401);
+        }
+        return Promise.reject(userData.error.message || "/api/user/cart GET error");
+    }
+
     const userCart: CartItem[] = userData.cart;
     const LsCart = getCart();
 
@@ -107,9 +124,58 @@ export async function routesSyncCart(items: CartItem[], token: string) {
 
     const data = await routesUpdateCart(LsCart, token);
 
-    if (data.status !== 'ok') {
-        return Promise.reject("fetch cart to strapi error");
-    } else {
-        return data
+    return data;
+}
+
+//Me
+export async function routesGetMe(token: string): Promise<UserData> {
+    const res = await fetch('/api/user/me', {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        }
+    });
+
+    if (!res.ok) {
+        return Promise.reject('routesGetMe fetch error');
     }
+
+    const data = await res.json();
+
+    if (data.error) {
+        if (data.error.status === 401) {
+            localStorage.removeItem('token');
+            return Promise.reject(401);
+        }
+
+        return Promise.reject(data.error.message);
+    }
+
+    return data;
+}
+
+export async function routesUpdateMe(userData: UserData, token: string) {
+    const res = await fetch('/api/user/me', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+        },
+        body: JSON.stringify(userData)
+    });
+
+    if (!res.ok) {
+        return Promise.reject('/api/user/me PUT fetch error');
+    }
+
+    const data = await res.json();
+
+    if (data.error) {
+        if (data.error.status === 401) {
+            localStorage.removeItem('token');
+            return Promise.reject(401);
+        }
+        return Promise.reject(data.error.message);
+    }
+
+    return data;
 }

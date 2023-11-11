@@ -2,6 +2,8 @@
 import {FC, useState} from "react";
 import {Furniture} from "@/entities/Furniture";
 import Link from "next/link";
+import {ModulesGrid} from "@/widgets/ModulesGrid";
+import {ModuleCard} from "@/entities/ModuleCard";
 
 interface CardSwitchProps {
     furniture: Furniture;
@@ -20,12 +22,14 @@ const CardSwitch: FC<CardSwitchProps> = ({ furniture }) => {
                     >
                         Описание
                     </li>
-                    <li
-                        onClick={() => setCurSwitch(2)}
-                        className={`cursor-pointer py-0.5 px-[1px] ${curSwitch === 2 ? 'border-b-2 border-dark font-bold' : ''}`}
-                    >
-                        Модули
-                    </li>
+                    { furniture.modules && furniture.modules.length > 0 &&
+                        <li
+                            onClick={() => setCurSwitch(2)}
+                            className={`cursor-pointer py-0.5 px-[1px] ${curSwitch === 2 ? 'border-b-2 border-dark font-bold' : ''}`}
+                            >
+                            Модули
+                        </li>
+                    }
                 </ul>
                 {furniture.collectionId &&
                     <Link href={'/catalog/collections/' + furniture.collectionId}
@@ -41,9 +45,19 @@ const CardSwitch: FC<CardSwitchProps> = ({ furniture }) => {
             }
 
             { curSwitch === 2 &&
-                <div>
-                    Модули тут будут
-                </div>
+                <ModulesGrid>
+                    {
+                        furniture.modules?.map(module =>
+                            <ModuleCard
+                                key={module.id}
+                                id={module.id}
+                                name={module.name}
+                                count={module.count}
+                                imageUrl={module.imageUrl}
+                            />
+                        )
+                    }
+                </ModulesGrid>
             }
         </div>
     );

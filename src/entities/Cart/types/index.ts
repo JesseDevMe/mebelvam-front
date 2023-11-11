@@ -18,4 +18,5 @@ export interface CartFurniture {
     count: number;
     variantId: number;
     attrId: number;
+    isModular?: boolean;
 }

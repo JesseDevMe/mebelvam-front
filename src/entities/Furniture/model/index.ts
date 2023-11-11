@@ -1,6 +1,7 @@
 import {fetchStrapi} from "@/shared/API";
 import {attr, Furniture, FurnitureMini, Furnitures, FurnitureWithVariant, variant} from "@/entities/Furniture";
 import {min_max} from "@/widgets/Filters/store/useSizesStore";
+import {furModule} from "@/entities/Furniture/types";
 
 function getFiltersUrl(customFilters: string[][]): string {
     let url = '';
@@ -44,7 +45,7 @@ export async function fetchFurnituresBySub(subcategoryId: number, params: Params
     const manufacturerQuery = params.manufacturer && params.manufacturer.map((manufacturerId, index) => `&filters[manufacturer][id][$in][${index}]=${manufacturerId}`).join('');
     const colorQuery = params.color && params.color.map((colorId, index) => `&filters[colors][id][$in][${index}]=${colorId}`).join('');
 
-    const res = await fetchStrapi(`/furnitures?fields[0]=name&fields[1]=under_price&filters[subcategory][id]=${subcategoryId}&populate[0]=images&populate[1]=variants.attributes&pagination[page]=${params.page}&pagination[pageSize]=25${filtersQuery}${widthQuery ? widthQuery : ''}${heightQuery ? heightQuery : ''}${depthQuery ? depthQuery : ''}${priceQuery ? priceQuery : ''}${manufacturerQuery ? manufacturerQuery : ''}${params.color ? colorQuery : ''}${params.sort ? '&sort=under_price:' + params.sort : ''}`);
+    const res = await fetchStrapi(`/furnitures?fields[0]=name&fields[1]=under_price&filters[subcategory][id]=${subcategoryId}&populate[0]=images&populate[1]=variants.attributes&populate[2]=modules&pagination[page]=${params.page}&pagination[pageSize]=25${filtersQuery}${widthQuery ? widthQuery : ''}${heightQuery ? heightQuery : ''}${depthQuery ? depthQuery : ''}${priceQuery ? priceQuery : ''}${manufacturerQuery ? manufacturerQuery : ''}${params.color ? colorQuery : ''}${params.sort ? '&sort=under_price:' + params.sort : ''}`);
 
     if (!res.ok) {
         throw new Error('furnitures fetch error');
@@ -58,11 +59,12 @@ export async function fetchFurnituresBySub(subcategoryId: number, params: Params
             id: furniture.id,
             name: furniture.attributes.name,
             colors: furniture.attributes.variants.map((variant: any): string => variant.color),
-            sizes: furniture.attributes.variants.flatMap((variant: any): string[] => variant.attributes.map((attribute: any):string => `${attribute.width}x${attribute.height}${attribute.depth ? 'x' + attribute.depth : ''}`)).filter((value: string, index: number, array: string[]) => array.indexOf(value) === index),
+            sizes: furniture.attributes.variants.flatMap((variant: any): string[] => variant.attributes.map((attribute: any):string => `${attribute.width && attribute.height ? attribute.width + 'x' + attribute.height : ''}${attribute.width && attribute.height && attribute.depth ? 'x' + attribute.depth : ''}`)).filter((value: string, index: number, array: string[]) => array.indexOf(value) === index),
             price: Number(furniture.attributes.under_price),
             imagesUrl: furniture.attributes.images.data.map((image:any): string => process.env.STRAPI_URL + image.attributes.url),
             firstVariantId: furniture.attributes.variants[0].id,
             firstAttrId: furniture.attributes.variants[0].attributes[0].id,
+            isModular: furniture.attributes.modules.length > 0,
         }
     })
 
@@ -74,7 +76,7 @@ export async function fetchFurnituresBySub(subcategoryId: number, params: Params
 
 export async function fetchFurniture(id: number): Promise<Furniture> {
     const res =
-        await fetchStrapi(`/furnitures/${id}?populate[0]=images&populate[1]=materials&populate[2]=manufacturer&populate[3]=subcategory.category&populate[4]=collection&populate[5]=modules&populate[6]=variants.attributes`);
+        await fetchStrapi(`/furnitures/${id}?populate[0]=images&populate[1]=materials&populate[2]=manufacturer&populate[3]=subcategory.category&populate[4]=collection&populate[5]=modules.furniture.images&populate[6]=variants.attributes`);
 
     if (!res.ok) {
         throw new Error('furniture fetch error');
@@ -116,6 +118,12 @@ export async function fetchFurniture(id: number): Promise<Furniture> {
                 } )
             }
         } ),
+        modules: data.attributes.modules.map((mod: any): furModule => ({
+            id: mod.furniture.data.id,
+            name: mod.furniture.data.attributes.name,
+            count: mod.count,
+            imageUrl: process.env.STRAPI_URL + mod.furniture.data.attributes.images.data[0].attributes.url,
+        }))
     }
 
     return furniture;
@@ -154,7 +162,7 @@ export async function fetchFurnituresWithVariants(ids: number[] | null | undefin
 
     const idQuery = ids.map((id, index) => `&filters[id][$in][${index}]=${id}`).join('')
 
-    const res = await fetchStrapi(`/furnitures?fields[0]=name&populate[images][fields][0]=url&populate[variants][populate]=attributes${idQuery}`);
+    const res = await fetchStrapi(`/furnitures?fields[0]=name&populate[modules][fields][0]=id&populate[images][fields][0]=url&populate[variants][populate]=attributes${idQuery}`);
 
     if (!res.ok) throw new Error('furnitures with variants fetch by ids error');
 
@@ -176,7 +184,8 @@ export async function fetchFurnituresWithVariants(ids: number[] | null | undefin
                     height: attr.height,
                     depth: attr.depth,
                 }))
-            }))
+            })),
+            isModular: furniture.attributes.modules.length > 0,
         }
     })
 

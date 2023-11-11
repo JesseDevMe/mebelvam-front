@@ -14,7 +14,7 @@ import {CartButton} from "@/features/CartButton";
 interface FurnitureCardProps extends FurnitureMini{
 }
 
-const FurnitureCard: FC<FurnitureCardProps> = ({id, name, imagesUrl, sizes, colors, price, firstVariantId, firstAttrId }) => {
+const FurnitureCard: FC<FurnitureCardProps> = ({id, name, imagesUrl, sizes, colors, price, firstVariantId, firstAttrId, isModular }) => {
 
 
 
@@ -39,6 +39,7 @@ const FurnitureCard: FC<FurnitureCardProps> = ({id, name, imagesUrl, sizes, colo
                     <CardDetails
                         sizes={sizes}
                         colors={colors}
+                        isModular={isModular}
                     />
                 </div>
 

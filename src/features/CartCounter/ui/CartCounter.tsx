@@ -4,6 +4,7 @@ import {addToCart, getCart} from "@/shared/Utils";
 import {CartItem} from "@/entities/Cart";
 import useCartStore from "@/entities/Cart/store/useCartStore";
 import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 interface CartCounterProps {
     furnitureId: number,
@@ -17,6 +18,7 @@ interface CartCounterProps {
 const CartCounter: FC<CartCounterProps> = ({ furnitureId, variantId, attrId, ItemsCount, price, oldPrice }) => {
     const furnitures = useCartStore(state => state.furnitures);
     const setFur = useCartStore(state => state.setFurnitures);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
 
     const cartItem: CartItem = {
@@ -41,7 +43,14 @@ const CartCounter: FC<CartCounterProps> = ({ furnitureId, variantId, attrId, Ite
             const token = localStorage.getItem('token')
             if (token) {
                 const cart = getCart();
-                routesUpdateCart(cart, token).catch()
+                routesUpdateCart(cart, token)
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    })
             }
         }
     }
@@ -60,7 +69,14 @@ const CartCounter: FC<CartCounterProps> = ({ furnitureId, variantId, attrId, Ite
         const token = localStorage.getItem('token')
         if (token) {
             const cart = getCart();
-            routesUpdateCart(cart, token).catch()
+            routesUpdateCart(cart, token)
+                .then()
+                .catch(error => {
+                    if (error === 401) {
+                        localStorage.removeItem('token');
+                        setIsAuth(false);
+                    }
+                })
         }
     }
 

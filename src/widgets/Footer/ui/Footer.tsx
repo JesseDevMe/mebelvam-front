@@ -6,12 +6,16 @@ import whatsapp from "../../../../public/header/WhatsApp.svg";
 import viber from "../../../../public/header/Viber.svg";
 import mail from "../../../../public/header/Mail_ru.svg";
 import logo from "@/../public/header/logo.svg"
+import {fetchStatic, StaticInf} from "@/entities/Static";
+import Link from "next/link";
 
 interface FooterProps {
 
 }
 
-const Footer: FC<FooterProps> = ({}) => {
+const Footer: FC<FooterProps> = async ({}) => {
+    const staticInf: StaticInf = await fetchStatic();
+
 
     return (
         <div className="bg-light rounded">
@@ -20,24 +24,25 @@ const Footer: FC<FooterProps> = ({}) => {
             >
                 <div className="order-1 max-w-[400px]">
                     <h2 className="font-normal text-sm">Контакты</h2>
-                    <p className="mt-2.5"><span className="font-bold mt-2.5">Телефон:</span> +7 (978) 815-58-28</p>
+                    <p className="mt-2.5"><span className="font-bold mt-2.5">Телефон:</span>
+                        <Link href={`tel:${staticInf.telephone}`}> {staticInf.telephone}</Link>
+                    </p>
                     <div className="flex gap-x-2.5 mt-3.5">
-                        <a href="#">
+                        <Link target="_blank" href={staticInf.vkLink || ''}>
                             <Image className="lg:w-12 lg:h-12" width={24} height={24} src={vk} alt="ВК"/>
-                            {/*<Image className="hidden lg:block" width={48} height={48} src={vk} alt="ВК"/>*/}
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link target="_blank" href={staticInf.telegramLink || ''}>
                             <Image className="lg:w-12 lg:h-12" width={24} height={24} src={telegram} alt="Телеграм"/>
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link target="_blank" href={staticInf.whatsAppLink || ''}>
                             <Image className="lg:w-12 lg:h-12" width={24} height={24} src={whatsapp} alt="Вотсапп"/>
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link target="_blank" href={staticInf.viberLink || ''}>
                             <Image className="lg:w-12 lg:h-12" width={24} height={24} src={viber} alt="Вайбер"/>
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link target="_blank" href={'mailto:' + staticInf.email}>
                             <Image className="lg:w-12 lg:h-12" width={24} height={24} src={mail} alt="Почта"/>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
@@ -45,8 +50,7 @@ const Footer: FC<FooterProps> = ({}) => {
                     <h2 className="font-normal text-sm">Доставка со склада</h2>
                     <p className="mt-2.5">У нас большой склад, поэтому все основные позиции есть в наличии. Это
                         позволяет нам быстро доставлять заказы по низким ценам.</p>
-                    <p><span className="font-bold block mt-2.5">Склад работает:</span> пн-пт—9:00 - 18:00, сб—10:00 -
-                        16:00, вс—выходной</p>
+                    <p><span className="font-bold block mt-2.5">Склад работает:</span> {staticInf.schedule}</p>
                 </div>
 
                 <div className="order-3 sm:order-2 flex flex-col items-center gap-y-3.5 max-w-[400px]">

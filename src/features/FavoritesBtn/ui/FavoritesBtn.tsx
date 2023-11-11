@@ -2,6 +2,7 @@
 import {FC, useEffect, useState} from "react";
 import {addToFavorites, deleteFromFavorites, getFavorites, routesSyncFavorites} from "@/shared/Utils";
 import {routesUpdateFavorites} from "@/shared/Utils/RouteHandlers";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 interface FavoritesBtnProps {
     id : number;
@@ -9,6 +10,7 @@ interface FavoritesBtnProps {
 
 const FavoritesBtn: FC<FavoritesBtnProps> = ({ id }) => {
     const [isActive, setIsActive] = useState<boolean>(false);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
     function toggleHandler(e: React.MouseEvent) {
         e.preventDefault();
@@ -21,7 +23,13 @@ const FavoritesBtn: FC<FavoritesBtnProps> = ({ id }) => {
             if (token) {
                 const favorites = getFavorites();
                 routesUpdateFavorites(favorites, token)
-                    .catch()
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    })
             }
         } else {
             setIsActive(true);
@@ -31,7 +39,13 @@ const FavoritesBtn: FC<FavoritesBtnProps> = ({ id }) => {
             if (token) {
                 const favorites = getFavorites();
                 routesUpdateFavorites(favorites, token)
-                    .catch();
+                    .then()
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    });
             }
         }
     }
