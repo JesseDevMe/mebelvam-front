@@ -30,7 +30,9 @@ const Welcome: FC<WelcomeProps> = ({}) => {
             >
                 <SwiperSlide>
                     <div className="h-[300px] md:h-[410px] lg:h-[700px] select-none relative w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
-                        <Image fill className="object-cover -z-10" src={bg_slide1} alt=""/>
+                        <Image quality={100} priority fill sizes="100vw"
+                               className="object-cover -z-10" src={bg_slide1} alt=""
+                        />
 
                         <div className="max-w-[300px] text-light font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
                         xl:px-20 absolute bottom-5 md:bottom-11 lg:bottom-20 lg:max-w-2xl md:text-[16px]"
@@ -49,7 +51,9 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                 </SwiperSlide>
                 <SwiperSlide>
                     <div className="h-[300px] md:h-[410px] lg:h-[700px] select-none relative w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
-                        <Image fill className="object-cover -z-10" src={bg_slide2} alt=""/>
+                        <Image quality={100} priority fill sizes="100vw"
+                               className="object-cover -z-10" src={bg_slide2} alt=""
+                        />
 
                         <div className="text-light font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
                         xl:px-20 absolute bottom-5 md:bottom-11 lg:bottom-20 md:text-[16px] max-w-[240px] md:max-w-[370px] lg:max-w-[500px]"
@@ -68,7 +72,9 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                 </SwiperSlide>
                 <SwiperSlide>
                     <div className="h-[300px] md:h-[410px] lg:h-[700px] select-none relative w-full bg-[linear-gradient(225deg,rgba(41,42,45,0)0%,rgba(41,42,45,0)30%,rgba(41,42,45,0.9)100%)]">
-                        <Image fill className="object-cover -z-10" src={bg_slide3} alt=""/>
+                        <Image quality={100} priority fill sizes="100vw"
+                               className="object-cover -z-10" src={bg_slide3} alt=""
+                        />
 
                         <div className="text-light font-montserrat flex flex-col gap-y-2.5 lg:gap-y-7 px-2.5 md:px-5 lg:px-10
                         xl:px-20 absolute bottom-5 md:bottom-11 lg:bottom-20 max-w-[250px] md:max-w-[370px] lg:max-w-[500px] md:text-[16px]"

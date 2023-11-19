@@ -68,29 +68,29 @@ const Header = () => {
     return (
         <div className={`md:sticky md:top-[-1px] bg-[rgba(242,242,241,0.7)] md:backdrop-blur transition-transform ${isHeaderOpen ? 'translate-y-0' : '-translate-y-full'} z-50`}>
             <header className={`px-2.5 md:px-5 lg:px-10 xl:px-20 w-full max-w-[1520px] mx-auto`}>
-                <div className="py-1.5 flex justify-between items-center gap-x-2">
-                    <div className={`flex items-center justify-between grow md:grow-0 ${isSearchOpen ? 'grow-0' : ''}`}>
-                        <Menu/>
+
+                <div className={`py-1.5 grid ${isSearchOpen ? 'grid-cols-[auto,1fr] min-[400px]:grid-cols-[auto,auto,1fr]' : 'grid-cols-[1fr,auto,1fr]'} 
+                      md:grid-cols-[auto,auto,1fr] lg:grid-cols-[1fr,auto,1fr] gap-x-2 items-center md:py-2.5`}
+                >
+                    <Menu/>
+
+                    <div className={`${isSearchOpen ? 'hidden' : 'block'} min-[400px]:block`}>
                         <Link
-                            className={`pr-3 translate-x-[20px] + ${isSearchOpen ? 'max-[410px]:hidden' : ''} lg:hidden`}
                             href='/'
                         >
-                            <Image src={logo} height={30} width={40} alt="Мебель Вам"/>
+                            <Image
+                                className="h-auto md:w-[49px] lg:w-[57px]"
+                                src={logo}
+                                alt="Мебель Вам"
+                            />
                         </Link>
                     </div>
 
-                    <Link
-                        className="hidden lg:block"
-                        href='/'
-                    >
-                        <Image src={logo} height={48} width={65} alt="Мебель Вам"/>
-                    </Link>
-
-                    <div className="grow lg:grow-0 flex items-center justify-end gap-x-5">
+                    <div className="flex justify-end gap-x-5 items-center">
                         <Search isOpen={isSearchOpen} setIsOpen={setIsSearchOpen}/>
 
                         <Link className="hidden md:block" href={'/favorites'}>
-                            <Image alt="Избранное" className="hover:scale-110 transition-transform" src={heart}/>
+                            <Image alt="Избранное" width={28} height={26} className="hover:scale-110 transition-transform" src={heart}/>
                         </Link>
 
                         <div className="hidden md:block">

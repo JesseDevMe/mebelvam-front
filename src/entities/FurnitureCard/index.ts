@@ -1,3 +1,4 @@
 import FurnitureCard from "./ui/FurnitureCard";
+import FurnitureCardSkeleton from "./ui/FurnitureCardSkeleton";
 
-export { FurnitureCard };
+export { FurnitureCard, FurnitureCardSkeleton };

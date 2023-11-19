@@ -14,6 +14,7 @@ import {PersonalData} from "@/widgets/PersonalData";
 import {FormProvider, useForm} from "react-hook-form";
 import {OrderDelivery} from "@/widgets/OrderDelivery";
 import {Payment} from "@/widgets/Payment";
+import {CartCardSkeleton} from "@/entities/CartCard";
 
 enum FetchStatus {
     LOADING,
@@ -72,7 +73,13 @@ const Page: FC<PageProps> = ({}) => {
                 <div className="lg:grow">
                     <div className="border rounded bg-fon shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] px-5 py-5">
                         {
-                            fetchStatus === FetchStatus.LOADING && <div>Загрузка...</div>
+                            fetchStatus === FetchStatus.LOADING &&
+                            <div>
+                                {[...new Array(4)].map((_, index) =>
+                                    <CartCardSkeleton key={index}/>
+                                )
+                                }
+                            </div>
                         }
 
                         {
@@ -134,6 +141,13 @@ const Page: FC<PageProps> = ({}) => {
                         </>
                     }
                 </div>
+                {fetchStatus === FetchStatus.LOADING &&
+                    <div>
+                        <div className="md:sticky md:top-16">
+                            <div className="h-[250px] rounded bg-gray-200 shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] px-5 py-[30px] lg:min-w-[350px] animate-pulse"></div>
+                        </div>
+                    </div>
+                }
                 {fetchStatus === FetchStatus.DONE && orderFurnitures.length > 0 &&
                     <div>
                         <div className="md:sticky md:top-16">

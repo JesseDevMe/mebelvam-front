@@ -30,8 +30,12 @@ const OrderCard: FC<OrderCardProps> = ({ id, name, imageUrl, color, size , price
                 </svg>
             </div>
 
-            <div className="relative aspect-square max-h-[310px] md:min-h-[220px] mt-8 md:mt-0 overflow-hidden rounded-[5px] shrink-0">
-                <Image src={imageUrl} alt={''} fill style={{objectFit: "contain"}}/>
+            <div className="relative aspect-square min-h-[310px] max-h-[400px] md:min-h-[220px] mt-8 md:mt-0 overflow-hidden rounded-[5px] shrink-0">
+                <Image
+                    src={imageUrl} alt={''}
+                    sizes="100vw, (min-width: 500px) 400px, (min-width: 768px) 220px"
+                    fill style={{objectFit: "contain"}}
+                />
             </div>
             <div className="grow md:flex md:flex-col justify-between">
                 <h2 className="font-montserrat text-base font-semibold h-[2.9em] line-clamp-2 mr-8">{name}</h2>

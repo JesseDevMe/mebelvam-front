@@ -14,13 +14,31 @@ interface PageProps {
 }
 
 const Page: FC<PageProps> = ({}) => {
-    const isAuth = useUserStore(state => state.isAuth);
+    const isAuthStore = useUserStore(state => state.isAuth);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
+    const [isAuthCheck, setIsAuthCheck] =
+        useState<boolean>(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            setIsAuth(true);
+        } else {
+            setIsAuth(false);
+        }
+        setIsAuthCheck(true);
+    }, [])
 
     return (
         <div className="pb-12 pt-12 px-2.5 md:px-5 lg:px-10 xl:px-20 max-w-[1520px] w-full mx-auto">
-            <h1 className="text-center text-xl font-montserrat font-semibold mb-[30px] md:text-2xl md:text-start">Личный кабинет</h1>
+            <h1 className="text-center text-xl font-montserrat font-semibold mb-[30px] md:text-2xl md:text-start">
+                Личный кабинет
+            </h1>
             {
-                isAuth &&
+                !isAuthCheck && <span className="ml-5">Загрузка...</span>
+            }
+
+            {
+                isAuthStore && isAuthCheck &&
                 <div className="flex flex-col gap-8 md:flex-row">
                     <div className="grow">
                         <MyPersonalData/>
@@ -29,7 +47,7 @@ const Page: FC<PageProps> = ({}) => {
                         <Link href='/cart' className="bg-fon border rounded py-8 px-7 flex flex-col gap-5 items-center justify-center
                         shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] lg:flex-row"
                         >
-                            <Image width={40} height={35} src={cart} alt=""/>
+                            <Image className="w-10 h-auto" src={cart} alt=""/>
                             <span className="font-montserrat text-base lg:text-xl font-semibold">Корзина</span>
                         </Link>
 
@@ -46,7 +64,7 @@ const Page: FC<PageProps> = ({}) => {
                             <div className="mt-7 bg-fon border rounded py-8 px-7 flex flex-col gap-5 items-center justify-center
                         shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] lg:flex-row"
                             >
-                                <Image width={40} height={35} src={secure} alt=""/>
+                                <Image className="w-10 h-auto" src={secure} alt=""/>
                                 <span className="font-montserrat text-base lg:text-xl font-semibold">Выйти из аккаунта</span>
                             </div>
                         </LogOutBtn>
@@ -55,7 +73,7 @@ const Page: FC<PageProps> = ({}) => {
             }
 
             {
-                !isAuth &&
+                (!isAuthStore && isAuthCheck) &&
                 <LogInButton>
                     <span className="underline text-accent">Войдите</span> в свой аккаунт, чтобы посмотреть информацию
                 </LogInButton>

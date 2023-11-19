@@ -47,7 +47,11 @@ const HotOffer: FC<HotOfferProps> = ({ offers }) => {
 
                                 <div className="shrink-0 relative flex items-center justify-center w-[250px] h-[180px]
                                         md:w-[300px] md:h-[225px] lg:w-[500px] lg:h-[300px] xl:w-[600px] xl:h-[400px]">
-                                    <Image fill style={{objectFit: 'contain'}} src={offer.imgUrl} alt=""/>
+                                    <Image
+                                        fill style={{objectFit: 'contain'}}
+                                        src={offer.imgUrl} alt=""
+                                        sizes="(max-width: 768px) 250px, (max-width: 1024px) 300px, (max-width: 1280px) 500px, 600px"
+                                    />
                                 </div>
                             </Link>
                         </SwiperSlide>

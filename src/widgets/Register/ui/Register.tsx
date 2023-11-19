@@ -1,5 +1,5 @@
 'use client'
-import {FC} from "react";
+import {FC, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useRouter} from "next/navigation";
 import useLogInStore from "@/features/LogInModal/store/useLogInStore";
@@ -13,11 +13,19 @@ type Inputs = {
     isPoliceAgree: boolean;
 }
 
+enum STATUS {
+    NO_ACTION,
+    LOADING,
+    FAILED,
+    DONE,
+}
+
 interface RegisterProps {
     backHandler: () => void;
 }
 
 const Register: FC<RegisterProps> = ({ backHandler }) => {
+    const [status, setStatus] = useState<STATUS>(STATUS.NO_ACTION);
     const setClose = useLogInStore(state => state.setClose);
     const setIsAuth = useUserStore(state => state.setIsAuth);
 
@@ -30,6 +38,7 @@ const Register: FC<RegisterProps> = ({ backHandler }) => {
     } = useForm<Inputs>();
 
     const onSubmit: SubmitHandler<Inputs> = (submitData) => {
+        setStatus(STATUS.LOADING);
         fetch('/api/register', {
             method: 'POST',
             headers: {
@@ -43,9 +52,9 @@ const Register: FC<RegisterProps> = ({ backHandler }) => {
             )
         })
             .then(res => res.json())
-            .catch(error => console.log(error))
             .then(data => {
                 if (data.error?.message === 'Email or Username are already taken') {
+                    setStatus(STATUS.NO_ACTION);
                     setError('email', {type: 'email exist',})
                     return;
                 }
@@ -65,9 +74,16 @@ const Register: FC<RegisterProps> = ({ backHandler }) => {
                         .catch(error => console.log(error));
 
                     setIsAuth(true);
-                    setClose();
+                    setStatus(STATUS.DONE);
+                    setTimeout(() => {
+                        setStatus(STATUS.NO_ACTION);
+                        setClose();
+                    }, 2000);
+                } else {
+                    setStatus(STATUS.FAILED);
                 }
             })
+            .catch(error => setStatus(STATUS.FAILED))
     }
 
     function passwordConfirmed(password: string): boolean {
@@ -87,7 +103,7 @@ const Register: FC<RegisterProps> = ({ backHandler }) => {
 
             <h2 className="font-montserrat text-base text-center font-semibold">Регистрация</h2>
 
-            <form className="mt-[30px] flex flex-col items-center w-full max-w-[440px] mx-auto" onSubmit={handleSubmit(onSubmit)}>
+            <form className="relative mt-[30px] flex flex-col items-center w-full max-w-[440px] mx-auto" onSubmit={handleSubmit(onSubmit)}>
                 <input className={`py-3 px-5 border-2 ${errors.email ? 'border-red-500' : 'border-dark'} rounded w-full max-w-[440px]`} type="email" placeholder="E-mail" {...register('email', {required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i})}/>
                 {errors.email?.type === 'required' && <span className="self-start ml-2.5 mt-1 text-red-500">Введите E-mail</span>}
                 {errors.email?.type === 'pattern' && <span className="self-start ml-2.5 mt-1 text-red-500">Введите корректный email</span>}
@@ -108,7 +124,46 @@ const Register: FC<RegisterProps> = ({ backHandler }) => {
                         персональной информации на условиях, определенных Политикой конфиденциальности.
                     </p>
                 </label>
-                <input className="py-[15px] bg-dark rounded max-w-[300px] w-full mt-[30px] text-light font-montserrat font-semibold cursor-pointer" value="Зарегистрироваться" type="submit"/>
+                <button
+                    disabled={status === STATUS.DONE || status === STATUS.LOADING}
+                    className="py-[15px] bg-dark rounded max-w-[300px] w-full mt-[30px] text-light font-montserrat font-semibold cursor-pointer"
+                    type="submit"
+                >
+                    { status === STATUS.LOADING
+                        ? <>
+                            <svg className="inline-block animate-spin h-5 w-5 text-white mr-3"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Обработка
+                        </>
+                        : 'Зарегистрироваться'
+                    }
+                </button>
+
+                { status === STATUS.DONE &&
+                    <div
+                        className="absolute top-[110%] left-1/2 -translate-x-1/2 border border-green-400 text-green-400 rounded bg-fon py-2.5 px-5 whitespace-nowrap">
+                        <span>Вы успешно зарегистрированы</span>
+                        <svg className="ml-2.5 inline-block" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                             viewBox="0 0 14 14" fill="none">
+                            <path d="M1 6.14286L6.77926 13L13 1" stroke="#4ade80" strokeWidth="2" strokeLinecap="round"
+                                  strokeLinejoin="round"/>
+                        </svg>
+                    </div>
+                }
+
+                { status === STATUS.FAILED &&
+                    <div
+                        className="absolute top-[110%] left-1/2 -translate-x-1/2 border border-red-500 text-red-500 rounded bg-fon py-2.5 px-5 whitespace-nowrap"
+                    >
+                        Произошла ошибка Х(
+                    </div>
+                }
             </form>
         </>
     );

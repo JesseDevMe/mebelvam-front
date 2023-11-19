@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify({
             identifier,
             password,
-        })
+        }),
     })
 
     const data = await res.json();

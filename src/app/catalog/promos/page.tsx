@@ -4,6 +4,7 @@ import {FurnitureGrid} from "@/widgets/FurnitureGrid";
 import {PromoCard, Promos} from "@/entities/Promo";
 import {Pagination} from "@/features/Pagination";
 import {useSearchParams} from "next/navigation";
+import {FurnitureCardSkeleton} from "@/entities/FurnitureCard";
 
 enum FetchStatus {
     LOADING,
@@ -49,6 +50,20 @@ const Page: FC<PageProps> = ({}) => {
                     </FurnitureGrid>
                     <Pagination pageCount={promos.meta.pagination.pageCount}/>
                 </>
+            }
+
+            { fetchStatus === FetchStatus.FAILED &&
+                'Не получилось загрузить акционные товары. Пожалуйста, попробуйте позже.'
+            }
+
+            { fetchStatus === FetchStatus.LOADING &&
+                <FurnitureGrid>
+                    {
+                        [...new Array(20)].map((_, index) =>
+                            <FurnitureCardSkeleton key={index}/>
+                        )
+                    }
+                </FurnitureGrid>
             }
         </div>
     );

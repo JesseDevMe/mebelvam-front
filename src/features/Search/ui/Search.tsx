@@ -16,8 +16,8 @@ const Search: FC<SearchProps> = ({isOpen, setIsOpen}) => {
     }
 
     return (
-        <div className="flex items-center justify-end">
-            <div className={`flex w-[230px] py-1 px-2 bg-fon rounded border-[1px] border-dark ${isOpen ? '' : 'hidden'} md:flex`}>
+        <div className="flex items-center">
+            <div className={`flex w-[230px] py-1 px-3 bg-fon rounded border-[1px] border-dark ${isOpen ? '' : 'hidden'} md:flex`}>
                 <span>
                     <svg focusable={false} xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20" fill="none">
                         <g opacity="0.5">

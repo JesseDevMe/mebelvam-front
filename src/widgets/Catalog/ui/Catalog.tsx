@@ -50,7 +50,10 @@ const Catalog: FC<CatalogProps> = async ({}) => {
                     <>
                         <Link href={`/catalog/collections`} className="min-w-[160px] md:min-w-[220px] min-[1440px]:min-w-[300px] rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
                             <div className="relative w-full aspect-[4/3] bg-accent flex justify-center items-center text-light font-montserrat text-5xl font-bold">
-                                <Image src={collections_img} fill style={{objectFit: 'cover'}} alt="Коллекции"/>
+                                <Image
+                                    src={collections_img} fill
+                                    sizes="50vw,(min-width: 520px) 33vw, (min-width: 1024px) 25vw"
+                                    style={{objectFit: 'cover'}} alt="Коллекции"/>
                             </div>
 
                             <div className="font-semibold text-sm md:text-base py-5 px-2.5">

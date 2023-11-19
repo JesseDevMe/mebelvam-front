@@ -1,5 +1,6 @@
 'use client'
 import {FC, useEffect, useRef, useState} from "react";
+import useCustomFiltersStore from "@/widgets/Filters/store/useCustomFiltersStore";
 
 interface DefaultFilterProps {
     title: string;
@@ -13,6 +14,7 @@ interface DefaultFilterProps {
 const DefaultFilter: FC<DefaultFilterProps> = ({ title, values, storeValues, addToStore, removeFromStore, colors }) => {
     const [isOpen, setIsOpen] = useState(false);
     const filterRef = useRef<HTMLDivElement>(null);
+    const isFiltersOpen = useCustomFiltersStore(state => state.isOpen);
 
     function handleToggle() {
         setIsOpen(!isOpen);
@@ -39,17 +41,43 @@ const DefaultFilter: FC<DefaultFilterProps> = ({ title, values, storeValues, add
         return () => {
             document.body.removeEventListener('click', bodyClickHandler)
         }
-    }, [isOpen])
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (!filterRef.current || !isFiltersOpen) {
+            return;
+        }
+        if (filterRef.current.getBoundingClientRect().left > (window.innerWidth / 3 * 2)) {
+            const ul = filterRef.current.getElementsByTagName('ul')[0];
+            if (!ul) {
+                return;
+            }
+            ul.style.left = 'auto';
+            ul.style.right = '0';
+        } else {
+            const ul = filterRef.current.getElementsByTagName('ul')[0];
+            if (!ul) {
+                return;
+            }
+            ul.style.left = '0';
+            ul.style.right = 'auto';
+        }
+
+    }, [window.innerWidth, filterRef.current, isFiltersOpen]);
 
     return (
-        <div ref={filterRef} className="py-2.5 px-5 w-full border border-dark rounded font-roboto max-w-[400px] md:max-w-fit relative">
+        <div ref={filterRef} className={`py-2.5 px-5 w-full border ${isOpen ? 'border-accent' : 'border-dark'} rounded 
+            font-roboto max-w-[400px] md:max-w-fit relative`}
+        >
             <h3
                 className="flex justify-between items-center cursor-pointer gap-x-2.5"
                 onClick={handleToggle}
             >
-                <span>{title}</span>
+                <span className={isOpen ? 'text-accent' : ''}>{title}</span>
                 <svg className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`} xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 10 7" fill="none">
-                    <path d="M5.24443 6.65822C5.12479 6.82573 4.87584 6.82574 4.75619 6.65824L0.338863 0.474379C0.197026 0.275819 0.338963 0 0.582978 0L9.41706 0C9.66107 0 9.80301 0.275803 9.66119 0.474364L5.24443 6.65822Z" fill="#292A2D"/>
+                    <path d="M5.24443 6.65822C5.12479 6.82573 4.87584 6.82574 4.75619 6.65824L0.338863 0.474379C0.197026 0.275819 0.338963 0 0.582978 0L9.41706 0C9.66107 0 9.80301 0.275803 9.66119 0.474364L5.24443 6.65822Z"
+                          fill={isOpen ? '#a50b34' : '#292A2D'}
+                    />
                 </svg>
             </h3>
             <ul className={`flex flex-col gap-y-4 bg-fon overflow-hidden transition-[max-height] md:transition-none duration-300 

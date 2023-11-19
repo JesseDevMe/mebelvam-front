@@ -10,21 +10,32 @@ interface AccountLinkProps {
 
 const AccountLink: FC<AccountLinkProps> = ({ isMobile }) => {
     const isAuth = useUserStore(state => state.isAuth);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
     const router = useRouter();
     const openModal = useLogInStore(state => state.setOpen);
 
     function linkHandler() {
-        if (!isAuth) {
+        if (!localStorage?.getItem('token')) {
+            setIsAuth(false);
             openModal();
         } else {
+            setIsAuth(true);
             router.push('/my')
         }
     }
 
+    useEffect(() => {
+        if (localStorage?.getItem('token')) {
+            setIsAuth(true);
+        } else {
+            setIsAuth(false)
+        }
+    }, [])
+
     return (
         <div onClick={linkHandler}>
             {!isMobile
-                ? <svg className="hover:scale-110 transition-transform" width="24" height="26" viewBox="0 0 25 24"
+                ? <svg className="hover:scale-110 transition-transform" width="26" height="28" viewBox="0 0 25 24"
                   fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12.5" cy="6" r="4.25" stroke="#292A2D" strokeWidth="1.5"/>
                 <path

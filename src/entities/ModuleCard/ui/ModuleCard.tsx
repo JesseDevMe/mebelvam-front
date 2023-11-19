@@ -14,7 +14,12 @@ const ModuleCard: FC<ModuleCardProps> = ({ id, name, count, imageUrl }) => {
         <Link href={`/product/${id}`} className="relative border border-[#E9E9E9] rounded bg-fon min-h-[250px]
                 shadow-[0px_4px_7px_0px_rgba(182,182,178,0.25)] md:shadow-[0px_7px_30px_0px_rgba(182,182,178,0.20)]">
             <div className="relative overflow-hidden w-full aspect-[1/1] shrink-0">
-                <Image draggable={false} fill style={{objectFit: 'contain'}} src={imageUrl} alt={''}/>
+                <Image
+                    draggable={false} fill
+                    sizes="50vw, (min-width: 640px) 33vw, (min-width: 1024px) 50vw, (min-width: 1200px) 33vw"
+                    style={{objectFit: 'contain'}} src={imageUrl}
+                    alt={''}
+                />
             </div>
             <div className="p-2.5 md:p-3.5">
                 <p className="h-[2.9em] line-clamp-2">{name}</p>

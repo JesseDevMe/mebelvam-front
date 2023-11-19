@@ -51,21 +51,21 @@ const Consultation: FC<ConsultationProps> = async ({}) => {
                     <a className="font-semibold" href={`tel:${staticInf.telephone}`}>{staticInf.telephone}</a>
                     <p>напишите нам в соц. сетях</p>
                     <div className="flex gap-x-2.5">
-                        <Link target="_blank" href={staticInf.vkLink || ''}>
+                        <a target="_blank" href={staticInf.vkLink || ''}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={vk} alt="ВК"/>
-                        </Link>
-                        <Link target="_blank" href={staticInf.telegramLink || ''}>
+                        </a>
+                        <a target="_blank" href={staticInf.telegramLink || ''}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={telegram} alt="Телеграм"/>
-                        </Link>
-                        <Link target="_blank" href={staticInf.whatsAppLink || ''}>
+                        </a>
+                        <a target="_blank" href={staticInf.whatsAppLink || ''}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={whatsapp} alt="Вотсапп"/>
-                        </Link>
-                        <Link target="_blank" href={staticInf.viberLink || ''}>
+                        </a>
+                        <a target="_blank" href={staticInf.viberLink || ''}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={viber} alt="Вайбер"/>
-                        </Link>
-                        <Link target="_blank" href={'mailto:' + staticInf.email}>
+                        </a>
+                        <a target="_blank" href={'mailto:' + staticInf.email}>
                             <Image className="md:w-12 md:h-12" width={40} height={40} src={mail} alt="Почта"/>
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div

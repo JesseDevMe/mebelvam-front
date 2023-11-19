@@ -1,7 +1,7 @@
 'use client'
 import {FC, useEffect, useRef, useState} from "react";
 import {FurnitureGrid} from "@/widgets/FurnitureGrid";
-import {FurnitureCard} from "@/entities/FurnitureCard";
+import {FurnitureCard, FurnitureCardSkeleton} from "@/entities/FurnitureCard";
 import {Furnitures} from "@/entities/Furniture";
 import {useRouter, useSearchParams} from "next/navigation";
 import {Pagination} from "@/features/Pagination";
@@ -41,7 +41,14 @@ const FurnituresPage: FC<FurnituresPageProps> = ({ subcategoryId }) => {
     return (
         <div>
             {
-            fetchStatus === FetchStatus.LOADING && <div>Загрузка</div>
+            fetchStatus === FetchStatus.LOADING &&
+                <FurnitureGrid>
+                    {
+                        [...new Array(20)].map((_, index) =>
+                            <FurnitureCardSkeleton key={index}/>
+                        )
+                    }
+                </FurnitureGrid>
             }
 
             {furnitures && fetchStatus === FetchStatus.DONE &&

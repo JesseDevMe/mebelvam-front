@@ -36,7 +36,7 @@ const HeaderCartBtn: FC<HeaderCartBtnProps> = ({ isMobile }) => {
                     className="cursor-pointer flex flex-col gap-1 items-center"
                 >
                     <div className="flex items-center gap-x-1">
-                        <Image src={cart} width={24} height={24} alt=''/>
+                        <Image src={cart} alt=''/>
                         <span>({count})</span>
                     </div>
                     <span>Корзина</span>

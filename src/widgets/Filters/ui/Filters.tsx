@@ -51,7 +51,11 @@ const Filters: FC<FiltersProps> = ({ subcategoryId }) => {
 
     useEffect( () => {
         fetch(`/api/filters?subcategoryId=${subcategoryId}`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    setFetchStatus(FetchStatus.FAILED);
+                } return res.json();
+            })
             .then((data) => {
                 setFilters(data);
                 setFetchStatus(FetchStatus.DONE);
@@ -95,11 +99,27 @@ const Filters: FC<FiltersProps> = ({ subcategoryId }) => {
     return (
         <>
             <div className="flex justify-between items-center gap-x-[30px] col-span-2 lg:col-span-1 lg:justify-end">
-                <Sort/>
+                {fetchStatus === FetchStatus.LOADING &&
+                    <>
+                        <div className="h-[1em] w-32 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="h-[24px] w-[24px] bg-gray-200 rounded animate-pulse"></div>
+                    </>
+                }
 
-                <div onClick={filterToggle} className="cursor-pointer">
-                    <Image src={filterIcon} alt='Фильтры'/>
-                </div>
+                {fetchStatus === FetchStatus.DONE &&
+                    <>
+                        <Sort/>
+
+                        <div onClick={filterToggle} className="cursor-pointer">
+                            <Image src={filterIcon} alt='Фильтры'/>
+                        </div>
+                    </>
+                }
+
+                {fetchStatus === FetchStatus.FAILED &&
+                    <span className="font-roboto text-red-500">Не удалось загрузить фильтры</span>
+                }
+
             </div>
 
             <div
@@ -109,9 +129,14 @@ const Filters: FC<FiltersProps> = ({ subcategoryId }) => {
             >
                 <div className="flex justify-between items-center">
                     <h2 className="font-montserrat text-base font-semibold md:font-normal md:font-roboto">Фильтры</h2>
-                    <svg onClick={() => setIsOpen(false)} className="cursor-pointer md:hidden" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-                        <line x1="1" y1="-1" x2="21.487" y2="-1" transform="matrix(0.709463 0.704742 -0.709463 0.704742 12 12)" stroke="#292A2D" strokeWidth="2" strokeLinecap="round"/>
-                        <line x1="1" y1="-1" x2="21.487" y2="-1" transform="matrix(0.709463 -0.704742 0.709463 0.704742 13.0464 28)" stroke="#292A2D" strokeWidth="2" strokeLinecap="round"/>
+                    <svg onClick={() => setIsOpen(false)} className="cursor-pointer md:hidden"
+                         xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <line x1="1" y1="-1" x2="21.487" y2="-1"
+                              transform="matrix(0.709463 0.704742 -0.709463 0.704742 12 12)" stroke="#292A2D"
+                              strokeWidth="2" strokeLinecap="round"/>
+                        <line x1="1" y1="-1" x2="21.487" y2="-1"
+                              transform="matrix(0.709463 -0.704742 0.709463 0.704742 13.0464 28)" stroke="#292A2D"
+                              strokeWidth="2" strokeLinecap="round"/>
                     </svg>
                 </div>
                 <div className="flex flex-col gap-y-2.5 mt-5 md:flex-row md:gap-x-4 md:flex-wrap">

@@ -6,7 +6,7 @@ interface UserState {
 }
 
 const useUserStore = create<UserState>()((set) => ({
-    isAuth: !!localStorage.getItem('token'),
+    isAuth: false,
     setIsAuth: (bool) => set(() => ({ isAuth: bool })),
 }))
 

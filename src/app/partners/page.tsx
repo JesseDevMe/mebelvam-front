@@ -32,6 +32,7 @@ const Page: FC<PageProps> = async ({}) => {
                 {
                     partners.map((partner) =>
                         <PartnerCard
+                            key={partner.name}
                             imageUrl={partner.imageUrl}
                             name={partner.name}
                             description={partner.description}

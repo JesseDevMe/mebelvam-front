@@ -47,8 +47,8 @@ const Menu: FC<MenuProps> = ({}) => {
 
     return (
         <div>
-            <div onClick={modalToggle} className="p-2 cursor-pointer lg:hidden">
-                <Image src={burger} height={16} width={24} alt='Меню'/>
+            <div onClick={modalToggle} className="p-2 cursor-pointer lg:hidden w-fit">
+                <Image className="h-auto" src={burger} width={24} alt='Меню'/>
             </div>
 
             <nav className="hidden lg:flex gap-x-7 ">

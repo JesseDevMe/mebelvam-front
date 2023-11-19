@@ -3,17 +3,22 @@ import {fetchFurniture, Furniture} from "@/entities/Furniture";
 import {CatalogRouter, Route} from "@/shared/CatalogRouter";
 import {CardSlider} from "@/shared/Slider";
 import {CardInfo} from "@/widgets/CardInfo";
-import {CardAddCart} from "@/features/CardAddCart";
 import {CardSwitch} from "@/features/CardSwitch";
 import {StillQuestions} from "@/widgets/StillQuestions";
 import {fetchStatic, StaticInf} from "@/entities/Static";
+import {notFound} from "next/navigation";
 
 interface PageProps {
     params: { id: number }
 }
 
 const Page: FC<PageProps> = async ({ params }) => {
-    const furniture: Furniture = await fetchFurniture(params.id);
+    let furniture: Furniture;
+    try {
+        furniture = await fetchFurniture(params.id);
+    } catch (e) {
+        notFound();
+    }
     const staticInf: StaticInf = await fetchStatic();
 
     const routes: Route[] = [

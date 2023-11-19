@@ -54,7 +54,7 @@ const FavoritesBtn: FC<FavoritesBtnProps> = ({ id }) => {
     useEffect(() => {
         const favoritesId = JSON.parse(localStorage.getItem('favorites') || '[]');
         setIsActive(favoritesId.includes(id));
-    }, [localStorage.getItem('favorites')]);
+    }, []);
 
     return (
         <div onClick={toggleHandler} className="absolute top-0 right-0 z-[9] p-2.5 bg-[rgba(253,253,253,0.80)] rounded-bl">

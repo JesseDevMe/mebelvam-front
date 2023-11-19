@@ -31,11 +31,11 @@ const MiniCardSlider: FC<CardSliderProps> = ({ children }) => {
                     {
                         children.map((child, index) => {
                             if (index < 4)
-                                return <SwiperSlide
-                                    key={index}
-                                >
-                                    {child}
-                                </SwiperSlide>
+                                return (
+                                    <SwiperSlide key={index}>
+                                        {child}
+                                    </SwiperSlide>
+                                )
                             }
                         )
                     }

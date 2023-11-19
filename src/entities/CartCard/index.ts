@@ -1,3 +1,4 @@
 import CartCard from "./ui/CartCard";
+import CartCardSkeleton from "./ui/CartCardSkeleton";
 
-export { CartCard };
+export { CartCard, CartCardSkeleton };

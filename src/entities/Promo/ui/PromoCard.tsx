@@ -19,7 +19,11 @@ const PromoCard: FC<PromoCardProps> = ({ id, name, price, old_price, size, color
                 {
                     imagesUrl.map((imageUrl, index) =>
                         <div key={imageUrl} className="relative overflow-hidden w-full aspect-[1/1] shrink-0">
-                            <Image draggable={false} fill style={{objectFit: 'contain'}} src={imageUrl} alt={''}/>
+                            <Image
+                                draggable={false} fill
+                                sizes="50vw, (min-width: 560px) 33vw, (min-width: 950px) 25vw, (min-width: 1400px) 20vw"
+                                style={{objectFit: 'contain'}}
+                                src={imageUrl} alt={''}/>
                         </div>
                     )
                 }

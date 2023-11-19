@@ -100,3 +100,16 @@ export function deleteFromCartById(id: number) {
     localStorage.setItem('cart', JSON.stringify(newCart));
     window.dispatchEvent(new Event("storage"));
 }
+
+export function deleteManyFromCart(items: CartItem[]) {
+    const cart: CartItem[] = getCart();
+
+    const newCart = cart.filter((cartItem) =>
+        (!items.some(delItem => cartItem.attribute_id === delItem.attribute_id))  ||
+        (!items.some(delItem => cartItem.variant_id === delItem.variant_id)) ||
+        (!items.some(delItem => cartItem.id === delItem.id))
+    )
+
+    localStorage.setItem('cart', JSON.stringify(newCart));
+    window.dispatchEvent(new Event("storage"));
+}

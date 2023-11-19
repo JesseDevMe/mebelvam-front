@@ -56,7 +56,7 @@ const StillQuestions: FC<StillQuestionsProps> = ({ telephone }) => {
                 <div className="flex flex-col font-montserrat font-semibold text-base mt-7">
                     <span>Или</span>
                     <span className="font-roboto font-normal text-sm">позвоните по телефону:</span>
-                    <Link className="mt-2.5" href={`tel:${telephone}`}>{telephone}</Link>
+                    <a className="mt-2.5" href={`tel:${telephone}`}>{telephone}</a>
                 </div>
 
                 <input

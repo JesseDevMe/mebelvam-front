@@ -31,6 +31,7 @@ const ColorFilter: FC<ColorFilterProps> = ({ subcategoryId }) => {
             .catch(() => setFetchStatus(FetchStatus.FAILED));
     }, [])
 
+
     return (
         <div>
             {fetchStatus === FetchStatus.DONE &&

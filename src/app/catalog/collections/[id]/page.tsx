@@ -22,7 +22,6 @@ const Page: FC<PageProps> = async ({ params }) => {
         {
             name: collection.name,
             path:'/' + collection.id,
-            // isAbsolute: true,
         }
     ]
 
@@ -56,7 +55,6 @@ const Page: FC<PageProps> = async ({ params }) => {
             <div className="flex flex-col gap-y-[10px] mt-[50px] lg:mt-[80px]">
                 <div className="flex justify-between">
                     <div className="font-montserrat font-semibold md:text-base lg:text-xl">Модули</div>
-                    {/*<Sort/>*/}
                 </div>
                 <FurnitureGrid>
                     { collection &&

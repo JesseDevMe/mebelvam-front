@@ -25,24 +25,24 @@ const Footer: FC<FooterProps> = async ({}) => {
                 <div className="order-1 max-w-[400px]">
                     <h2 className="font-normal text-sm">Контакты</h2>
                     <p className="mt-2.5"><span className="font-bold mt-2.5">Телефон:</span>
-                        <Link href={`tel:${staticInf.telephone}`}> {staticInf.telephone}</Link>
+                        <a href={`tel:${staticInf.telephone}`}> {staticInf.telephone}</a>
                     </p>
                     <div className="flex gap-x-2.5 mt-3.5">
-                        <Link target="_blank" href={staticInf.vkLink || ''}>
-                            <Image className="lg:w-12 lg:h-12" width={24} height={24} src={vk} alt="ВК"/>
-                        </Link>
-                        <Link target="_blank" href={staticInf.telegramLink || ''}>
-                            <Image className="lg:w-12 lg:h-12" width={24} height={24} src={telegram} alt="Телеграм"/>
-                        </Link>
-                        <Link target="_blank" href={staticInf.whatsAppLink || ''}>
-                            <Image className="lg:w-12 lg:h-12" width={24} height={24} src={whatsapp} alt="Вотсапп"/>
-                        </Link>
-                        <Link target="_blank" href={staticInf.viberLink || ''}>
-                            <Image className="lg:w-12 lg:h-12" width={24} height={24} src={viber} alt="Вайбер"/>
-                        </Link>
-                        <Link target="_blank" href={'mailto:' + staticInf.email}>
-                            <Image className="lg:w-12 lg:h-12" width={24} height={24} src={mail} alt="Почта"/>
-                        </Link>
+                        <a target="_blank" href={staticInf.vkLink || ''}>
+                            <Image className="lg:w-12 lg:h-12" src={vk} alt="ВК"/>
+                        </a>
+                        <a target="_blank" href={staticInf.telegramLink || ''}>
+                            <Image className="lg:w-12 lg:h-12" src={telegram} alt="Телеграм"/>
+                        </a>
+                        <a target="_blank" href={staticInf.whatsAppLink || ''}>
+                            <Image className="lg:w-12 lg:h-12" src={whatsapp} alt="Вотсапп"/>
+                        </a>
+                        <a target="_blank" href={staticInf.viberLink || ''}>
+                            <Image className="lg:w-12 lg:h-12" src={viber} alt="Вайбер"/>
+                        </a>
+                        <a target="_blank" href={'mailto:' + staticInf.email}>
+                            <Image className="lg:w-12 lg:h-12" src={mail} alt="Почта"/>
+                        </a>
                     </div>
                 </div>
 
@@ -54,7 +54,7 @@ const Footer: FC<FooterProps> = async ({}) => {
                 </div>
 
                 <div className="order-3 sm:order-2 flex flex-col items-center gap-y-3.5 max-w-[400px]">
-                    <Image src={logo} width={70} height={50} alt="Мебель вам"/>
+                    <Image className="w-[70px] h-auto" src={logo} alt="Мебель вам"/>
                     <p>Интернет-магазин мебели в Севастополе</p>
                     <p>Информация на сайте не является публичной офертой.</p>
                     <p>Интернет-магазин «Мебель Вам» © 2023</p>

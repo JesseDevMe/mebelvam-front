@@ -1,7 +1,7 @@
 'use client'
 import {FC, useEffect, useState} from "react";
 import {FurnitureGrid} from "@/widgets/FurnitureGrid";
-import {FurnitureCard} from "@/entities/FurnitureCard";
+import {FurnitureCard, FurnitureCardSkeleton} from "@/entities/FurnitureCard";
 import {FurnitureMini} from "@/entities/Furniture";
 import Link from "next/link";
 import {LogInButton} from "@/features/LogInButton";
@@ -44,7 +44,14 @@ const Page: FC<PageProps> = ({}) => {
         <div className="pb-12 pt-12 px-2.5 md:px-5 lg:px-10 xl:px-20 max-w-[1520px] w-full mx-auto text-base">
             <h1 className="text-center text-xl font-montserrat font-semibold mb-[30px] md:text-2xl md:text-start">Избранное</h1>
             {
-                fetchStatus === FetchStatus.LOADING && <div>Загрузка...</div>
+                fetchStatus === FetchStatus.LOADING &&
+                <FurnitureGrid>
+                    {
+                        [...new Array(20)].map((_, index) =>
+                            <FurnitureCardSkeleton key={index}/>
+                        )
+                    }
+                </FurnitureGrid>
             }
 
             {
@@ -64,6 +71,8 @@ const Page: FC<PageProps> = ({}) => {
                                 colors={furniture.colors}
                                 sizes={furniture.sizes}
                                 imagesUrl={furniture.imagesUrl}
+                                firstAttrId={furniture.firstAttrId}
+                                firstVariantId={furniture.firstVariantId}
                             />
                         )
                     }

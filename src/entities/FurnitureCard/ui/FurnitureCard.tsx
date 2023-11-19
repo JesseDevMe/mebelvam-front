@@ -16,8 +16,6 @@ interface FurnitureCardProps extends FurnitureMini{
 
 const FurnitureCard: FC<FurnitureCardProps> = ({id, name, imagesUrl, sizes, colors, price, firstVariantId, firstAttrId, isModular }) => {
 
-
-
     return (
         <Link href={`/product/${id}`} className="flex relative flex-col gap-y-2 border border-[#E9E9E9] rounded bg-fon min-w-[165px] min-h-[300px]
                 min-[560px]:min-w-[175px] md:min-w-[220px] shadow-[0px_4px_7px_0px_rgba(182,182,178,0.25)] md:shadow-[0px_7px_30px_0px_rgba(182,182,178,0.20)] [&_#name]:hover:text-accent">
@@ -25,7 +23,11 @@ const FurnitureCard: FC<FurnitureCardProps> = ({id, name, imagesUrl, sizes, colo
                 {
                     imagesUrl.map((imageUrl, index) =>
                         <div key={imageUrl} className="relative overflow-hidden w-full aspect-[1/1] shrink-0">
-                            <Image draggable={false} fill style={{objectFit: 'contain'}} src={imageUrl} alt={''}/>
+                            <Image
+                                draggable={false} fill
+                                sizes="50vw, (min-width: 560px) 33vw, (min-width: 950px) 25vw, (min-width: 1400px) 20vw"
+                                style={{objectFit: 'contain'}}
+                                src={imageUrl} alt={''}/>
                         </div>
                     )
                 }

@@ -21,19 +21,19 @@ const NavBarM: FC<NavBarMProps> = ({}) => {
             >
                 <nav className="flex justify-around items-center">
                     <Link href='/' className="cursor-pointer flex flex-col gap-1 items-center">
-                        <Image src={home} width={24} height={24} alt=''/>
+                        <Image src={home} alt=''/>
                         <div>Главная</div>
                     </Link>
 
                     <Link href={'/catalog'} className="cursor-pointer flex flex-col gap-1 items-center">
-                        <Image src={catalog} width={24} height={24} alt=''/>
+                        <Image src={catalog} alt=''/>
                         <div>Каталог</div>
                     </Link>
 
                     <AccountLink isMobile={true}/>
 
                     <Link href="/favorites" className="cursor-pointer flex flex-col gap-1 items-center">
-                        <Image src={favorites} width={24} height={24} alt=''/>
+                        <Image src={favorites} alt=''/>
                         <div>Избранное</div>
                     </Link>
 

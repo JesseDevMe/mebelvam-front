@@ -6,7 +6,7 @@ import Link from "next/link";
 import {LogInButton} from "@/features/LogInButton";
 import {getCart} from "@/shared/Utils";
 import {CartFurniture, CartItem} from "@/entities/Cart";
-import {CartCard} from "@/entities/CartCard";
+import {CartCard, CartCardSkeleton} from "@/entities/CartCard";
 import {CartTotalInfo} from "@/widgets/CartTotalInfo";
 import useCartStore from "@/entities/Cart/store/useCartStore";
 
@@ -41,7 +41,11 @@ const Page: FC<PageProps> = ({}) => {
             },
             body: JSON.stringify(cart),
         })
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    return setFetchStatus(FetchStatus.FAILED);
+                } else return res.json()
+            })
             .then((data: CartFurniture[]) => {
                 setFetchStatus(FetchStatus.DONE);
                 setFurnitures(data);
@@ -57,11 +61,17 @@ const Page: FC<PageProps> = ({}) => {
                 <div className="border rounded bg-fon shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] px-5 py-5 lg:grow h-fit"
                 >
                     {
-                        fetchStatus === FetchStatus.LOADING && <div>Загрузка...</div>
+                        fetchStatus === FetchStatus.LOADING &&
+                        <div>
+                            {[...new Array(4)].map((_, index) =>
+                                <CartCardSkeleton key={index}/>
+                            )
+                            }
+                        </div>
                     }
 
                     {
-                        fetchStatus === FetchStatus.FAILED && <div>Ошибка загрузки корзины</div>
+                        fetchStatus === FetchStatus.FAILED && <div>Не удалось загрузить корзину</div>
                     }
 
                     {
@@ -108,6 +118,9 @@ const Page: FC<PageProps> = ({}) => {
                 </div>
                 <div>
                     <div className="md:sticky md:top-16">
+                        {fetchStatus === FetchStatus.LOADING &&
+                            <div className="h-[250px] rounded bg-gray-200 shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] px-5 py-[30px] lg:min-w-[350px] animate-pulse"></div>
+                        }
                         {fetchStatus === FetchStatus.DONE && furnitures.length > 0 &&
                             <CartTotalInfo/>
                         }

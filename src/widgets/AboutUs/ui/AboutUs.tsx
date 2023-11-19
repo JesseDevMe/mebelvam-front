@@ -23,7 +23,7 @@ const AboutUs: FC<AboutUsProps> = async ({}) => {
                     нас</h2>
                 <h3 className="text-base lg:text-xl mt-4 lg:mt-12 font-montserrat font-semibold text-center lg:text-start leading-normal md:col-span-2 lg:col-span-1">Интернет-магазин
                     мебели в
-                    Севастополе <span className="block lg:inline">"МЕБЕЛЬ ВАМ"</span>
+                    Севастополе <span className="block lg:inline">&quot;МЕБЕЛЬ ВАМ&quot;</span>
                 </h3>
                 <div className="flex flex-col gap-y-4 mt-4 lg:mt-12">
                     <p>
@@ -53,38 +53,39 @@ const AboutUs: FC<AboutUsProps> = async ({}) => {
                         упаковку до конца сборки.
                     </p>
                 </div>
-                <Link
+                <a
+                    target="_blank"
                     href={staticInf.vkLink || ''}
                     className="cursor-pointer mt-5 flex flex-col items-center md:items-start gap-y-5 lg:col-start-2 lg:row-start-2 lg:row-span-3"
                 >
                     <div
                         className="ml-10 md:ml-0 lg:ml-11 overflow-hidden relative w-[188px] h-[305px] md:w-[150px] md:h-[240px] lg:w-[254px] lg:h-[410px]">
-                        <Image fill src={mockup} alt={""}/>
+                        <Image sizes="160px,(min-width: 1024px) 220px" fill src={mockup} alt={""}/>
                     </div>
                     <p className="font-montserrat font-semibold text-base lg:text-xl text-center w-[250px] md:w-[160px] lg:w-[300px] md:text-start lg:text-center">
                         Присоединяйтесь к нам Вконтакте
                     </p>
-                </Link>
+                </a>
                 <div
                     className="col-span-2 lg:col-span-1 flex flex-wrap justify-center min-[1100px]:justify-between gap-5 mt-16 font-montserrat font-semibold md:font-roboto">
                     <div
                         className="flex flex-col items-center text-center gap-y-5 w-[160px] lg:w-[220px]">
-                        <Image width={60} height={60} src={benefit1} alt=""/>
+                        <Image src={benefit1} alt=""/>
                         <p>Низкие цены и оплата при получении</p>
                     </div>
                     <div
                         className="flex flex-col items-center text-center gap-y-5 w-[160px] lg:w-[220px]">
-                        <Image width={60} height={60} src={benefit2} alt=""/>
+                        <Image src={benefit2} alt=""/>
                         <p>Подробная консультация и помощь в выборе мебели</p>
                     </div>
                     <div
                         className="flex flex-col items-center text-center gap-y-5 w-[160px] lg:w-[220px]">
-                        <Image width={60} height={60} src={benefit3} alt=""/>
+                        <Image src={benefit3} alt=""/>
                         <p>Квалифицированные сборщики</p>
                     </div>
                     <div
                         className="flex flex-col items-center text-center gap-y-5 w-[160px] lg:w-[220px]">
-                        <Image width={60} height={60} src={benefit4} alt=""/>
+                        <Image src={benefit4} alt=""/>
                         <p>Замер и дизайн кухни бесплатно <span className="font-roboto font-normal block text-gray-500">при условии заказа мебели*</span>
                         </p>
                     </div>
