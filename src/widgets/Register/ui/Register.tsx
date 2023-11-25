@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import useLogInStore from "@/features/LogInModal/store/useLogInStore";
 import {getCart, getFavorites, routesSyncCart, routesSyncFavorites} from "@/shared/Utils";
 import useUserStore from "@/entities/User/store/useUserStore";
+import Link from "next/link";
 
 type Inputs = {
     email: string;
@@ -120,8 +121,8 @@ const Register: FC<RegisterProps> = ({ backHandler }) => {
                 <label className="flex flex-row gap-x-2.5 mt-5 cursor-pointer w-full max-w-[440px]">
                     <input className="self-start" type='checkbox' {...register('isPoliceAgree', {required: true})}/>
                     <p className={`${errors.isPoliceAgree && 'text-red-500'}`}>
-                        Я принимаю условия Пользовательского соглашения и даю своё согласие на обработку моей
-                        персональной информации на условиях, определенных Политикой конфиденциальности.
+                        Я принимаю условия <Link href="/policy" className="underline">Пользовательского соглашения</Link> и даю своё согласие на обработку моей
+                        персональной информации на условиях, определенных <Link href="/policy" className="underline">Политикой конфиденциальности</Link>.
                     </p>
                 </label>
                 <button

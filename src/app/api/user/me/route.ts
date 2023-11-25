@@ -19,7 +19,8 @@ export async function GET(request: NextRequest) {
     const userRes = await fetchStrapi('/users/me', {
         headers: {
             Authorization: authToken,
-        }
+        },
+        next: {revalidate: 0}
     })
 
     if (!userRes.ok) {
@@ -64,7 +65,8 @@ export async function PUT(request: NextRequest) {
     const userRes = await fetchStrapi('/users/me?fields=id', {
         headers: {
             Authorization: authToken,
-        }
+        },
+        next: {revalidate: 0}
     })
 
     if (!userRes.ok) {
@@ -79,7 +81,8 @@ export async function PUT(request: NextRequest) {
         {
             headers: {
                 Authorization: `Bearer ${process.env.GOD_TOKEN}`,
-            }
+            },
+            next: {revalidate: 0}
         }
     )
 
@@ -107,7 +110,8 @@ export async function PUT(request: NextRequest) {
         },
         body: JSON.stringify(
             newData
-        )
+        ),
+        next: {revalidate: 0}
     })
 
     if (!updateRes.ok) {

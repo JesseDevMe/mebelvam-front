@@ -14,8 +14,8 @@ const CardSwitch: FC<CardSwitchProps> = ({ furniture }) => {
 
     return (
         <div>
-            <div className="flex justify-between">
-                <ul className="flex gap-x-7 mb-5 md:text-base md:font-montserrat lg:text-xl">
+            <div className="flex justify-between gap-x-5 mb-5">
+                <ul className="flex gap-x-7 md:text-base md:font-montserrat lg:text-xl h-fit">
                     <li
                         onClick={() => setCurSwitch(1)}
                         className={`cursor-pointer py-0.5 px-[1px] ${curSwitch === 1 ? 'border-b-2 border-dark font-bold' : ''}`}
@@ -33,9 +33,10 @@ const CardSwitch: FC<CardSwitchProps> = ({ furniture }) => {
                 </ul>
                 {furniture.collectionId &&
                     <Link href={'/catalog/collections/' + furniture.collectionId}
-                       className="cursor-pointer py-0.5 font-montserrat font-semibold md:text-base lg:text-xl">
-                    Посмотреть все модули коллекции
-                </Link>
+                       className="text-end cursor-pointer font-montserrat font-semibold md:text-base lg:text-xl"
+                    >
+                        Посмотреть все модули коллекции
+                    </Link>
                 }
             </div>
             { curSwitch === 1 &&

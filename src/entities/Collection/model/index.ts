@@ -7,7 +7,7 @@ export async function fetchCollections(): Promise<CollectionsResponse> {
     const res = await fetchStrapi('/collections?fields[0]=name&populate[images][fields][0]=url');
 
     if (!res.ok) {
-        throw new Error('collections fetch error')
+        throw new Error('collections fetch error');
     }
 
     const { data, meta } = await res.json();

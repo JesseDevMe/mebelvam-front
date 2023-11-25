@@ -91,15 +91,14 @@ const CardSlider: FC<CardSliderProps> = ({ imagesUrl, aspect }) => {
                 <div
                     onClick={bgClickHandler}
                     className="fixed top-0 left-0 w-full h-full z-[100] md:px-2.5
-                        bg-[rgba(0,0,0,0.667)] overflow-y-scroll py-20"
+                        bg-[rgba(0,0,0,0.667)] overflow-auto py-20 flex"
                 >
                     <div
                         onClick={(e) => {
                             e.stopPropagation();
                             e.preventDefault();
                         }}
-                        className="absolute w-full max-w-[1000px] aspect-square left-1/2
-                            -translate-x-1/2"
+                        className="relative w-full max-w-[1000px] aspect-square mx-auto my-auto"
                     >
                         <Image
                             fill style={{objectFit: 'contain'}}

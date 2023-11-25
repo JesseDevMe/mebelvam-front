@@ -6,19 +6,20 @@ export async function GET(request: NextRequest) {
     const authToken = request.headers.get('Authorization');
 
     if (!authToken) {
-        return Response.json({error: {message: 'Authorization header is empty'}})
+        return Response.json({error: {message: 'Authorization header is empty'}}, {status: 400})
     }
 
 
     const userRes = await fetchStrapi('/users/me?fields=id&populate[cart][populate][furniture][fields]=id', {
         headers: {
             Authorization: authToken,
-        }
+        },
+        next: {revalidate: 0}
     })
 
     if (!userRes.ok) {
         const userData = await userRes.json();
-        return Response.json(userData);
+        return Response.json(userData, {status: userRes.status});
     }
 
     const userData = await userRes.json();
@@ -40,22 +41,23 @@ export async function PUT(request: NextRequest) {
     const authToken = request.headers.get('Authorization');
 
     if (!authToken) {
-        return Response.json({error: {message: 'Authorization header is empty'}})
+        return Response.json({error: {message: 'Authorization header is empty'}}, {status: 400})
     }
 
     if (!cart) {
-        return Response.json({error: {message: 'Body is empty'}});
+        return Response.json({error: {message: 'Body is empty'}}, {status: 400});
     }
 
     const userRes = await fetchStrapi('/users/me?fields=id', {
         headers: {
             Authorization: authToken,
-        }
+        },
+        next: {revalidate: 0}
     })
 
     if (!userRes.ok) {
         const userData = await userRes.json();
-        return Response.json(userData);
+        return Response.json(userData, {status: userRes.status});
     }
 
     const userData = await userRes.json();
@@ -78,12 +80,13 @@ export async function PUT(request: NextRequest) {
                     }
                 }
             ))
-        })
+        }),
+        next: {revalidate: 0}
     })
 
     if (!updateRes.ok) {
         const updateData = await updateRes.json();
-        return Response.json(updateData);
+        return Response.json(updateData, {status: updateRes.status});
     }
 
     return Response.json({status: 'ok'});

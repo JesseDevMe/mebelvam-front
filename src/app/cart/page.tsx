@@ -4,11 +4,13 @@ import cart from '@/../public/Pages/Cart/cart.svg'
 import Image from "next/image";
 import Link from "next/link";
 import {LogInButton} from "@/features/LogInButton";
-import {getCart} from "@/shared/Utils";
+import {getCart, routesSyncCart} from "@/shared/Utils";
 import {CartFurniture, CartItem} from "@/entities/Cart";
 import {CartCard, CartCardSkeleton} from "@/entities/CartCard";
 import {CartTotalInfo} from "@/widgets/CartTotalInfo";
 import useCartStore from "@/entities/Cart/store/useCartStore";
+import {updateCart} from "@/shared/Utils/LocalStorage";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 enum FetchStatus {
     LOADING,
@@ -24,34 +26,87 @@ const Page: FC<PageProps> = ({}) => {
     const [fetchStatus, setFetchStatus] = useState<FetchStatus>(FetchStatus.LOADING);
     const furnitures = useCartStore(state => state.furnitures);
     const setFurnitures = useCartStore(state => state.setFurnitures);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
     useEffect(() => {
-        const cart: CartItem[] = getCart();
+        const token = localStorage.getItem('token');
 
-        if (cart.length === 0) {
-            setFurnitures([]);
-            setFetchStatus(FetchStatus.DONE);
-            return;
-        }
+        if (token) {
+            const cart: CartItem[] = getCart();
+            routesSyncCart(cart, token)
+                .then()
+                .catch(error => {
+                    if (error === 401) {
+                        localStorage.removeItem('token');
+                        setIsAuth(false);
+                    }
+                })
+                .finally(() => {
+                    const cart: CartItem[] = getCart();
+                    if (cart.length === 0) {
+                        setFurnitures([]);
+                        setFetchStatus(FetchStatus.DONE);
+                        return;
+                    }
 
-        fetch('/api/build-cart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(cart),
-        })
-            .then(res => {
-                if (!res.ok) {
-                    return setFetchStatus(FetchStatus.FAILED);
-                } else return res.json()
-            })
-            .then((data: CartFurniture[]) => {
+                    fetch('/api/build-cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(cart),
+                    })
+                        .then(res => {
+                            if (!res.ok) {
+                                setFetchStatus(FetchStatus.FAILED);
+                                throw new Error();
+                            } else return res.json()
+                        })
+                        .then((data: CartFurniture[]) => {
+                            setFetchStatus(FetchStatus.DONE);
+                            updateCart(data.map((fur) => ({
+                                id: fur.id,
+                                variant_id: fur.variantId,
+                                attribute_id: fur.attrId,
+                                count: fur.count
+                            })));
+                            setFurnitures(data);
+                        })
+                        .catch(() => setFetchStatus(FetchStatus.FAILED));
+                })
+        } else {
+            const cart: CartItem[] = getCart();
+            if (cart.length === 0) {
+                setFurnitures([]);
                 setFetchStatus(FetchStatus.DONE);
-                setFurnitures(data);
-            })
-            .catch(() => setFetchStatus(FetchStatus.FAILED));
+                return;
+            }
 
+            fetch('/api/build-cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cart),
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        setFetchStatus(FetchStatus.FAILED);
+                        throw new Error();
+                    } else return res.json()
+                })
+                .then((data: CartFurniture[]) => {
+                    setFetchStatus(FetchStatus.DONE);
+                    updateCart(data.map((fur) => ({
+                        id: fur.id,
+                        variant_id: fur.variantId,
+                        attribute_id: fur.attrId,
+                        count: fur.count
+                    })));
+                    setFurnitures(data);
+                })
+                .catch(() => setFetchStatus(FetchStatus.FAILED));
+        }
     }, [])
 
     return (
@@ -71,7 +126,10 @@ const Page: FC<PageProps> = ({}) => {
                     }
 
                     {
-                        fetchStatus === FetchStatus.FAILED && <div>Не удалось загрузить корзину</div>
+                        fetchStatus === FetchStatus.FAILED &&
+                        <div>
+                            Не удалось загрузить корзину. Пожалуйста, попробуйте снова чуть позже.
+                        </div>
                     }
 
                     {

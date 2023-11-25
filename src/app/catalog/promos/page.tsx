@@ -26,7 +26,14 @@ const Page: FC<PageProps> = ({}) => {
     useEffect(() => {
         setFetchStatus(FetchStatus.LOADING);
         fetch(`/api/promos${pageParam ? '?page=' + pageParam : ''}`)
-            .then(res => res.json())
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    setFetchStatus(FetchStatus.FAILED);
+                    throw new Error();
+                }
+            })
             .then((data) => {
                 setPromos(data);
                 setFetchStatus(FetchStatus.DONE);
@@ -53,7 +60,7 @@ const Page: FC<PageProps> = ({}) => {
             }
 
             { fetchStatus === FetchStatus.FAILED &&
-                'Не получилось загрузить акционные товары. Пожалуйста, попробуйте позже.'
+                'Не получилось загрузить акционные товары. Мы уже решаем проблему. Пожалуйста, попробуйте позже.'
             }
 
             { fetchStatus === FetchStatus.LOADING &&

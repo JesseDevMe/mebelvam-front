@@ -10,47 +10,50 @@ export async function POST(request: NextRequest) {
         return Response.json([]);
     }
 
-    const furnitures = await fetchFurnituresWithVariants(cart.map(item => item.id));
+    try {
+        const furnitures = await fetchFurnituresWithVariants(cart.map(item => item.id));
 
-    const cartFurniture: CartFurniture[] = [];
+        const cartFurniture: CartFurniture[] = [];
 
-    for (const item of cart) {
-        const curFur = furnitures.find((fur) => fur.id === item.id);
-        if (!curFur) continue;
+        for (const item of cart) {
+            const curFur = furnitures.find((fur) => fur.id === item.id);
+            if (!curFur) continue;
 
-        let curVariant: variant | undefined;
-        let curAttr: attr | undefined;
-        if (!item.variant_id) {
-            curVariant = curFur.variants[0];
-            curAttr = curVariant.attributes[0];
-        } else {
-            curVariant = curFur.variants.find(variant => variant.id === item.variant_id);
-            if (!curVariant) continue;
-
-            if (!item.attribute_id) {
+            let curVariant: variant | undefined;
+            let curAttr: attr | undefined;
+            if (!item.variant_id) {
+                curVariant = curFur.variants[0];
                 curAttr = curVariant.attributes[0];
             } else {
-                curAttr = curVariant.attributes.find(attr => attr.id === item.attribute_id);
-                if (!curAttr) continue;
+                curVariant = curFur.variants.find(variant => variant.id === item.variant_id);
+                if (!curVariant) continue;
+
+                if (!item.attribute_id) {
+                    curAttr = curVariant.attributes[0];
+                } else {
+                    curAttr = curVariant.attributes.find(attr => attr.id === item.attribute_id);
+                    if (!curAttr) continue;
+                }
             }
+
+
+            cartFurniture.push({
+                id: curFur.id,
+                name: curFur.name,
+                imageUrl: curFur.imageUrl,
+                color: curVariant.color,
+                size: `${curAttr.height}x${curAttr.width}${curAttr.depth ? 'x' + curAttr.depth : ''}`,
+                price: curAttr.price,
+                oldPrice: Number(curAttr.old_price),
+                count: item.count,
+                variantId: curVariant.id,
+                attrId: curAttr?.id,
+                isModular: curFur.isModular,
+            })
         }
 
-
-        cartFurniture.push({
-            id: curFur.id,
-            name: curFur.name,
-            imageUrl: curFur.imageUrl,
-            color: curVariant.color,
-            size: `${curAttr.height}x${curAttr.width}${curAttr.depth ? 'x' + curAttr.depth : ''}`,
-            price: curAttr.price,
-            oldPrice: Number(curAttr.old_price),
-            count: item.count,
-            variantId: curVariant.id,
-            attrId: curAttr?.id,
-            isModular: curFur.isModular,
-        })
+        return Response.json(cartFurniture);
+    } catch (e) {
+        return Response.json({error: {message: e}}, {status: 500});
     }
-
-
-    return Response.json(cartFurniture);
 }

@@ -13,7 +13,21 @@ interface PageProps {
 }
 
 const Page: FC<PageProps> = async ({}) => {
-    const categories: Category[] = await fetchCategories();
+    let categories: Category[] = [];
+    try {
+        categories = await fetchCategories();
+    } catch (e) {
+        return (
+            <div className="max-w-[1520px] w-full mx-auto bg-fon pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 font-montserrat">
+                <div className="lg:mt-10 lg:mb-[55px]">
+                    <CatalogRouter/>
+                </div>
+                <p>
+                    Не удалось загрузить каталог. Пожалуйста, попробуйте снова чуть позже. Мы уже решаем возникшую проблему.
+                </p>
+            </div>
+        );
+    }
 
     for (const category of categories) {
         const res = await fetchStrapi(`/furnitures?filters[subcategory][category][id]=${category.id}&pagination[pageSize]=1&fields[0]=name`);
@@ -49,7 +63,7 @@ const Page: FC<PageProps> = async ({}) => {
             </div>
             <CatalogGrid>
                 <>
-                    <Link href={`/catalog/collections`} className="min-w-[160px] md:min-w-[220px] min-[1440px]:min-w-[300px] rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
+                    <Link href={`/catalog/collections`} className="rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
                         <div className="relative w-full aspect-[4/3] bg-accent flex justify-center items-center text-light font-montserrat text-5xl font-bold">
                             <Image
                                 src={collections_img} fill
@@ -77,7 +91,7 @@ const Page: FC<PageProps> = async ({}) => {
                         )
                     }
 
-                    <Link href={`/catalog/promos`} className="min-w-[160px] md:min-w-[220px] min-[1440px]:min-w-[300px] rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
+                    <Link href={`/catalog/promos`} className="rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
                         <div className="w-full aspect-[4/3] bg-accent flex justify-center items-center text-light font-montserrat text-5xl font-bold">
                             АКЦИИ
                         </div>

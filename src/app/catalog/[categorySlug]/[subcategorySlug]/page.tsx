@@ -15,7 +15,8 @@ interface PageProps {
 }
 
 const Page: FC<PageProps> = async ({params}) => {
-    try { // Проверка категории
+    try {
+        // Проверка категории
         const categorySlugTokens = params.categorySlug.split('-');
         const categoryId = Number(categorySlugTokens.pop());
 

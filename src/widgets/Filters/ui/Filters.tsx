@@ -54,6 +54,7 @@ const Filters: FC<FiltersProps> = ({ subcategoryId }) => {
             .then(res => {
                 if (!res.ok) {
                     setFetchStatus(FetchStatus.FAILED);
+                    throw new Error();
                 } return res.json();
             })
             .then((data) => {

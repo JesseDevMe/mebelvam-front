@@ -56,8 +56,10 @@ const OrderCounter: FC<OrderCounterProps> = ({ attrId, ItemsCount, price, oldPri
             </div>
             <div className="font-semibold">
                 {oldPrice !== undefined && oldPrice !== 0 && <span className="font-normal line-through mr-2.5">{ItemsCount * oldPrice} руб.</span>}
-                <span className={`text-base font-montserrat md:text-xl ${oldPrice ? 'text-accent' : ''}`}>{ItemsCount * price} </span>
-                <span className={`text-sm font-roboto ${oldPrice ? 'text-accent' : ''}`}>руб.</span>
+                <div className="min-[400px]:inline-block">
+                    <span className={`text-base font-montserrat md:text-xl ${oldPrice ? 'text-accent' : ''}`}>{ItemsCount * price} </span>
+                    <span className={`text-sm font-roboto ${oldPrice ? 'text-accent' : ''}`}>руб.</span>
+                </div>
             </div>
         </div>
 

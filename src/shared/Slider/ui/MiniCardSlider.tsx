@@ -15,7 +15,7 @@ const MiniCardSlider: FC<CardSliderProps> = ({ children }) => {
     const slidesCount = children.length;
 
     return (
-        <div className="w-full relative rounded-t overflow-hidden">
+        <div className="w-full rounded-t overflow-hidden">
             <div className="w-full relative mb-5">
                 <Swiper
                     className="!overflow-y-visible"

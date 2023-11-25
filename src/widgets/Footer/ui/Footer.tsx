@@ -28,18 +28,26 @@ const Footer: FC<FooterProps> = async ({}) => {
                         <a href={`tel:${staticInf.telephone}`}> {staticInf.telephone}</a>
                     </p>
                     <div className="flex gap-x-2.5 mt-3.5">
-                        <a target="_blank" href={staticInf.vkLink || ''}>
-                            <Image className="lg:w-12 lg:h-12" src={vk} alt="ВК"/>
-                        </a>
-                        <a target="_blank" href={staticInf.telegramLink || ''}>
-                            <Image className="lg:w-12 lg:h-12" src={telegram} alt="Телеграм"/>
-                        </a>
-                        <a target="_blank" href={staticInf.whatsAppLink || ''}>
-                            <Image className="lg:w-12 lg:h-12" src={whatsapp} alt="Вотсапп"/>
-                        </a>
-                        <a target="_blank" href={staticInf.viberLink || ''}>
-                            <Image className="lg:w-12 lg:h-12" src={viber} alt="Вайбер"/>
-                        </a>
+                        { staticInf.vkLink &&
+                            <a target="_blank" href={staticInf.vkLink}>
+                                <Image className="lg:w-12 lg:h-12" src={vk} alt="ВК"/>
+                            </a>
+                        }
+                        { staticInf.telegramLink &&
+                            <a target="_blank" href={staticInf.telegramLink}>
+                                <Image className="lg:w-12 lg:h-12" src={telegram} alt="Телеграм"/>
+                            </a>
+                        }
+                        { staticInf.whatsAppLink &&
+                            <a target="_blank" href={staticInf.whatsAppLink}>
+                                <Image className="lg:w-12 lg:h-12" src={whatsapp} alt="Вотсапп"/>
+                            </a>
+                        }
+                        { staticInf.viberLink &&
+                            <a target="_blank" href={staticInf.viberLink}>
+                                <Image className="lg:w-12 lg:h-12" src={viber} alt="Вайбер"/>
+                            </a>
+                        }
                         <a target="_blank" href={'mailto:' + staticInf.email}>
                             <Image className="lg:w-12 lg:h-12" src={mail} alt="Почта"/>
                         </a>

@@ -1,7 +1,7 @@
 .bullet-mini {
     display: inline-block;
     box-sizing: content-box;
-    width: 30px;
+    width: 15%;
     height: 2px;
     border-radius: 3px;
     background-color: #DADADA;

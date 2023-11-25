@@ -6,6 +6,7 @@ import {OrderFurInfo, OrderInfo} from "@/entities/Order/types";
 import {deleteManyFromCart, getCart} from "@/shared/Utils";
 import {CartItem} from "@/entities/Cart";
 import Link from "next/link";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 interface OrderTotalInfoProps {
 
@@ -33,6 +34,7 @@ const OrderTotalInfo: FC<OrderTotalInfoProps> = ({}) => {
     const isLift = useOrderStore(state => state.isLift);
     const isSetup = useOrderStore(state => state.isSetup);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
     const {
         trigger,
@@ -94,12 +96,18 @@ const OrderTotalInfo: FC<OrderTotalInfoProps> = ({}) => {
                                     },
                                     body: JSON.stringify(getCart())
                                 })
-                                    .then()
+                                    .then(res => {
+                                        if (res.status === 401) {
+                                            localStorage.removeItem('token');
+                                            setIsAuth(false);
+                                        }
+                                    })
                             }
                             setIsModalOpen(true);
                         } else {
                             setStatus(STATUS.FAILED);
                             setIsModalOpen(true);
+                            throw new Error();
                         }
                     })
                     .catch((error) => {
@@ -176,8 +184,8 @@ const OrderTotalInfo: FC<OrderTotalInfoProps> = ({}) => {
 
             { isModalOpen &&
                 <div
-                    className="fixed top-0 left-0 w-screen h-screen z-[100] px-2.5 flex flex-col justify-center items-center
-                    bg-[rgba(0,0,0,0.667)]"
+                    className="fixed top-0 left-0 w-full h-full z-[100] p-2.5 flex
+                    bg-[rgba(0,0,0,0.667)] overflow-auto"
                     onClick={bgClickHandler}
                 >
                     <div
@@ -185,8 +193,8 @@ const OrderTotalInfo: FC<OrderTotalInfoProps> = ({}) => {
                             e.preventDefault();
                             e.stopPropagation();
                         }}
-                        className="relative py-5 border rounded bg-fon w-full h-full max-w-[600px] max-h-[390px] flex
-                        flex-col gap-y-5 items-center justify-center text-center"
+                        className="relative py-5 px-5 border rounded bg-fon w-full max-w-[600px] h-[390px] flex
+                        flex-col gap-y-5 items-center justify-center text-center mx-auto my-auto"
                     >
                         <div
                             onClick={() => setIsModalOpen(false)}
@@ -203,9 +211,8 @@ const OrderTotalInfo: FC<OrderTotalInfoProps> = ({}) => {
                                 <div className="mt-7">
                                     <p>Пожалуйста, попробуйте позже</p>
                                     <p className="font-bold">или</p>
-                                    <p>позвоните по номеру:</p>
+                                    <p>позвоните <Link className="font-semibold underline" href="/#consultation">нам</Link></p>
                                 </div>
-                                <a className="font-montserrat text-base font-semibold max-w-[300px]" href="tel:">+7 (978) 815-58-28</a>
                                 <p className="max-w-[300px]">Мы с радостью поможем вам оформить заказ</p>
                             </>
                         }

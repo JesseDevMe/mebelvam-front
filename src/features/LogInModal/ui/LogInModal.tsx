@@ -43,9 +43,13 @@ const LogInModal: FC<LogInButtonProps> = ({ }) => {
     }, [isOpen])
 
     return (
-        <div onClick={bgClickHandler} className={`fixed left-0 right-0 top-0 bottom-0 bg-[rgba(0,0,0,0.667)] justify-center items-center ${isOpen ? 'flex' : 'hidden'} z-[110]`}>
+        <div
+            onClick={bgClickHandler}
+            className={`fixed left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.667)] 
+            ${isOpen ? 'flex' : 'hidden'} z-[110] overflow-auto px-3 py-5`}
+        >
             <div
-                className="relative max-w-[600px] w-full h-[700px] mx-3 rounded bg-fon px-6 pt-20"
+                className="relative max-w-[600px] w-full h-[660px] rounded bg-fon px-6 pt-20 mx-auto my-auto"
                 onClick={(e) => {
                     e.stopPropagation();
                 }}

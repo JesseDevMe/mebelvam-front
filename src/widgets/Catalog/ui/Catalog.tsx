@@ -13,19 +13,31 @@ interface CatalogProps {
 }
 
 const Catalog: FC<CatalogProps> = async ({}) => {
-    const categories: Category[] = await fetchCategories();
+    let categories: Category[] = [];
+
+    try {
+        categories = await fetchCategories();
+    } catch (error) {
+        return (
+            <div className="bg-light min-[1520px]:rounded-t-[50px]">
+                <div className="max-w-[1520px] w-full mx-auto py-8 px-2.5 md:px-5 lg:px-10 xl:px-20 font-montserrat">
+                    <h2 className="text-xl font-semibold text-center">Каталог</h2>
+                    <p className="text-center py-5 md:py-8 lg:py-14 text-red-500">Не получилось загрузить каталог. Пожалуйста, перезагрузите страницу.</p>
+                </div>
+            </div>
+        );
+    }
 
     for (const category of categories) {
         const res = await fetchStrapi(`/furnitures?filters[subcategory][category][id]=${category.id}&pagination[pageSize]=1&fields[0]=name`);
 
         if (!res.ok) {
-            throw new Error('Category metadata fetch error')
+            category.count = undefined;
+        } else {
+            const { meta } = await res.json();
+
+            category.count = meta.pagination.total;
         }
-
-        const { meta } = await res.json();
-
-
-        category.count = meta.pagination.total;
     }
 
 
@@ -34,12 +46,12 @@ const Catalog: FC<CatalogProps> = async ({}) => {
         const res = await fetchStrapi(`/collections?pagination[pageSize]=1&fields[0]=name`);
 
         if (!res.ok) {
-            throw new Error('Collections metadata fetch error')
+            collectionsCount = undefined;
+        } else {
+            const { meta } = await res.json();
+
+            collectionsCount = meta.pagination.total;
         }
-
-        const { meta } = await res.json();
-
-        collectionsCount = meta.pagination.total;
     }
 
     return (
@@ -48,7 +60,7 @@ const Catalog: FC<CatalogProps> = async ({}) => {
                 <h2 className="text-xl font-semibold text-center">Каталог</h2>
                 <CatalogGrid>
                     <>
-                        <Link href={`/catalog/collections`} className="min-w-[160px] md:min-w-[220px] min-[1440px]:min-w-[300px] rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
+                        <Link href={`/catalog/collections`} className="rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
                             <div className="relative w-full aspect-[4/3] bg-accent flex justify-center items-center text-light font-montserrat text-5xl font-bold">
                                 <Image
                                     src={collections_img} fill
@@ -74,7 +86,7 @@ const Catalog: FC<CatalogProps> = async ({}) => {
                             )
                         }
 
-                        <Link href={`/catalog/promos`} className="min-w-[160px] md:min-w-[220px] min-[1440px]:min-w-[300px] rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
+                        <Link href={`/catalog/promos`} className="rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
                             <div className="w-full aspect-[4/3] bg-accent flex justify-center items-center text-light font-montserrat text-5xl font-bold">
                                 АКЦИИ
                             </div>

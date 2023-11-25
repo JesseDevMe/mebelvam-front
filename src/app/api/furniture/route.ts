@@ -52,15 +52,29 @@ export async function GET(request: NextRequest) {
         max: parseInt(priceTokens[1])
     }
 
-    if (!(sort === 'asc' || sort === 'desc')) {
+    if (sort !== 'asc' && sort !== 'desc') {
         sort = null;
     }
 
-    if (subcategoryId) {
-        return Response.json(await fetchFurnituresBySub(Number(subcategoryId),
-            {page: page || '1', sort: sort, customFilters: customArray, width, height, depth, price, manufacturer: manufacturerTokens, color: colorTokens}
-        ));
+    if (!subcategoryId) {
+        return Response.json({error: {message: 'Subcategory id in body exists'}}, {status: 400});
     }
 
-    return;
+    try {
+        return Response.json(await fetchFurnituresBySub(Number(subcategoryId),
+            {
+                page: page || '1',
+                sort: sort,
+                customFilters: customArray,
+                width,
+                height,
+                depth,
+                price,
+                manufacturer: manufacturerTokens,
+                color: colorTokens
+            }
+        ));
+    } catch (e) {
+        return Response.json({error: {message: e}}, {status: 500});
+    }
 }

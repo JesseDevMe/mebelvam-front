@@ -6,6 +6,9 @@ import {addToCart, deleteFromCart, deleteFromCartById, getCart, isItemIdInCart, 
 import {CartItem} from "@/entities/Cart";
 import incart from "../../../../public/Pages/Furniture/incart.svg";
 import {routesUpdateCart} from "@/shared/Utils/RouteHandlers";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import useUserStore from "@/entities/User/store/useUserStore";
 
 interface PromoAddToCartProps {
     furnitureId: number;
@@ -15,6 +18,8 @@ interface PromoAddToCartProps {
 
 const PromoAddToCart: FC<PromoAddToCartProps> = ({ furnitureId, variantId, attrId }) => {
     const [isInCart, setIsInCart] = useState(false);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
+
     const cartItem: CartItem = {
         id: furnitureId,
         count: 1,
@@ -32,7 +37,13 @@ const PromoAddToCart: FC<PromoAddToCartProps> = ({ furnitureId, variantId, attrI
             const token = localStorage.getItem('token')
             if (token) {
                 const cart = getCart();
-                routesUpdateCart(cart, token).catch()
+                routesUpdateCart(cart, token)
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    })
             }
         } else {
             addToCart(cartItem);
@@ -41,7 +52,13 @@ const PromoAddToCart: FC<PromoAddToCartProps> = ({ furnitureId, variantId, attrI
             const token = localStorage.getItem('token')
             if (token) {
                 const cart = getCart();
-                routesUpdateCart(cart, token).catch()
+                routesUpdateCart(cart, token)
+                    .catch(error => {
+                        if (error === 401) {
+                            localStorage.removeItem('token');
+                            setIsAuth(false);
+                        }
+                    })
             }
         }
     }

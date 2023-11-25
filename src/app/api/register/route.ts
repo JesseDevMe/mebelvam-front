@@ -13,7 +13,8 @@ export async function POST(request: NextRequest) {
             username: email,
             email,
             password,
-        })
+        }),
+        next: {revalidate: 0}
     })
 
     const data = await res.json();

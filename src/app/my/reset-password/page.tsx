@@ -58,6 +58,7 @@ const Page: FC<PageProps> = ({}) => {
                     setStatus(STATUS.DONE);
                 } else {
                     setStatus(STATUS.FAILED);
+                    throw new Error();
                 }
             })
             .catch((error) => {

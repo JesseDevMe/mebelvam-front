@@ -69,7 +69,7 @@ const CartButton: FC<CartButtonProps> = ({ furnitureId, variantId, attrId }) => 
     return (
         <div
             onClick={cartHandler}
-            className="cursor-pointer relative bg-dark rounded w-[40px] h-[30px] md:h-[40px]"
+            className="cursor-pointer relative bg-dark rounded w-[40px] h-[30px] md:h-[40px] shrink-0"
         >
             <Image className="px-3 md:px-2.5" src={isInCart ? incart : icon_basket} fill alt="Добавить в корзину"/>
         </div>

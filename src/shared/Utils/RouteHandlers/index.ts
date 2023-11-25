@@ -16,17 +16,12 @@ export async function routesSyncFavorites(ids: number[], token: string) {
     })
 
     if (!res.ok) {
-        return Promise.reject("/api/user/favorites PUT error");
+        if (res.status === 401) {
+            return Promise.reject(401);
+        } else return Promise.reject(await res.json());
     }
 
     const data = await res.json();
-
-    if (data.error) {
-        if (data.error.status === 401) {
-            return Promise.reject(401);
-        }
-        return Promise.reject(data.error.message || 'push fetch error');
-    }
 
     return data.ids;
 }
@@ -44,17 +39,12 @@ export async function routesUpdateFavorites(ids: number[], token: string) {
     })
 
     if (!res.ok) {
-        return Promise.reject("/api/user/favorites PATCH error");
+        if (res.status === 401) {
+            return Promise.reject(401);
+        } else return Promise.reject(await res.json());
     }
 
     const data = await res.json();
-
-    if (data.error) {
-        if (data.error.status === 401) {
-            return Promise.reject(401);
-        }
-        return Promise.reject(data.error.message || 'PATCH fetch error');
-    }
 
     return data.ids;
 }
@@ -73,18 +63,12 @@ export async function routesUpdateCart(items: CartItem[], token: string): Promis
     })
 
     if (!res.ok) {
-        return Promise.reject("/api/user/cart PUT error");
+        if (res.status === 401) {
+            return Promise.reject(401);
+        } else return Promise.reject(await res.json());
     }
 
     const data = await res.json();
-
-    if (data.error) {
-        if (data.error.status === 401) {
-            return Promise.reject(401);
-        }
-        return Promise.reject(data.error.message || 'PUT fetch error');
-    }
-
     return data;
 }
 
@@ -96,34 +80,35 @@ export async function routesSyncCart(items: CartItem[], token: string) {
     })
 
     if (!userRes.ok) {
-        return Promise.reject("/api/user/cart GET error");
+        if (userRes.status === 401) {
+            return Promise.reject(401);
+        } else return Promise.reject(await userRes.json());
     }
 
     const userData = await userRes.json();
 
-    if (userData.error) {
-        if (userData.error.status === 401) {
-            return Promise.reject(401);
-        }
-        return Promise.reject(userData.error.message || "/api/user/cart GET error");
-    }
-
     const userCart: CartItem[] = userData.cart;
     const LsCart = getCart();
 
-    if (!userCart || userCart.length === 0) {
-        const data = await routesUpdateCart(LsCart, token);
-        return;
+    if ((!userCart || userCart.length === 0)) {
+        if (LsCart.length > 0) {
+            const data = await routesUpdateCart(LsCart, token);
+            return data;
+        } else return;
     }
 
-    const uniqueUserCart = userCart.filter((userItem) =>
-        !LsCart.some((LsItem) => LsItem.attribute_id === userItem.attribute_id)
+    // const uniqueUserCart = userCart.filter((userItem) =>
+    //     !LsCart.some((LsItem) => LsItem.attribute_id === userItem.attribute_id)
+    // )
+
+    const uniqueLsCart = LsCart.filter((lsItem) =>
+        !userCart.some((userItem) => lsItem.attribute_id === userItem.attribute_id)
     )
-    LsCart.push(...uniqueUserCart);
-    localStorage.setItem('cart', JSON.stringify(LsCart));
 
-    const data = await routesUpdateCart(LsCart, token);
+    userCart.push(...uniqueLsCart);
+    localStorage.setItem('cart', JSON.stringify(userCart));
 
+    const data = await routesUpdateCart(userCart, token);
     return data;
 }
 
@@ -132,7 +117,7 @@ export async function routesGetMe(token: string): Promise<UserData> {
     const res = await fetch('/api/user/me', {
         headers: {
             Authorization: 'Bearer ' + token,
-        }
+        },
     });
 
     if (!res.ok) {

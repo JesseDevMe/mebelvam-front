@@ -81,7 +81,7 @@ const CartCounter: FC<CartCounterProps> = ({ furnitureId, variantId, attrId, Ite
     }
 
     return (
-        <div className="flex justify-between items-end">
+        <div className="flex justify-between items-end gap-2.5">
             <div className="border border-dark rounded flex items-center">
                 <div onClick={minusHandler} className="p-2.5 cursor-pointer min-w-[40px]">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="2" viewBox="0 0 18 2" fill="none">
@@ -99,9 +99,14 @@ const CartCounter: FC<CartCounterProps> = ({ furnitureId, variantId, attrId, Ite
                 </div>
             </div>
             <div className="font-semibold">
-                {oldPrice !== undefined && oldPrice !== 0 && <span className="font-normal line-through mr-2.5">{ItemsCount * oldPrice} руб.</span>}
-                <span className={`text-base font-montserrat md:text-xl ${oldPrice ? 'text-accent' : ''}`}>{ItemsCount * price} </span>
-                <span className={`text-sm font-roboto ${oldPrice ? 'text-accent' : ''}`}>руб.</span>
+                {oldPrice !== undefined && oldPrice !== 0 &&
+                    <span className="font-normal line-through mr-2.5">{ItemsCount * oldPrice} руб.</span>
+                }
+                <div className="min-[400px]:inline-block">
+                    <span className={`text-base font-montserrat md:text-xl ${oldPrice ? 'text-accent' : ''}`}>{ItemsCount * price} </span>
+                    <span className={`text-sm font-roboto ${oldPrice ? 'text-accent' : ''}`}>руб.</span>
+                </div>
+
             </div>
         </div>
 

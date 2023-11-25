@@ -1,29 +1,29 @@
 import {type NextRequest} from 'next/server'
 import {fetchStrapi} from "@/shared/API";
 
-
 export async function PUT(request: NextRequest) {
     const { ids }: {ids: number[]} = await request.json();
 
     const authToken = request.headers.get('Authorization');
 
     if (!authToken) {
-        return Response.json({error: {message: 'Authorization header is empty'}})
+        return Response.json({error: {message: 'Authorization header is empty'}}, {status: 400})
     }
 
     if (!ids) {
-        return Response.json({error: {message: 'Body param (id) is empty'}});
+        return Response.json({error: {message: 'Body param (id) is empty'}}, {status: 400});
     }
 
     const userRes = await fetchStrapi('/users/me?populate[favorites][fields][0]=id', {
         headers: {
             Authorization: authToken,
-        }
+        },
+        next: {revalidate: 0}
     })
 
     if (!userRes.ok) {
-        const userData = await userRes.json();
-        return Response.json(userData);
+        const errorData = await userRes.json();
+        return Response.json(errorData, {status: userRes.status});
     }
 
     const userData = await userRes.json();
@@ -34,7 +34,7 @@ export async function PUT(request: NextRequest) {
         return Response.json({ids: favoritesId})
     }
 
-    ids.forEach((id) => favoritesId.push(id));
+    favoritesId.push(...ids);
 
     favoritesId = favoritesId.filter(function(item, pos){
         return favoritesId.indexOf(item)== pos;
@@ -47,12 +47,13 @@ export async function PUT(request: NextRequest) {
         },
         body: JSON.stringify({
             favorites: favoritesId,
-        })
+        }),
+        next: {revalidate: 0}
     })
 
     if (!updateRes.ok) {
         const updateData = await updateRes.json();
-        return Response.json(updateData);
+        return Response.json(updateData, {status: updateRes.status});
     }
 
     return Response.json({ids: favoritesId});
@@ -73,12 +74,13 @@ export async function PATCH(request: NextRequest) {
     const userRes = await fetchStrapi('/users/me', {
         headers: {
             Authorization: authToken,
-        }
+        },
+        next: {revalidate: 0}
     })
 
     if (!userRes.ok) {
         const userData = await userRes.json();
-        return Response.json(userData);
+        return Response.json(userData, {status: userRes.status});
     }
 
     const userData = await userRes.json();
@@ -93,12 +95,13 @@ export async function PATCH(request: NextRequest) {
         },
         body: JSON.stringify({
             favorites: ids,
-        })
+        }),
+        next: {revalidate: 0}
     })
 
     if (!updateRes.ok) {
         const updateData = await updateRes.json();
-        return Response.json(updateData);
+        return Response.json(updateData, {status: updateRes.status});
     }
 
     return Response.json({ids: ids})

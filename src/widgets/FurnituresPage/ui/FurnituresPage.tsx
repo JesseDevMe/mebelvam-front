@@ -27,7 +27,14 @@ const FurnituresPage: FC<FurnituresPageProps> = ({ subcategoryId }) => {
     useEffect(() => {
         setFetchStatus(FetchStatus.LOADING);
         fetch(`/api/furniture?${urlParams.toString()}&subcategoryId=${subcategoryId}`)
-            .then(res => res.json())
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    setFetchStatus(FetchStatus.FAILED);
+                   throw new Error();
+                }
+            })
             .then((data) => {
                 setFurnitures(data);
                 setFetchStatus(FetchStatus.DONE);
@@ -51,7 +58,7 @@ const FurnituresPage: FC<FurnituresPageProps> = ({ subcategoryId }) => {
                 </FurnitureGrid>
             }
 
-            {furnitures && fetchStatus === FetchStatus.DONE &&
+            {furnitures && fetchStatus === FetchStatus.DONE && furnitures.data.length > 0 &&
                 <div>
                     <FurnitureGrid>
                         {furnitures &&
@@ -73,11 +80,21 @@ const FurnituresPage: FC<FurnituresPageProps> = ({ subcategoryId }) => {
                     </FurnitureGrid>
                     <Pagination pageCount={pageCount}/>
                 </div>
-                }
+            }
 
-                {
-                    fetchStatus === FetchStatus.FAILED && <div>Ошибка загрузки</div>
-                }
+            {furnitures && fetchStatus === FetchStatus.DONE && furnitures.data.length === 0 &&
+                <div className="lg:text-base mt-5">
+                    По вашему запросу товаров сейчас нет.
+                </div>
+            }
+
+            {
+                fetchStatus === FetchStatus.FAILED &&
+                <div>
+                    Во время загрузки возникла ошибка.
+                    Пожалуйста, попробуйте снова чуть позже. Мы уже заняты решением проблемы.
+                </div>
+            }
         </div>
     );
 };

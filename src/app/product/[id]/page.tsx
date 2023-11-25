@@ -17,7 +17,18 @@ const Page: FC<PageProps> = async ({ params }) => {
     try {
         furniture = await fetchFurniture(params.id);
     } catch (e) {
-        notFound();
+        if (e instanceof Error && e.message === '404 Not Found') {
+            notFound();
+        } else {
+            return (
+            <div className="pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 max-w-[1520px] w-full mx-auto">
+                <p className="mt-5">
+                    Не удалось загрузить страницу товара. Пожалуйста, попробуйте снова немного позже.
+                    Мы уже заняты решением этой проблемы.
+                </p>
+            </div>
+            );
+        }
     }
     const staticInf: StaticInf = await fetchStatic();
 

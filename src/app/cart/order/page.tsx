@@ -55,7 +55,12 @@ const Page: FC<PageProps> = ({}) => {
             },
             body: JSON.stringify(cart),
         })
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    setFetchStatus(FetchStatus.FAILED);
+                    throw new Error();
+                } else return res.json()
+            })
             .then((data: CartFurniture[]) => {
                 setFetchStatus(FetchStatus.DONE);
                 setOrderFur(data);
@@ -83,7 +88,10 @@ const Page: FC<PageProps> = ({}) => {
                         }
 
                         {
-                            fetchStatus === FetchStatus.FAILED && <div>Не удалось загрузить страницу</div>
+                            fetchStatus === FetchStatus.FAILED &&
+                            <div>
+                                Не удалось загрузить страницу. Пожалуйста, попробуйте снова чуть позже.
+                            </div>
                         }
 
                         {

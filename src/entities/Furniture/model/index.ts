@@ -79,7 +79,9 @@ export async function fetchFurniture(id: number): Promise<Furniture> {
         await fetchStrapi(`/furnitures/${id}?populate[0]=images&populate[1]=materials&populate[2]=manufacturer&populate[3]=subcategory.category&populate[4]=collection&populate[5]=modules.furniture.images&populate[6]=variants.attributes`);
 
     if (!res.ok) {
-        throw new Error('furniture fetch error');
+        if (res.status === 404) {
+            throw new Error('404 Not Found');
+        } else throw new Error('furniture fetch error');
     }
 
     const { data } = await res.json();
@@ -190,4 +192,33 @@ export async function fetchFurnituresWithVariants(ids: number[] | null | undefin
     })
 
     return furnitures;
+}
+
+export async function fetchFurnituresByName(name: string, page: number, sort: 'asc' | 'desc' | null): Promise<Furnitures> {
+    const res = await fetchStrapi(`/furnitures?fields[0]=name&fields[1]=under_price&filters[name][$contains]=${name}&populate[0]=images&populate[1]=variants.attributes&pagination[page]=${page}&pagination[pageSize]=25${sort ? '&sort=under_price:' + sort : ''}`);
+
+    if (!res.ok) {
+        throw Error('fetch furnitures by name error');
+    }
+
+    const { data, meta } = await res.json();
+
+
+    const furnitures: FurnitureMini[] = data.map((furniture: any): FurnitureMini => {
+        return {
+            id: furniture.id,
+            name: furniture.attributes.name,
+            colors: furniture.attributes.variants.map((variant: any): string => variant.color),
+            sizes: furniture.attributes.variants.flatMap((variant: any): string[] => variant.attributes.map((attribute: any):string => `${attribute.width && attribute.height ? attribute.width + 'x' + attribute.height : ''}${attribute.width && attribute.height && attribute.depth ? 'x' + attribute.depth : ''}`)).filter((value: string, index: number, array: string[]) => array.indexOf(value) === index),
+            price: Number(furniture.attributes.under_price),
+            imagesUrl: furniture.attributes.images.data.map((image:any): string => process.env.STRAPI_URL + image.attributes.url),
+            firstVariantId: furniture.attributes.variants[0].id,
+            firstAttrId: furniture.attributes.variants[0].attributes[0].id,
+        }
+    })
+
+    return {
+        data: furnitures,
+        meta: meta,
+    }
 }

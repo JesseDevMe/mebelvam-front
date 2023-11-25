@@ -5,7 +5,8 @@ import {FurnitureCard, FurnitureCardSkeleton} from "@/entities/FurnitureCard";
 import {FurnitureMini} from "@/entities/Furniture";
 import Link from "next/link";
 import {LogInButton} from "@/features/LogInButton";
-import {getFavorites} from "@/shared/Utils";
+import {getFavorites, routesSyncFavorites} from "@/shared/Utils";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 enum FetchStatus {
     LOADING,
@@ -20,8 +21,50 @@ interface PageProps {
 const Page: FC<PageProps> = ({}) => {
     const [fetchStatus, setFetchStatus] = useState<FetchStatus>(FetchStatus.LOADING);
     const [furnitures, setFurnitures] = useState<FurnitureMini[]>([]);
+    const setIsAuth = useUserStore(state => state.setIsAuth);
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            const furnituresId: number[] = getFavorites();
+
+            routesSyncFavorites(furnituresId, token)
+                .then((data: number[]) => {
+                    localStorage.setItem('favorites', JSON.stringify(data));
+                })
+                .catch(error => {
+                    if (error === 401) {
+                        localStorage.removeItem('token');
+                        setIsAuth(false);
+                    }
+                })
+                .finally(() => {
+                    const furnituresId: number[] = getFavorites();
+
+                    if (furnituresId.length === 0) {
+                        setFurnitures([]);
+                        setFetchStatus(FetchStatus.DONE);
+                        return;
+                    }
+
+                    fetch(`/api/furniturebyid?id=${furnituresId.join(',')}`)
+                        .then(res => {
+                            if (!res.ok) {
+                                setFetchStatus(FetchStatus.FAILED);
+                                throw new Error();
+                            } else return res.json();
+                        })
+                        .then((data) => {
+                            setFetchStatus(FetchStatus.DONE);
+                            setFurnitures(data);
+                        })
+                        .catch(() => setFetchStatus(FetchStatus.FAILED));
+                })
+
+            return;
+        }
+
         const furnituresId: number[] = getFavorites();
 
         if (furnituresId.length === 0) {
@@ -31,7 +74,12 @@ const Page: FC<PageProps> = ({}) => {
         }
 
         fetch(`/api/furniturebyid?id=${furnituresId.join(',')}`)
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    setFetchStatus(FetchStatus.FAILED);
+                    throw new Error();
+                } else return res.json();
+            })
             .then((data) => {
                 setFetchStatus(FetchStatus.DONE);
                 setFurnitures(data);
@@ -55,7 +103,8 @@ const Page: FC<PageProps> = ({}) => {
             }
 
             {
-                fetchStatus === FetchStatus.FAILED && <div>Ошибка загрузки избранных товаров</div>
+                fetchStatus === FetchStatus.FAILED && <div>Ошибка загрузки избранных товаров.
+                    Мы уже решаем эту проблему. Пожалуйста, попробуйте снова чуть позже.</div>
             }
 
             {

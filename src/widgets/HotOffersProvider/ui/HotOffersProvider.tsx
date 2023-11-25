@@ -7,7 +7,12 @@ interface HotOffersProviderProps {
 }
 
 const HotOffersProvider: FC<HotOffersProviderProps> = async ({}) => {
-    const offers: Offer[] = await fetchHotOffers();
+    let offers: Offer[] = [];
+    try {
+        offers = await fetchHotOffers();
+    } catch (e) {
+
+    }
 
     return (
         <div>

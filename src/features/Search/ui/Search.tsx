@@ -3,6 +3,7 @@ import {Dispatch, FC, SetStateAction, useState} from "react";
 import Image from "next/image";
 import search from "../../../../public/header/icon_searth.svg";
 import cross from "../../../../public/header/cross.svg";
+import {useRouter} from "next/navigation";
 
 interface SearchProps {
     isOpen: boolean;
@@ -10,9 +11,18 @@ interface SearchProps {
 }
 
 const Search: FC<SearchProps> = ({isOpen, setIsOpen}) => {
+    const [searchQuery, setSearchQuery] = useState<string>('')
+    const router = useRouter();
 
-    function handleSearch() {
+    function toggleSearch() {
             setIsOpen(!isOpen);
+    }
+
+    function handleSearch(e: React.FormEvent) {
+        e.preventDefault();
+        setSearchQuery('');
+        setIsOpen(false);
+        router.push('/search?q=' + searchQuery);
     }
 
     return (
@@ -26,13 +36,17 @@ const Search: FC<SearchProps> = ({isOpen, setIsOpen}) => {
                         </g>
                     </svg>
                 </span>
-                <input
-                    placeholder="Искать"
-                    className="px-1.5 outline-0 bg-fon" type="text"
-                />
+                <form onSubmit={(e) => handleSearch(e)}>
+                    <input
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        value={searchQuery}
+                        placeholder="Искать"
+                        className="px-1.5 outline-0 bg-fon" type="text"
+                    />
+                </form>
             </div>
 
-            <div onClick={handleSearch} className="w-10 h-10 flex justify-center items-center md:hidden">
+            <div onClick={toggleSearch} className="w-10 h-10 flex justify-center items-center md:hidden">
                 {
                     isOpen
                     ? <Image src={cross} height={18} width={18} alt='Закрыть поиск'/>

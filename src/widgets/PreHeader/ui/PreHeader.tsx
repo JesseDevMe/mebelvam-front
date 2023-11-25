@@ -23,20 +23,28 @@ const PreHeader: FC<PreHeaderProps> = async ({}) => {
                     <a href={`tel:${staticInf.telephone}`}>{staticInf.telephone}</a>
 
                     <div className="flex gap-x-2.5">
-                        <a target="_blank" href={staticInf.vkLink || ''}>
-                            <Image width={24} height={24} src={vk} alt="ВК"/>
-                        </a>
-                        <a target="_blank" href={staticInf.telegramLink || ''}>
-                            <Image width={24} height={24} src={telegram} alt="Телеграм"/>
-                        </a>
-                        <a target="_blank" href={staticInf.whatsAppLink || ''}>
-                            <Image width={24} height={24} src={whatsapp} alt="Вотсапп"/>
-                        </a>
-                        <a target="_blank" href={staticInf.viberLink || ''}>
-                            <Image width={24} height={24} src={viber} alt="Вайбер"/>
-                        </a>
+                        { staticInf.vkLink &&
+                            <a target="_blank" href={staticInf.vkLink}>
+                                <Image src={vk} alt="ВК"/>
+                            </a>
+                        }
+                        { staticInf.telegramLink &&
+                            <a target="_blank" href={staticInf.telegramLink}>
+                                <Image src={telegram} alt="Телеграм"/>
+                            </a>
+                        }
+                        { staticInf.whatsAppLink &&
+                            <a target="_blank" href={staticInf.whatsAppLink}>
+                                <Image src={whatsapp} alt="Вотсапп"/>
+                            </a>
+                        }
+                        { staticInf.viberLink &&
+                            <a target="_blank" href={staticInf.viberLink}>
+                                <Image src={viber} alt="Вайбер"/>
+                            </a>
+                        }
                         <a target="_blank" href={'mailto:' + staticInf.email}>
-                            <Image width={24} height={24} src={mail} alt="Почта"/>
+                            <Image src={mail} alt="Почта"/>
                         </a>
                     </div>
                 </div>

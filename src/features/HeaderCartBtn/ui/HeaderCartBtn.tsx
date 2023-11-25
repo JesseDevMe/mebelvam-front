@@ -39,7 +39,7 @@ const HeaderCartBtn: FC<HeaderCartBtnProps> = ({ isMobile }) => {
                         <Image src={cart} alt=''/>
                         <span>({count})</span>
                     </div>
-                    <span>Корзина</span>
+                    <span className="hidden min-[390px]:block">Корзина</span>
                 </Link>
             }
 

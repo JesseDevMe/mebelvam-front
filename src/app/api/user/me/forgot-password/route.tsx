@@ -14,6 +14,7 @@ export async function POST(request: NextRequest) {
                 email: email,
             }
         ),
+        next: {revalidate: 0}
     })
 
     const data = await res.json();

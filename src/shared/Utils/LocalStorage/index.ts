@@ -83,6 +83,11 @@ export function addToCart(item: CartItem) {
     window.dispatchEvent(new Event("storage"));
 }
 
+export function updateCart(items: CartItem[]) {
+    localStorage.setItem('cart', JSON.stringify(items));
+    window.dispatchEvent(new Event("storage"));
+}
+
 export function deleteFromCart(item: CartItem) {
     const cart: CartItem[] = getCart();
 

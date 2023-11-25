@@ -1,4 +1,3 @@
-import {fetchStrapi} from "@/shared/API";
 import {NextRequest} from "next/server";
 import {fetchPromos} from "@/entities/Promo";
 
@@ -10,11 +9,13 @@ export async function GET(request: NextRequest) {
         page = undefined;
     }
 
-    const promos = await fetchPromos({page});
-
-
-    return Response.json(
-        promos
-    );
+    try {
+        const promos = await fetchPromos({page});
+        return Response.json(
+            promos
+        );
+    } catch (e) {
+        return Response.json({error: {message: e}}, {status: 500})
+    }
 
 }

@@ -12,9 +12,12 @@ interface HotOfferProps {
 }
 
 const HotOffer: FC<HotOfferProps> = ({ offers }) => {
-    const navigationPrevRef = useRef(null)
-    const navigationNextRef = useRef(null)
+    const navigationPrevRef = useRef(null);
+    const navigationNextRef = useRef(null);
 
+    if (offers.length === 0) {
+        return;
+    }
 
     return (
         <div className="max-w-[1520px] w-full mx-auto">

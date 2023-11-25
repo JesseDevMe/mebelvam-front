@@ -33,8 +33,6 @@ const PriceFilter: FC<PriceFilterProps> = ({subcategoryId}) => {
 
     return (
         <div>
-            {fetchStatus === FetchStatus.LOADING && <div>Грузится фильтр цены</div>}
-            {fetchStatus === FetchStatus.FAILED && <div>Не получилось загрузить фильтр цены</div>}
             {fetchStatus === FetchStatus.DONE && <SizeFilter title={'Цена'} min={min} max={max} setToStore={setPrice} storeValue={price}/>}
         </div>
     );

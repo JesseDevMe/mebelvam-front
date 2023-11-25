@@ -13,17 +13,18 @@ interface PromoCardProps extends Promo{
 const PromoCard: FC<PromoCardProps> = ({ id, name, price, old_price, size, color, imagesUrl, variantId, attrId }) => {
 
     return (
-        <Link href={`/product/${id}`} className="flex relative flex-col gap-y-2 border border-[#E9E9E9] rounded bg-fon min-w-[165px] min-h-[300px]
-                min-[560px]:min-w-[175px] md:min-w-[220px] shadow-[0px_4px_7px_0px_rgba(182,182,178,0.25)] md:shadow-[0px_7px_30px_0px_rgba(182,182,178,0.20)] [&_#name]:hover:text-accent">
+        <Link href={`/product/${id}`} className="flex relative flex-col gap-y-2 border border-[#E9E9E9] rounded bg-fon min-w-[0px] min-h-[300px]
+                shadow-[0px_4px_7px_0px_rgba(182,182,178,0.25)] md:shadow-[0px_7px_30px_0px_rgba(182,182,178,0.20)] [&_#name]:hover:text-accent">
             <MiniCardSlider>
                 {
-                    imagesUrl.map((imageUrl, index) =>
-                        <div key={imageUrl} className="relative overflow-hidden w-full aspect-[1/1] shrink-0">
+                    imagesUrl.map((imageUrl) =>
+                        <div key={imageUrl} className="relative overflow-hidden aspect-[1/1]">
                             <Image
                                 draggable={false} fill
                                 sizes="50vw, (min-width: 560px) 33vw, (min-width: 950px) 25vw, (min-width: 1400px) 20vw"
                                 style={{objectFit: 'contain'}}
-                                src={imageUrl} alt={''}/>
+                                src={imageUrl} alt={''}
+                            />
                         </div>
                     )
                 }
