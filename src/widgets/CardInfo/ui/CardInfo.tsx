@@ -23,7 +23,7 @@ const CardInfo: FC<CardInfoProps> = ({ furniture }) => {
     useEffect(() => {
         const favoritesId = getFavorites();
         setIsFavorite(favoritesId.includes(furniture.id));
-    }, []);
+    }, [furniture.id]);
 
     function variantChangeHandler(value: variant) {
         setCurVariant(value);
@@ -77,8 +77,8 @@ const CardInfo: FC<CardInfoProps> = ({ furniture }) => {
             <div className="flex flex-col gap-y-7">
                 <div className="flex justify-between items-center">
                     <h1 className="font-montserrat text-base font-semibold md:text-xl">{furniture.name}</h1>
-                    <div className="cursor-pointer" onClick={favoriteToggle}>
-                        <svg className="p-1 md:p-0.5" xmlns="http://www.w3.org/2000/svg" width="32" height="29" viewBox="0 0 32 29"
+                    <div className="cursor-pointer group" onClick={favoriteToggle}>
+                        <svg className="p-1 md:p-0.5 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" width="32" height="29" viewBox="0 0 32 29"
                              fill={`${isFavorite ? '#A50B34' : 'none'}`}>
                             <path
                                 d="M3.53502 16.128L3.53421 16.1272C1.94546 14.4997 1.03369 12.2942 1.00091 9.97905C0.968142 7.66383 1.81713 5.43163 3.35961 3.75691C4.90129 2.08305 7.01283 1.09868 9.24241 1.00448C11.3428 0.915741 13.5312 2.16451 15.3236 3.81507C15.7065 4.16758 16.2956 4.16758 16.6784 3.81507C18.4711 2.16429 20.6574 0.915749 22.7576 1.00448C24.9872 1.09868 27.0987 2.08305 28.6404 3.75691C30.1829 5.43163 31.0319 7.66383 30.9991 9.97905C30.9663 12.2942 30.0545 14.4997 28.4658 16.1272L28.465 16.128L17.5448 27.3406C17.1304 27.7661 16.5742 28 16 28C15.4258 28 14.8696 27.7661 14.4553 27.3407C14.4552 27.3407 14.4552 27.3407 14.4552 27.3406L3.53502 16.128Z"

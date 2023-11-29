@@ -1,4 +1,4 @@
-import { fetchSubcategories, fetchSubcategory } from "./model";
+import { fetchSubcategories, fetchSubcategory, fetchSubcategoriesPath } from "./model";
 
 export type { Subcategory } from "./types"
-export { fetchSubcategories, fetchSubcategory };
+export { fetchSubcategories, fetchSubcategory, fetchSubcategoriesPath };

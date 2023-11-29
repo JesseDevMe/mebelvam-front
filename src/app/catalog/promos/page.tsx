@@ -1,77 +1,21 @@
-'use client'
-import {FC, useEffect, useState} from "react";
-import {FurnitureGrid} from "@/widgets/FurnitureGrid";
-import {PromoCard, Promos} from "@/entities/Promo";
-import {Pagination} from "@/features/Pagination";
-import {useSearchParams} from "next/navigation";
-import {FurnitureCardSkeleton} from "@/entities/FurnitureCard";
-
-enum FetchStatus {
-    LOADING,
-    FAILED,
-    DONE,
-}
+import {FC} from "react";
+import {PromosClientWrapper} from "@/widgets/PromosClientWrapper";
+import {Metadata} from "next";
 
 interface PageProps {
 
 }
 
+export const metadata: Metadata = {
+    title: 'Акции - Мебель Вам',
+    description: 'Мебельный магазин в Севастополе "Мебель Вам". Акционные товары. Ловите самое выгодное предложение.',
+}
+
 const Page: FC<PageProps> = ({}) => {
-    const [fetchStatus, setFetchStatus] = useState<FetchStatus>(FetchStatus.LOADING);
-    const [promos, setPromos] = useState<Promos>();
-    const searchParams = useSearchParams();
-    const pageParam = searchParams.get('page');
-
-
-    useEffect(() => {
-        setFetchStatus(FetchStatus.LOADING);
-        fetch(`/api/promos${pageParam ? '?page=' + pageParam : ''}`)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                } else {
-                    setFetchStatus(FetchStatus.FAILED);
-                    throw new Error();
-                }
-            })
-            .then((data) => {
-                setPromos(data);
-                setFetchStatus(FetchStatus.DONE);
-            })
-            .catch(() => setFetchStatus(FetchStatus.FAILED));
-
-    }, [pageParam])
 
     return (
         <div className="max-w-[1520px] w-full mx-auto bg-fon pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20">
-            { fetchStatus === FetchStatus.DONE && promos &&
-                <>
-                    <FurnitureGrid>
-                    {
-                        promos.data.map((promo) =>
-                            <PromoCard key={promo.id + promo.size} id={promo.id} name={promo.name} price={promo.price}
-                                       old_price={promo.old_price} size={promo.size} color={promo.color}
-                                       imagesUrl={promo.imagesUrl} variantId={promo.variantId} attrId={promo.attrId}/>
-                        )
-                    }
-                    </FurnitureGrid>
-                    <Pagination pageCount={promos.meta.pagination.pageCount}/>
-                </>
-            }
-
-            { fetchStatus === FetchStatus.FAILED &&
-                'Не получилось загрузить акционные товары. Мы уже решаем проблему. Пожалуйста, попробуйте позже.'
-            }
-
-            { fetchStatus === FetchStatus.LOADING &&
-                <FurnitureGrid>
-                    {
-                        [...new Array(20)].map((_, index) =>
-                            <FurnitureCardSkeleton key={index}/>
-                        )
-                    }
-                </FurnitureGrid>
-            }
+           <PromosClientWrapper/>
         </div>
     );
 };

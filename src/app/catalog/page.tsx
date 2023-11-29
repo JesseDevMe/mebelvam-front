@@ -7,6 +7,12 @@ import collections_img from "../../../public/Pages/Home/Catalog/cat1.jpeg";
 import {fetchStrapi} from "@/shared/API";
 import Link from "next/link";
 import Image from "next/image";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Каталог - Мебель Вам',
+    description: 'Мебельный магазин в Севастополе "Мебель Вам". Каталог магазина. У нас большой ассортимент за приятную цену.',
+}
 
 interface PageProps {
 
@@ -56,6 +62,19 @@ const Page: FC<PageProps> = async ({}) => {
 
     }
 
+    let promosCount: number | undefined = undefined;
+    {
+        const res = await fetchStrapi(`/furnitures?pagination[pageSize]=1&fields[0]=name&filters[variants][attributes][old_price][$notNull]=true`);
+
+        if (!res.ok) {
+            promosCount = undefined;
+        } else {
+            const { meta } = await res.json();
+            promosCount = meta.pagination.total;
+        }
+
+    }
+
     return (
         <div className="max-w-[1520px] w-full mx-auto bg-fon pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 font-montserrat">
             <div className="lg:mt-10 lg:mb-[55px]">
@@ -90,16 +109,17 @@ const Page: FC<PageProps> = async ({}) => {
                             />
                         )
                     }
+                    {promosCount !== undefined &&
+                        <Link href={`/catalog/promos`} className="rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
+                            <div className="w-full aspect-[4/3] bg-accent flex justify-center items-center text-light font-montserrat text-4xl lg:text-5xl font-bold">
+                                АКЦИИ
+                            </div>
 
-                    <Link href={`/catalog/promos`} className="rounded overflow-hidden bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
-                        <div className="w-full aspect-[4/3] bg-accent flex justify-center items-center text-light font-montserrat text-5xl font-bold">
-                            АКЦИИ
-                        </div>
-
-                        <div className="font-semibold text-sm md:text-base py-5 px-2.5">
-                            Акции {0 !== undefined ? `(${0})` : ''}
-                        </div>
-                    </Link>
+                            <div className="font-semibold text-sm md:text-base py-5 px-2.5">
+                                Акции
+                            </div>
+                        </Link>
+                    }
                 </>
             </CatalogGrid>
         </div>

@@ -29,7 +29,7 @@ const PriceFilter: FC<PriceFilterProps> = ({subcategoryId}) => {
                 setFetchStatus(FetchStatus.DONE);
             })
             .catch(() => setFetchStatus(FetchStatus.FAILED));
-    }, [])
+    }, [subcategoryId])
 
     return (
         <div>

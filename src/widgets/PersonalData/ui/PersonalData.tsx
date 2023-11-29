@@ -1,6 +1,9 @@
 'use client'
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import {useFormContext} from "react-hook-form"
+import {routesGetMe} from "@/shared/Utils/RouteHandlers";
+import {UserData} from "@/entities/User";
+import useUserStore from "@/entities/User/store/useUserStore";
 
 type Inputs = {
     name: string;
@@ -19,7 +22,32 @@ const PersonalData: FC<PersonalDataProps> = ({}) => {
         register,
         watch,
         formState: { errors },
-    } = useFormContext<Inputs>()
+        setValue
+    } = useFormContext<Inputs>();
+
+    const setIsAuth = useUserStore(state => state.setIsAuth);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            return;
+        }
+
+        routesGetMe(token)
+            .catch((error) => {
+                if (error === 401) {
+                    localStorage.removeItem('token');
+                    setIsAuth(false);
+                }
+            })
+            // @ts-ignore
+            .then((data: UserData) => {
+                data.name && setValue('name', data.name);
+                data.middleName && setValue('middleName', data.middleName);
+                data.telephone && setValue('telephone', data.telephone);
+            })
+    }, [setIsAuth, setValue])
 
 
     return (
@@ -59,7 +87,7 @@ const PersonalData: FC<PersonalDataProps> = ({}) => {
                             {
                                 errors.telephone.type === 'required'
                                     ? 'Введите телефон'
-                                    : (errors.telephone.type === 'pattern' ? 'Проверьте номер на валидность' : '')
+                                    : (errors.telephone.type === 'pattern' ? 'Введен неверный телефон. Пример: +7 (978) 123 45 67' : '')
                             }
                         </p>
                     }

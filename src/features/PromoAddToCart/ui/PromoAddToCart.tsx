@@ -65,12 +65,12 @@ const PromoAddToCart: FC<PromoAddToCartProps> = ({ furnitureId, variantId, attrI
 
     useEffect(() => {
         setIsInCart(isItemInCart(cartItem));
-    }, [])
+    }, [cartItem])
 
     return (
         <div
             onClick={cartHandler}
-            className="cursor-pointer relative bg-dark rounded w-[40px] h-[30px] md:h-[40px]"
+            className="cursor-pointer relative bg-dark hover:bg-black rounded w-[40px] h-[30px] md:h-[40px]"
         >
             <Image className="px-3 md:px-2.5" src={isInCart ? incart : icon_basket} fill alt="Добавить в корзину"/>
         </div>

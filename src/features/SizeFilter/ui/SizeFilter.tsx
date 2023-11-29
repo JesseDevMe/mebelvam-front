@@ -150,7 +150,8 @@ const SizeFilter: FC<SizeFilterProps> = ({ title, min, max, setToStore, storeVal
             max-w-[400px] md:max-w-fit relative`}
         >
             <h3
-                className={`flex justify-between items-center cursor-pointer gap-x-2.5 ${isOpen ? 'text-accent' : ''}`}
+                className={`flex justify-between items-center cursor-pointer hover:text-accent
+                    gap-x-2.5 ${isOpen ? 'text-accent' : ''}`}
                 onClick={handleToggle}
             >
                 <span>{title}</span>

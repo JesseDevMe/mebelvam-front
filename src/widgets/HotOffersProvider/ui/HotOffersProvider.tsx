@@ -1,6 +1,10 @@
 import {FC} from "react";
-import {HotOffer} from "@/widgets/HotOffer";
 import {fetchHotOffers, Offer} from "@/widgets/HotOffer/model";
+import dynamic from "next/dynamic";
+
+const HotOffer = dynamic(
+    () => import('@/widgets/HotOffer/ui/HotOffer'),
+);
 
 interface HotOffersProviderProps {
 

@@ -25,7 +25,7 @@ const Footer: FC<FooterProps> = async ({}) => {
                 <div className="order-1 max-w-[400px]">
                     <h2 className="font-normal text-sm">Контакты</h2>
                     <p className="mt-2.5"><span className="font-bold mt-2.5">Телефон:</span>
-                        <a href={`tel:${staticInf.telephone}`}> {staticInf.telephone}</a>
+                        <a className="hover:text-accent" href={`tel:${staticInf.telephone}`}> {staticInf.telephone}</a>
                     </p>
                     <div className="flex gap-x-2.5 mt-3.5">
                         { staticInf.vkLink &&

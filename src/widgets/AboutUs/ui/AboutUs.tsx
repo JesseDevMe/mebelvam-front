@@ -19,11 +19,14 @@ const AboutUs: FC<AboutUsProps> = async ({}) => {
         <div className="bg-light">
             <div id="aboutus"
                  className="max-w-[1520px] w-full mx-auto px-2.5 md:px-5 lg:px-10 xl:px-20 py-8 lg:py-12 md:grid md:grid-cols-[auto_auto] gap-x-5">
-                <h2 className="text-xl lg:text-3xl font-montserrat font-semibold text-center leading-normal md:col-span-2">О
-                    нас</h2>
-                <h3 className="text-base lg:text-xl mt-4 lg:mt-12 font-montserrat font-semibold text-center lg:text-start leading-normal md:col-span-2 lg:col-span-1">Интернет-магазин
-                    мебели в
-                    Севастополе <span className="block lg:inline">&quot;МЕБЕЛЬ ВАМ&quot;</span>
+                <h2
+                    className="text-xl lg:text-2xl font-montserrat font-semibold text-center leading-normal md:col-span-2"
+                >
+                    О нас
+                </h2>
+                <h3 className="text-base lg:text-xl mt-4 lg:mt-12 font-montserrat font-semibold text-center lg:text-start leading-normal md:col-span-2 lg:col-span-1">
+                    Интернет-магазин мебели в Севастополе
+                    <span className="block lg:inline"> &quot;МЕБЕЛЬ ВАМ&quot;</span>
                 </h3>
                 <div className="flex flex-col gap-y-4 mt-4 lg:mt-12">
                     <p>

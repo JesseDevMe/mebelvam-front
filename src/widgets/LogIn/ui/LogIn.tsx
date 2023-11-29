@@ -100,7 +100,7 @@ const LogIn: FC<LogInProps> = ({ resetHandler, registerHandler }) => {
 
                 <button
                     disabled={status === STATUS.DONE || status === STATUS.LOADING}
-                    className="py-[15px] bg-dark rounded max-w-[300px] w-full mt-[30px] text-light font-montserrat
+                    className="py-[15px] bg-dark hover:bg-black rounded max-w-[300px] w-full mt-[30px] text-light font-montserrat
                         font-semibold cursor-pointer" type="submit"
                 >
                     { status === STATUS.LOADING
@@ -140,7 +140,7 @@ const LogIn: FC<LogInProps> = ({ resetHandler, registerHandler }) => {
                 }
             </form>
             <div
-                className="py-5 mt-2.5 text-center max-w-[280px] mx-auto text-base font-montserrat cursor-pointer"
+                className="py-5 mt-2.5 text-center max-w-[280px] mx-auto text-base font-montserrat cursor-pointer hover:text-accent"
                 onClick={resetHandler}
             >
                 Забыли пароль?
@@ -161,7 +161,10 @@ const LogIn: FC<LogInProps> = ({ resetHandler, registerHandler }) => {
 
                 </Link>
             </div>
-            <button onClick={registerHandler} className="block py-[15px] bg-dark rounded max-w-[300px] w-full mt-[30px] mx-auto text-light font-montserrat font-semibold cursor-pointer">
+            <button onClick={registerHandler} className="block py-[15px] bg-dark hover:bg-black rounded
+                max-w-[300px] w-full mt-[30px] mx-auto text-light font-montserrat font-semibold
+                cursor-pointer"
+            >
                 Зарегистрироваться
             </button>
         </>

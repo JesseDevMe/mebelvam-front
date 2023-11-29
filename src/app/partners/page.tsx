@@ -2,6 +2,12 @@ import {FC} from "react";
 import {CrumbRouter} from "@/shared/CrumbRouter";
 import {PartnerCard} from "@/entities/Partner";
 import {fetchPartners} from "@/entities/Partner/model";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Сотрудничество - Мебель Вам',
+    description: 'Мебельный магазин в Севастополе "Мебель Вам". Мы сотрудничаем с лучшими производителями мебели. У нас Вы можете заказать и купить недорого корпусную мебель ведущих производителей по самой низкой цене!',
+}
 
 interface PageProps {
 }
@@ -21,9 +27,9 @@ const Page: FC<PageProps> = async ({}) => {
                     ]}
                 />
 
-                <p className="font-montserrat text-base font-semibold text-center max-w-[625px] mx-auto">
-                    У нас Вы можете заказать и купить недорого корпусную мебель  ведущих производителей по самой низкой цене!
-                </p>
+                <h1 className="font-montserrat text-base font-semibold text-center max-w-[625px] mx-auto">
+                    У нас Вы можете заказать и купить недорого корпусную мебель ведущих производителей по самой низкой цене!
+                </h1>
 
                 <p className="mt-[30px] font-montserrat text-base font-semibold text-center max-w-[625px] mx-auto">
                     Мы сотрудничаем с лучшими производителями мебели

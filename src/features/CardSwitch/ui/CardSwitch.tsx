@@ -18,14 +18,14 @@ const CardSwitch: FC<CardSwitchProps> = ({ furniture }) => {
                 <ul className="flex gap-x-7 md:text-base md:font-montserrat lg:text-xl h-fit">
                     <li
                         onClick={() => setCurSwitch(1)}
-                        className={`cursor-pointer py-0.5 px-[1px] ${curSwitch === 1 ? 'border-b-2 border-dark font-bold' : ''}`}
+                        className={`cursor-pointer hover:text-accent py-0.5 px-[1px] ${curSwitch === 1 ? 'border-b-2 border-dark font-bold hover:text-dark' : ''}`}
                     >
                         Описание
                     </li>
                     { furniture.modules && furniture.modules.length > 0 &&
                         <li
                             onClick={() => setCurSwitch(2)}
-                            className={`cursor-pointer py-0.5 px-[1px] ${curSwitch === 2 ? 'border-b-2 border-dark font-bold' : ''}`}
+                            className={`cursor-pointer hover:text-accent py-0.5 px-[1px] ${curSwitch === 2 ? 'border-b-2 border-dark font-bold hover:text-dark' : ''}`}
                             >
                             Модули
                         </li>

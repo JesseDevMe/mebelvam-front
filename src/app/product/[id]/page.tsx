@@ -4,12 +4,28 @@ import {CatalogRouter, Route} from "@/shared/CatalogRouter";
 import {CardSlider} from "@/shared/Slider";
 import {CardInfo} from "@/widgets/CardInfo";
 import {CardSwitch} from "@/features/CardSwitch";
-import {StillQuestions} from "@/widgets/StillQuestions";
 import {fetchStatic, StaticInf} from "@/entities/Static";
 import {notFound} from "next/navigation";
+import {Metadata} from "next";
+import dynamic from "next/dynamic";
+import {StillQuestions} from "@/widgets/StillQuestions";
 
 interface PageProps {
     params: { id: number }
+}
+
+export async function generateMetadata(
+    { params }: PageProps,
+): Promise<Metadata> {
+    try {
+        const furniture: Furniture = await fetchFurniture(params.id);
+        return {
+            title: furniture.name + ' - Мебель Вам',
+            description: `${furniture.name} по выгодной цене в мебельном магазине Севастополя "Мебель Вам", у нас покупают мебель по низким ценам.`
+        };
+    } catch (error) {
+        return {};
+    }
 }
 
 const Page: FC<PageProps> = async ({ params }) => {
@@ -23,7 +39,7 @@ const Page: FC<PageProps> = async ({ params }) => {
             return (
             <div className="pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 max-w-[1520px] w-full mx-auto">
                 <p className="mt-5">
-                    Не удалось загрузить страницу товара. Пожалуйста, попробуйте снова немного позже.
+                    Не удалось загрузить страницу коллекции. Пожалуйста, попробуйте снова немного позже.
                     Мы уже заняты решением этой проблемы.
                 </p>
             </div>

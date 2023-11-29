@@ -12,8 +12,10 @@ const CartTotalInfo: FC<CartTotalInfoProps> = ({}) => {
 
 
     return (
-        <div className="border rounded bg-fon shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] px-5 py-[30px] lg:min-w-[350px]">
-            <Link href={'/cart/order'} className="block cursor-pointer rounded bg-dark py-4 text-center text-light font-montserrat text-base font-semibold">
+        <div className="border rounded bg-fon shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] px-5 py-[30px] lg:min-w-[350px] mb-7">
+            <Link href={'/cart/order'} className="block cursor-pointer rounded bg-dark hover:bg-black py-4
+                text-center text-light font-montserrat text-base font-semibold"
+            >
                 Перейти к оформлению
             </Link>
             <div className="mt-7">

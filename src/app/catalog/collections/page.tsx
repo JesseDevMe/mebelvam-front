@@ -3,6 +3,12 @@ import {CatalogRouter} from "@/shared/CatalogRouter";
 import {CatalogGrid} from "@/widgets/CatalogGrid";
 import {fetchCollections} from "@/entities/Collection/model";
 import {CollectionCard} from "@/entities/Collection";
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Коллекции - Мебель Вам',
+    description: 'Мебельный магазин в Севастополе "Мебель Вам". Каталог коллекций от ведущих производителей мебели.',
+}
 
 interface PageProps {
 

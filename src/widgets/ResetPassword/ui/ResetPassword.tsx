@@ -81,7 +81,8 @@ const ResetPassword: FC<ResetPasswordProps> = ({ backHandler }) => {
 
                 <button
                     disabled={status === STATUS.DONE || status === STATUS.LOADING}
-                    className="py-[15px] bg-dark rounded max-w-[300px] w-full mt-[30px] text-light font-montserrat font-semibold cursor-pointer"
+                    className="py-[15px] bg-dark hover:bg-black rounded max-w-[300px] w-full mt-[30px]
+                        text-light font-montserrat font-semibold cursor-pointer"
                     type="submit"
                 >
                     { status === STATUS.LOADING

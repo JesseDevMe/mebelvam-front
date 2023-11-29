@@ -1,11 +1,21 @@
 'use client'
 import {FC, useEffect, useState} from "react";
-import account from "../../../../public/header/personal_account.svg";
-import Image from "next/image";
-import {LogIn} from "@/widgets/LogIn";
-import {ResetPassword} from "@/widgets/ResetPassword";
-import {Register} from "@/widgets/Register";
 import useLogInStore from "@/features/LogInModal/store/useLogInStore";
+import dynamic from "next/dynamic";
+import {LoadingSpinner} from "@/shared/LoadingSpinner";
+
+const LogIn = dynamic(
+    () => import('@/widgets/LogIn/ui/LogIn'),
+    {loading: () => <div className="w-fit mx-auto mt-8"><LoadingSpinner/></div>}
+);
+const ResetPassword = dynamic(
+    () => import('@/widgets/ResetPassword/ui/ResetPassword'),
+    {loading: () => <div className="w-fit mx-auto mt-8"><LoadingSpinner/></div>}
+);
+const Register = dynamic(
+    () => import('@/widgets/Register/ui/Register'),
+    {loading: () => <div className="w-fit mx-auto mt-8"><LoadingSpinner/></div>}
+);
 
 enum WINDOW {
     LOG_IN,

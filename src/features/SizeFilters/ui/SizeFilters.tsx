@@ -47,7 +47,7 @@ const SizeFilters: FC<SizeFiltersProps> = ({isWidth, isHeight, isDepth, subcateg
                 setFetchStatus(FetchStatus.DONE);
             })
             .catch(() => setFetchStatus(FetchStatus.FAILED));
-    }, [])
+    }, [subcategoryId])
 
     return (
         <>

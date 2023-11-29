@@ -34,7 +34,7 @@ const ManufacturerFilter: FC<ManufacturerFilterProps> = ({ subcategoryId }) => {
                 setFetchStatus(FetchStatus.DONE);
             })
             .catch(() => setFetchStatus(FetchStatus.FAILED));
-    }, [])
+    }, [subcategoryId])
 
     return (
         <div>

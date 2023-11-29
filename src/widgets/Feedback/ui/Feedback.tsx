@@ -12,11 +12,11 @@ const Feedback: FC<FeedbackProps> = ({}) => {
 
     return (
         <div className="relative">
-            <div id="feedback" className="rounded-[10px] max-w-[1520px] w-full mx-auto relative overflow-hidden pt-4 pb-4 bg-[rgba(242,242,241,0.80)]">
+            <div id="feedback" className="rounded-[10px] max-w-[1520px] w-full mx-auto relative overflow-hidden pt-8 lg:py-[50px] pb-4 bg-[rgba(242,242,241,0.80)]">
                 <Image src={bg} fill style={{objectFit: "cover", zIndex: -1}} alt=""/>
-                <h2 className="text-center text-xl font-montserrat font-semibold">Отзывы</h2>
+                <h2 className="text-center text-xl font-montserrat font-semibold lg:text-2xl mb-5">Отзывы</h2>
 
-                <div className="mt-5 px-7 md:pl-12 lg:px-20 flex gap-x-7 overflow-auto snap-mandatory snap-x
+                <div className="px-7 md:pl-12 lg:px-20 flex gap-x-7 overflow-auto snap-mandatory snap-x
                             scroll-smooth will-change-scroll pb-8 select-none">
                     {
                         comments.map((comment) =>

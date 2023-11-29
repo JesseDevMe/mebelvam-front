@@ -144,7 +144,7 @@ const CardAddCart: FC<CardAddCartProps> = ({ furnitureId, curAttr, curVariant })
             </div>
 
             <div
-                className="text-light flex justify-center gap-x-3.5 bg-dark px-[60px] py-3.5 w-fit min-w-[250px] rounded-[5px] cursor-pointer"
+                className="text-light flex justify-center gap-x-3.5 bg-dark hover:bg-black px-[60px] py-3.5 w-fit min-w-[250px] rounded-[5px] cursor-pointer"
                 onClick={toCartHandler}
             >
                 {isInCart && <Image src={incart} alt='В корзине'/>}

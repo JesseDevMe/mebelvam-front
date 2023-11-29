@@ -118,7 +118,7 @@ const MyPersonalData: FC<MyPersonalDataProps> = ({}) => {
                 data.email && setValue('email', data.email);
                 setFetchStatus(FetchStatus.DONE);
             })
-    }, [])
+    }, [setIsAuth, setValue])
 
     return (
         <div className="bg-fon border rounded py-5 px-5 shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)]">
@@ -177,7 +177,7 @@ const MyPersonalData: FC<MyPersonalDataProps> = ({}) => {
 
                     <button
                         disabled={actionStatus === STATUS.LOADING}
-                        className="mt-10 bg-dark rounded py-4 w-full text-light font-montserrat font-semibold text-base"
+                        className="mt-10 bg-dark hover:bg-black rounded py-4 w-full text-light font-montserrat font-semibold text-base"
                         type="submit"
                     >
                         { actionStatus === STATUS.LOADING

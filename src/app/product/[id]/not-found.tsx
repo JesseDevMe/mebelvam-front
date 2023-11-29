@@ -16,9 +16,9 @@ const NotFound: FC<NotFoundProps> = ({}) => {
     const router = useRouter();
 
     return (
-        <div className="max-w-[1520px] w-full mx-auto px-2.5 md:px-5 lg:px-10 xl:px-20">
+        <div className="w-full h-full">
             <div className="relative w-full h-full min-h-[800px] pt-[162px] md:pt-[250px] md:min-h-[900px]">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[340px] h-[160px] md:w-[500px] lg:left-5 lg:translate-x-0">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[340px] h-[120px] md:h-[160px] md:w-[500px] lg:left-[20%] lg:-translate-x-0">
                     <Image
                         fill style={{objectFit: "contain"}}
                         sizes="340px, (min-width: 768px) 500px"

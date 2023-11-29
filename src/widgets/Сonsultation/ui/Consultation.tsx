@@ -18,9 +18,9 @@ const Consultation: FC<ConsultationProps> = async ({}) => {
 
     return (
         <div id="consultation" className="relative pb-10">
-            <div className="max-w-[1520px] w-full mx-auto relative py-8 px-2.5 md:px-5 lg:px-10 xl:px-20 bg-[rgba(242,242,241,0.80)] rounded-[10px] overflow-hidden">
+            <div className="max-w-[1520px] w-full mx-auto relative py-8 lg:py-[50px] px-2.5 md:px-5 lg:px-10 xl:px-20 bg-[rgba(242,242,241,0.80)] rounded-[10px] overflow-hidden">
                 <Image fill className="-z-10 object-cover" src={bg} alt=""/>
-                <h2 className="font-montserrat text-xl lg:text-3xl font-semibold text-center">Получите консультацию</h2>
+                <h2 className="font-montserrat text-xl lg:text-2xl font-semibold text-center">Получите консультацию</h2>
                 <p className="mt-5 lg:mt-8 text-center">Оставьте заявку прямо сейчас, менеджер нашего интернет-магазина
                     свяжется с Вами </p>
                 <ConsultationForm/>

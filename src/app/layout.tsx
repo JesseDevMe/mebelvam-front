@@ -4,9 +4,9 @@ import {Header} from '../widgets/Header'
 import {NavBarM} from "@/widgets/NavBarM";
 import {Footer} from "@/widgets/Footer";
 import {PreHeader} from "@/widgets/PreHeader";
-import {LogInModal} from "@/features/LogInModal";
+import dynamic from "next/dynamic";
 
-// px-2.5 md:px-5 lg:px-10 xl:px-20
+const LogInModal = dynamic(() => import('../features/LogInModal/ui/LogInModal'))
 
 export default function RootLayout({
   children,

@@ -1,5 +1,5 @@
 import CategoryCard from "./ui/CategoryCard";
-import { fetchCategories } from "./model";
+import { fetchCategories, fetchCategoriesSlug } from "./model";
 
 export type { Category } from "./types"
-export { CategoryCard, fetchCategories };
+export { CategoryCard, fetchCategories, fetchCategoriesSlug };

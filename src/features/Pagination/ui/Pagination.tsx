@@ -37,25 +37,26 @@ const Pagination: FC<PaginationProps> = ({ pageCount }) => {
         <div className="flex flex-col gap-y-7 items-center mt-7">
             <div
                 onClick={nextPage}
-                className={`cursor-pointer px-[88px] py-[15px] rounded text-fon bg-dark ${curPage >= (pageCount || 1) ? 'hidden' : 'block'}`}
+                className={`cursor-pointer px-[88px] py-[15px] text-center rounded text-fon bg-dark 
+                    ${curPage >= (pageCount || 1) ? 'hidden' : 'block'} hover:bg-black`}
             >
                 Смотреть еще
             </div>
 
-            <ul className="flex font-roboto h-10 border border-dark rounded w-fit bg-fon cursor-pointer">
+            <ul className="flex font-roboto border border-dark rounded w-fit bg-fon cursor-pointer flex-wrap gap-y-2.5">
                 {
-                    curPage > 10 &&
+                    curPage > 5 &&
                     <>
                         <li
                             key={0}
-                            className={`flex justify-center items-center w-10 border-r border-dark`}
+                            className={`flex justify-center items-center w-10 border-r border-dark min-h-[40px]`}
                             onClick={() => setPage(1)}
                         >
                             {1}
                         </li>
                         <li
                             key={1}
-                            className={`flex justify-center items-center w-10 border-r border-dark`}
+                            className={`flex justify-center items-center w-10 border-r border-dark min-h-[40px]`}
                         >
                             ...
                         </li>
@@ -63,15 +64,16 @@ const Pagination: FC<PaginationProps> = ({ pageCount }) => {
                 }
                 {
                     [...new Array(pageCount)].map((el, index) => {
-                            if (curPage > 10 && (index < (curPage -3) || index > curPage + 6)) {
+                            if (curPage > 5 && (index < (curPage -2) || index > curPage + 1)) {
                                 return;
                             }
 
-                            if (curPage <= 10 && index > 10) return;
+                            if (curPage <= 5 && index > 5) return;
 
                             return <li
                                 key={index}
-                                className={`flex justify-center items-center w-10 border-r border-dark ${curPage === (index + 1) ? 'bg-dark text-fon' : ''}`}
+                                className={`flex justify-center items-center w-10 border-r min-h-[40px] border-dark 
+                                    ${curPage === (index + 1) ? 'bg-dark text-fon' : ''}`}
                                 onClick={() => setPage(index + 1)}
                             >
                                 {index + 1}
@@ -79,7 +81,7 @@ const Pagination: FC<PaginationProps> = ({ pageCount }) => {
                         }
                     )
                 }
-                <li onClick={nextPage} className={`flex justify-center items-center w-10 ${curPage >= (pageCount || 1) ? 'hidden' : 'block'}`}>
+                <li onClick={nextPage} className={`flex justify-center items-center w-10 ${curPage >= (pageCount || 1) ? 'hidden' : 'block'} min-h-[40px]`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"
                          fill="none">
                         <path

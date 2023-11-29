@@ -42,3 +42,21 @@ export async function fetchSubcategory(id: number): Promise<Subcategory> {
 
     return subcategory;
 }
+
+export async function fetchSubcategoriesPath(): Promise<string[]> {
+    const res =
+        await fetchStrapi('/subcategories?fields=slug&populate[category][fields]=slug&pagination[limit]=-1');
+
+    if (!res.ok) {
+        throw new Error(await res.json());
+    }
+
+    const { data } = await res.json();
+
+    return data.map((subcategory: any): string =>
+        subcategory.attributes.category.data.attributes.slug + '-' +
+        subcategory.attributes.category.data.id + '/' +
+        subcategory.attributes.slug + '-' +
+        subcategory.id
+    )
+}

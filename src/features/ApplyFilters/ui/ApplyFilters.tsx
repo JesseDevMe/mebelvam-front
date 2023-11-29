@@ -47,7 +47,7 @@ const ApplyFilters: FC<ApplyFiltersProps> = ({}) => {
 
     return (
         <div
-            className="py-2.5 px-10 bg-dark rounded text-light w-fit cursor-pointer"
+            className="py-2.5 px-10 bg-dark rounded text-light w-fit cursor-pointer hover:bg-black"
             onClick={clickHandler}
         >
             <span>Применить</span>

@@ -20,7 +20,7 @@ const PreHeader: FC<PreHeaderProps> = async ({}) => {
         <div className="z-50 border-x bg-[rgba(242,242,241,0.7)]">
             <div className="max-w-[1520px] mx-auto px-2.5 md:px-5 lg:px-10 xl:px-20 w-full">
                 <div className="hidden md:flex justify-between items-center pt-5 pb-2.5 border-b-2 border-dark">
-                    <a href={`tel:${staticInf.telephone}`}>{staticInf.telephone}</a>
+                    <a className="hover:text-accent" href={`tel:${staticInf.telephone}`}>{staticInf.telephone}</a>
 
                     <div className="flex gap-x-2.5">
                         { staticInf.vkLink &&

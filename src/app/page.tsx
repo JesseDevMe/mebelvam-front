@@ -8,8 +8,9 @@ import {Consultation} from "@/widgets/Сonsultation";
 import {HotOffersProvider} from "@/widgets/HotOffersProvider";
 import CatalogSuspense from "@/widgets/Catalog/ui/CatalogSuspense";
 export const metadata: Metadata = {
-  title: 'Главная страница',
-  description: 'Мебельный магазин мебель вам, купить мебель',
+  title: 'Мебель Вам - Главная страница',
+  description: 'Мебельный магазин в Севастополе "Мебель Вам". У нас вы можете ' +
+      'купить мебель от лучших производителей за низкую цену.',
 }
 
 interface PageProps {
@@ -21,7 +22,9 @@ const Page: FC<PageProps> = ({}) => {
   return (
       <div>
           <Welcome/>
-          <HotOffersProvider/>
+          <Suspense>
+              <HotOffersProvider/>
+          </Suspense>
           <Suspense fallback={<CatalogSuspense/>}>
               <Catalog/>
           </Suspense>

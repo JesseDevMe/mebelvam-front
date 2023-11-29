@@ -3,12 +3,17 @@ import Image from "next/image";
 import logo from "@/../public/header/logo.svg"
 import Link from "next/link";
 import {Menu} from "@/features/Menu";
-import {Search} from "@/features/Search";
 import {useEffect, useRef, useState} from "react";
 import heart from "@/../public/header/heart.svg";
 import {HeaderCartBtn} from "@/features/HeaderCartBtn";
 import {AccountLink} from "@/features/AccountLink";
+import dynamic from "next/dynamic";
+import search from "../../../../public/header/icon_searth.svg";
 
+const Search = dynamic(
+    () => import('@/features/Search/ui/Search'),
+    {loading: () => <Image src={search} height={24} width={24} alt='Поиск'/>}
+);
 
 const Header = () => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);

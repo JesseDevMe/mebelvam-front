@@ -222,3 +222,15 @@ export async function fetchFurnituresByName(name: string, page: number, sort: 'a
         meta: meta,
     }
 }
+
+export async function fetchFurnituresId(): Promise<number[]> {
+    const res = await fetchStrapi('/furnitures?fields=id&pagination[limit]=-1');
+
+    if (!res.ok) {
+        throw new Error(await res.json());
+    }
+
+    const { data } = await res.json();
+
+    return data.map((furniture: any): number => furniture.id);
+}

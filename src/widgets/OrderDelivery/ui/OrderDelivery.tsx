@@ -1,7 +1,5 @@
 'use client'
-import {FC, useEffect, useState} from "react";
-import Image from "next/image";
-import freeBus from "@/../public/Pages/Cart/FreeBus.svg";
+import {FC, useEffect} from "react";
 import useOrderStore, {METHOD} from "@/entities/Order/store/useOrderStore";
 
 interface OrderDeliveryProps {
@@ -54,7 +52,7 @@ const OrderDelivery: FC<OrderDeliveryProps> = ({}) => {
         } else {
             setMethod(METHOD.COURIER);
         }
-    }, [furnitures])
+    }, [furnitures, setMethod])
 
     return (
         <div className="mt-[30px] border rounded bg-fon shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] p-5">
@@ -63,10 +61,10 @@ const OrderDelivery: FC<OrderDeliveryProps> = ({}) => {
                 <div className="flex flex-col gap-y-5">
                     <div
                         className={`cursor-pointer border border-dark rounded px-2.5 py-4 flex flex-col items-center gap-3.5 font-montserrat 
-                                text-base ${method === METHOD.FREE && 'bg-dark text-light'}`}
+                                text-base ${method === METHOD.FREE ? 'bg-dark text-light' : 'hover:scale-[102%]'}`}
                         onClick={freeHandler}
                     >
-                        <div className="font-semibold">
+                        <div className="font-semibold text-center">
                             <svg className="inline-block mr-4" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M0 6.16667C0 4.97005 0.97005 4 2.16667 4H19.8333C21.03 4 22 4.97005 22 6.16667V8.24378L25.7258 9.29853C27.6628 9.84691 29 11.6152 29 13.6284V19.8333C29 19.8894 28.9979 19.945 28.9937 20H29C29.5523 20 30 20.4477 30 21C30 21.5523 29.5523 22 29 22H27C26.9881 22 26.9763 21.9998 26.9645 21.9994C26.9879 22.1629 27 22.33 27 22.5C27 24.433 25.433 26 23.5 26C21.567 26 20 24.433 20 22.5C20 22.327 20.0126 22.1569 20.0368 21.9906C19.9698 21.9968 19.902 22 19.8333 22H9.96463C9.98799 22.1633 10.0001 22.3303 10.0001 22.5C10.0001 24.433 8.43308 26 6.50008 26C4.56708 26 3.00008 24.433 3.00008 22.5C3.00008 22.3303 3.01217 22.1633 3.03553 22H2.16667C0.970052 22 0 21.03 0 19.8333V6.16667ZM22 19.3368C22.4546 19.1208 22.9632 19 23.5 19C24.4536 19 25.3182 19.3814 25.9495 20H26.8333C26.9254 20 27 19.9254 27 19.8333V13.6284C27 12.5099 26.2571 11.5276 25.181 11.2229L22 10.3224L22 19.3368ZM9 20C8.98349 20 8.96708 20.0004 8.95076 20.0012C8.31939 19.3819 7.45434 19 6.50008 19C5.51834 19 4.63101 19.4042 3.99542 20.0553C3.89246 20.0195 3.78184 20 3.66667 20H2.16667C2.07462 20 2 19.9254 2 19.8333V6.16667C2 6.07462 2.07462 6 2.16667 6H19.8333C19.9254 6 20 6.07462 20 6.16667L20 7.67758V8.99998V19.8345C19.9994 19.926 19.925 20 19.8333 20H9ZM6.50008 24C7.32851 24 8.00008 23.3284 8.00008 22.5C8.00008 21.6716 7.32851 21 6.50008 21C5.67165 21 5.00008 21.6716 5.00008 22.5C5.00008 23.3284 5.67165 24 6.50008 24ZM25 22.5C25 23.3284 24.3284 24 23.5 24C22.6716 24 22 23.3284 22 22.5C22 21.6716 22.6716 21 23.5 21C24.3284 21 25 21.6716 25 22.5Z"
                                       fill={method === METHOD.FREE ? '#F2F2F1' : '#292A2D'}
@@ -75,14 +73,14 @@ const OrderDelivery: FC<OrderDeliveryProps> = ({}) => {
                                       fill={method === METHOD.FREE ? '#F2F2F1' : '#292A2D'}
                                 />
                             </svg>
-                            <span>Бесплатная доставка</span>
+                            <div className="inline-block">Бесплатная доставка</div>
                         </div>
                         <p>при заказе от 7 000 руб.*</p>
                     </div>
 
                     <div
                         className={`cursor-pointer border border-dark rounded px-2.5 py-4 flex flex-col items-center gap-3.5 font-montserrat 
-                                text-base ${method === METHOD.COURIER && 'bg-dark text-light'}`}
+                                text-base ${method === METHOD.COURIER ? 'bg-dark text-light' : 'hover:scale-[102%]'}`}
                         onClick={courierHandler}
                     >
                         <div className="font-semibold">
@@ -100,7 +98,7 @@ const OrderDelivery: FC<OrderDeliveryProps> = ({}) => {
 
                     <div
                         className={`cursor-pointer border border-dark rounded px-2.5 py-4 flex flex-col items-center gap-3.5 font-montserrat 
-                                text-base ${method === METHOD.PICKUP && 'bg-dark text-light'}`}
+                                text-base ${method === METHOD.PICKUP ? 'bg-dark text-light' : 'hover:scale-[102%]'}`}
                         onClick={pickupHandler}
                     >
                         <div className="font-semibold">
@@ -118,15 +116,20 @@ const OrderDelivery: FC<OrderDeliveryProps> = ({}) => {
                 </div>
 
                 <div className="border rounded bg-fon shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] py-5 px-4 text-center">
-                    <p className="font-montserrat text-base font-semibold">Доставка курьером</p>
-                    <p className="mt-3.5">
-                        Доставка осуществляется по согласованию с покупателем, за день сообщаем время доставки.
-                    </p>
-                    <div className="mt-5">
-                        <div className="flex justify-between items-center">
-                            <p><b>Подъем на этаж</b> <br/> от 100 руб.</p>
-                            <div>
-                                <label className="flex gap-x-2.5 items-center cursor-pointer">
+                    {(method === METHOD.COURIER || method === METHOD.FREE) &&
+                        <div>
+                            <p className="font-montserrat text-base font-semibold">
+                                {method === METHOD.COURIER && 'Доставка курьером'}
+                                {method === METHOD.FREE && 'Бесплатная доставка'}
+                            </p>
+                            <p className="mt-3.5">
+                                Доставка осуществляется по согласованию с покупателем, за день сообщаем время доставки.
+                            </p>
+                            <div className="mt-5">
+                                <div className="flex justify-between items-center">
+                                    <p><b>Подъем на этаж</b> <br/> от 100 руб.</p>
+                                    <div>
+                                        <label className="flex gap-x-2.5 items-center cursor-pointer">
                                     <span className="w-5 h-5 relative border border-dark rounded-[5px]">
                                         <input
                                             className="absolute left-0 top-0 w-full h-full appearance-none cursor-pointer" type="checkbox"
@@ -142,9 +145,9 @@ const OrderDelivery: FC<OrderDeliveryProps> = ({}) => {
                                             </svg>
                                         </div>
                                     </span>
-                                    <span>Да</span>
-                                </label>
-                                <label className="flex gap-x-2.5 items-center cursor-pointer mt-3">
+                                            <span>Да</span>
+                                        </label>
+                                        <label className="flex gap-x-2.5 items-center cursor-pointer mt-3">
                                     <span className="w-5 h-5 relative border border-dark rounded-[5px]">
                                         <input
                                             className="absolute left-0 top-0 w-full h-full appearance-none cursor-pointer" type="checkbox"
@@ -160,15 +163,15 @@ const OrderDelivery: FC<OrderDeliveryProps> = ({}) => {
                                             </svg>
                                         </div>
                                     </span>
-                                    <span>Нет</span>
-                                </label>
-                            </div>
-                        </div>
+                                            <span>Нет</span>
+                                        </label>
+                                    </div>
+                                </div>
 
-                        <div className="flex justify-between items-center mt-6">
-                            <p><b>Установка мебели</b> <br/> от 500 руб.</p>
-                            <div>
-                                <label className="flex gap-x-2.5 items-center cursor-pointer">
+                                <div className="flex justify-between items-center mt-6">
+                                    <p><b>Установка мебели</b> <br/> от 500 руб.</p>
+                                    <div>
+                                        <label className="flex gap-x-2.5 items-center cursor-pointer">
                                     <span className="w-5 h-5 relative border border-dark rounded-[5px]">
                                         <input
                                             className="absolute left-0 top-0 w-full h-full appearance-none cursor-pointer" type="checkbox"
@@ -184,9 +187,9 @@ const OrderDelivery: FC<OrderDeliveryProps> = ({}) => {
                                             </svg>
                                         </div>
                                     </span>
-                                        <span>Да</span>
-                                    </label>
-                                <label className="flex gap-x-2.5 items-center cursor-pointer mt-3">
+                                            <span>Да</span>
+                                        </label>
+                                        <label className="flex gap-x-2.5 items-center cursor-pointer mt-3">
                                     <span className="w-5 h-5 relative border border-dark rounded-[5px]">
                                         <input
                                             className="absolute left-0 top-0 w-full h-full appearance-none cursor-pointer" type="checkbox"
@@ -202,18 +205,34 @@ const OrderDelivery: FC<OrderDeliveryProps> = ({}) => {
                                             </svg>
                                         </div>
                                     </span>
-                                    <span>Нет</span>
-                                </label>
+                                            <span>Нет</span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
+                            <p className="mt-8 font-light">Цены уточняйте у менеджера*</p>
                         </div>
-                    </div>
-                    <p className="mt-5 font-light">Цены уточняйте у менеджера*</p>
+                    }
+
+                    {method === METHOD.PICKUP &&
+                        <div>
+                            <p className="font-montserrat text-base font-semibold">Самовывоз</p>
+                            <p className="mt-3.5">
+                                Вы можете самостоятельно забрать заказ с нашего склада или по пути следования машины.
+                            </p>
+                            <p className="mt-5">
+                                <div className="font-semibold">Телефон:</div>
+                                <div className="mt-1">+7 (978) 815-58-28</div>
+                            </p>
+                            <p className="mt-5">
+                                <div className="font-semibold">Режим работы склада:</div>
+                                <div className="mt-1">пн-пт — 9:00 - 18:00, сб— 10:00 - 16:00,<br/> вс —выходной</div>
+                            </p>
+                            <p className="mt-5 font-light">Подробности уточняйте у менеджера*</p>
+                        </div>
+                    }
                 </div>
             </div>
-
-
-
-
         </div>
     );
 };

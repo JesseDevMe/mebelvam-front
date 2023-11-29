@@ -13,7 +13,7 @@ interface FurnitureCardSkeletonProps {
 const FurnitureCardSkeleton: FC<FurnitureCardSkeletonProps> = ({}) => {
 
     return (
-        <div className="flex relative flex-col gap-y-5 border overflow-hidden border-[#E9E9E9] rounded bg-fon min-w-[0px] min-h-[300px]
+        <div className="flex relative flex-col gap-y-5 border overflow-hidden border-[#E9E9E9] rounded-[5px] bg-fon min-w-[0px] min-h-[300px]
                 shadow-[0px_4px_7px_0px_rgba(182,182,178,0.25)] md:shadow-[0px_7px_30px_0px_rgba(182,182,178,0.20)]"
         >
 

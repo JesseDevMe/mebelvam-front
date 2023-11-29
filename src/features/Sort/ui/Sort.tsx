@@ -79,7 +79,7 @@ const Sort: FC<SortProps> = ({}) => {
 
     return (
         <div ref={sortRef} className="relative flex gap-x-2 items-center font-roboto">
-            <span onClick={toggleHandler} className="cursor-pointer">{curSort}</span>
+            <span onClick={toggleHandler} className="cursor-pointer hover:text-accent">{curSort}</span>
             <div
                 className={`${isOpen ? 'flex' : 'hidden'} flex-col absolute -left-1 w-[190px] top-full translate-y-[10px] bg-fon overflow-hidden rounded-[7px]
                 shadow-[0px_0px_15px_-6px_rgba(0,0,0,0.1)] z-[20] border`}

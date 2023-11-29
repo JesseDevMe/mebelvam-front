@@ -35,7 +35,9 @@ export async function fetchCollection(id: number): Promise<Collection> {
     const res = await fetchStrapi(`/collections/${id}?populate[images][fields][0]=url&populate[manufacturer][fields][0]=name&populate[materials][fields][0]=title&populate[furnitures][populate][images][fields]=url&populate[furnitures][populate][variants][populate]=*`);
 
     if (!res.ok) {
-        throw new Error('collection fetch error')
+        if (res.status === 404) {
+            throw new Error('404 Not Found')
+        } else throw new Error('collection fetch error')
     }
 
     const { data } = await res.json();

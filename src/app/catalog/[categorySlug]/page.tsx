@@ -6,10 +6,30 @@ import {fetchCategory} from "@/entities/Category/model";
 import {fetchSubcategories, Subcategory} from "@/entities/Subcategory";
 import {fetchStrapi} from "@/shared/API";
 import {notFound} from "next/navigation";
+import {Metadata, ResolvingMetadata} from "next";
 
 interface PageProps {
     params: {
         categorySlug: string,
+    }
+}
+
+export async function generateMetadata(
+    { params }: PageProps,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+
+    let slugTokens = params.categorySlug.split('-');
+    const categoryId = Number(slugTokens.pop());
+
+    if (Number.isNaN(categoryId)) return notFound();
+    const category = await fetchCategory(categoryId);
+    if (category.slug !== slugTokens.join('-')) return notFound();
+
+
+    return {
+        title: category.name + ' - Мебель Вам',
+        description: `${category.name} по выгодной цене в мебельном магазине Севастополя "Мебель Вам".`
     }
 }
 

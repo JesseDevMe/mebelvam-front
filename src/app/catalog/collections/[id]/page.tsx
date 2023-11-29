@@ -4,6 +4,10 @@ import {fetchCollection} from "@/entities/Collection";
 import {CardSlider} from "@/shared/Slider";
 import {FurnitureGrid} from "@/widgets/FurnitureGrid";
 import {FurnitureCard} from "@/entities/FurnitureCard";
+import {Metadata} from "next";
+import {notFound} from "next/navigation";
+import {Collection} from "@/entities/Collection/types";
+
 
 interface PageProps {
     params: {
@@ -11,8 +15,38 @@ interface PageProps {
     }
 }
 
+export async function generateMetadata(
+    { params }: PageProps,
+): Promise<Metadata> {
+    try {
+        const collection = await fetchCollection(params.id);
+        return {
+            title: collection.name + ' - Мебель Вам',
+            description: `${collection.name} по выгодной цене в мебельном магазине Севастополя "Мебель Вам", у нас покупают мебель по низким ценам.`
+        };
+    } catch (error) {
+        return {};
+    }
+}
+
 const Page: FC<PageProps> = async ({ params }) => {
-    const collection = await fetchCollection(params.id);
+    let collection: Collection;
+    try {
+        collection = await fetchCollection(params.id);
+    } catch (e) {
+        if (e instanceof Error && e.message === '404 Not Found') {
+            notFound();
+        } else {
+            return (
+                <div className="pb-12 pt-5 px-2.5 md:px-5 lg:px-10 xl:px-20 max-w-[1520px] w-full mx-auto">
+                    <p className="mt-5">
+                        Не удалось загрузить страницу товара. Пожалуйста, попробуйте снова немного позже.
+                        Мы уже заняты решением этой проблемы.
+                    </p>
+                </div>
+            );
+        }
+    }
 
     const routes: Route[] = [
         {

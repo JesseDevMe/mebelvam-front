@@ -3,8 +3,13 @@ import {FurnituresPage} from "@/widgets/FurnituresPage";
 import {CatalogRouter} from "@/shared/CatalogRouter";
 import {fetchSubcategory} from "@/entities/Subcategory";
 import {fetchCategory} from "@/entities/Category/model";
-import {Filters} from "@/widgets/Filters";
 import {notFound} from "next/navigation";
+import {Metadata, ResolvingMetadata} from "next";
+import dynamic from "next/dynamic";
+
+const Filters = dynamic(
+    () => import('@/widgets/Filters/ui/Filters')
+);
 
 interface PageProps {
     params: {
@@ -12,6 +17,37 @@ interface PageProps {
         subcategorySlug: string,
     },
 
+}
+
+export async function generateMetadata(
+    { params }: PageProps,
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+
+    // Проверка категории
+    const categorySlugTokens = params.categorySlug.split('-');
+    const categoryId = Number(categorySlugTokens.pop());
+
+    if (Number.isNaN(categoryId)) return notFound();
+    const category = await fetchCategory(categoryId);
+
+    if (category.slug !== categorySlugTokens.join('-')) return notFound();
+
+    // Проверка сабкатегории
+    const slugTokens = params.subcategorySlug.split('-');
+    const subcategoryId = Number(slugTokens.pop());
+
+    if (Number.isNaN(subcategoryId)) return notFound();
+    const subcategory = await fetchSubcategory(subcategoryId);
+    if (categoryId !== subcategory.categoryId) return notFound();
+
+    if (subcategory.slug != slugTokens.join('-')) return notFound();
+
+
+    return {
+        title: subcategory.name + ' - Мебель Вам',
+        description: `${subcategory.name} по выгодной цене в мебельном магазине Севастополя "Мебель Вам".`
+    }
 }
 
 const Page: FC<PageProps> = async ({params}) => {

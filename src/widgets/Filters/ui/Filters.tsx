@@ -12,9 +12,9 @@ import {SizeFilters} from "@/features/SizeFilters";
 import {PriceFilter} from "@/features/PriceFilter";
 import {ManufacturerFilter} from "@/features/ManufacturerFilter";
 import useDefaultFiltersStore from "@/widgets/Filters/store/useDefaultFiltersStore";
-import {Sort} from "@/features/Sort";
 import usePriceStore from "@/widgets/Filters/store/usePriceStore";
 import {ColorFilter} from "@/features/ColorFilter";
+import {Sort} from "@/features/Sort";
 
 enum FetchStatus {
     LOADING,
@@ -49,6 +49,8 @@ const Filters: FC<FiltersProps> = ({ subcategoryId }) => {
     customParams.delete('depth');
     customParams.delete('color');
 
+    const effectSizes = '' + searchParams.get('width') + searchParams.get('height') + searchParams.get('depth');
+
     useEffect( () => {
         fetch(`/api/filters?subcategoryId=${subcategoryId}`)
             .then(res => {
@@ -62,27 +64,27 @@ const Filters: FC<FiltersProps> = ({ subcategoryId }) => {
                 setFetchStatus(FetchStatus.DONE);
             })
             .catch(() => setFetchStatus(FetchStatus.FAILED));
-    }, []);
+    }, [subcategoryId]);
 
     useEffect(() => {
         initFilterStore(customParams);
-    }, [customParams]);
+    }, [customParams, initFilterStore]);
 
     useEffect(() => {
         initSizesStore(searchParams);
-    }, [searchParams.get('width'), searchParams.get('height'), searchParams.get('depth')]);
+    }, [effectSizes, initSizesStore]);
 
     useEffect(() => {
         initManufacturerStore(searchParams.get('manufacturer'));
-    }, [searchParams.get('manufacturer')]);
+    }, [searchParams.get('manufacturer'), initManufacturerStore]);
 
     useEffect(() => {
         initColorStore(searchParams.get('color'));
-    }, [searchParams.get('color')]);
+    }, [searchParams.get('color'), initColorStore]);
 
     useEffect(() => {
         initPriceStore(searchParams.get('price'))
-    }, [searchParams.get('price')])
+    }, [searchParams.get('price'), initPriceStore])
 
     function filterToggle() {
         setIsOpen(!isOpen);

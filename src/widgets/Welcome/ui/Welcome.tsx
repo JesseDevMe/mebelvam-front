@@ -41,7 +41,7 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                             <p className="font-light font-roboto md:font-montserrat max-w-[240px] md:max-w-[370px] lg:max-w-[500px]">Интернет-магазин мебели в Севастополе</p>
                             <a
                                 className="w-fit py-2 px-3.5 md:py-4 md:px-12 md:mt-5 lg:mt-0 text-dark bg-light border-solid border-[1px]
-                                    rounded border-[rgba(41,42,45,0.15)] font-semibold transition-colors hover:bg-fon"
+                                    rounded border-[rgba(41,42,45,0.15)] font-semibold transition-colors hover:bg-white"
                                 href="#"
                             >
                                 Каталог товаров
@@ -62,7 +62,7 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                                 <span className="text-[14px] md:text-xl md:font-medium lg:text-3xl">вызов замерщика</span></h2>
                             <a
                                 className="w-fit py-2 px-3.5 md:py-4 md:px-12 md:mt-5 lg:mt-0 text-dark bg-light border-solid border-[1px]
-                                    rounded border-[rgba(41,42,45,0.15)] font-semibold transition-colors hover:bg-fon"
+                                    rounded border-[rgba(41,42,45,0.15)] font-semibold transition-colors hover:bg-white"
                                 href="#"
                             >
                                 Каталог товаров
@@ -84,7 +84,7 @@ const Welcome: FC<WelcomeProps> = ({}) => {
                                 при заказе от 7000 р.</span></h2>
                             <a
                                 className="w-fit py-2 px-3.5 md:py-4 md:px-12 md:mt-5 lg:mt-0 text-dark bg-light border-solid border-[1px]
-                                    rounded border-[rgba(41,42,45,0.15)] font-semibold transition-colors hover:bg-fon"
+                                    rounded border-[rgba(41,42,45,0.15)] font-semibold transition-colors hover:bg-white"
                                 href="#"
                             >
                                 Каталог товаров

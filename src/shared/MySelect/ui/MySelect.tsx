@@ -43,12 +43,12 @@ const MySelect: FC<MySelectProps> = ({ options, changeHandler }) => {
 
     return (
         <div
-            className="relative border border-dark hover:border-accent rounded select-none"
+            className="relative border border-dark hover:border-accent group rounded select-none"
             onClick={(e) => {
                 e.preventDefault()
             }}
         >
-            <div onClick={toggleList} className="cursor-pointer relative py-1.5 pl-5 pr-[50px]">
+            <div onClick={toggleList} className="cursor-pointer group-hover:text-accent relative py-1.5 pl-5 pr-[50px]">
                 {curValue}
                 <span className={`absolute right-5 top-1/2 -translate-y-1/2 transition-transform duration-300 ${isListOpen ? 'rotate-180' : ''}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 12 8" fill="none">

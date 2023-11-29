@@ -13,7 +13,7 @@ interface PromoCardProps extends Promo{
 const PromoCard: FC<PromoCardProps> = ({ id, name, price, old_price, size, color, imagesUrl, variantId, attrId }) => {
 
     return (
-        <Link href={`/product/${id}`} className="flex relative flex-col gap-y-2 border border-[#E9E9E9] rounded bg-fon min-w-[0px] min-h-[300px]
+        <Link href={`/product/${id}`} className="flex relative flex-col gap-y-2 border border-[#E9E9E9] rounded-[5px] bg-fon min-w-[0px] min-h-[300px]
                 shadow-[0px_4px_7px_0px_rgba(182,182,178,0.25)] md:shadow-[0px_7px_30px_0px_rgba(182,182,178,0.20)] [&_#name]:hover:text-accent">
             <MiniCardSlider>
                 {

@@ -13,10 +13,10 @@ interface CatalogCardProps {
 const CatalogCard: FC<CatalogCardProps> = ({name, count, imgUrl, slug, id}) => {
 
     return (
-        <Link href={`/catalog/${slug}-${id}`} className="rounded bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent">
+        <Link href={`/catalog/${slug}-${id}`} className="rounded-[5px] bg-fon shadow-[0px_7px_30px_0px_rgba(182,182,178,0.25)] transition-colors hover:text-accent overflow-hidden">
             <div className="relative w-full aspect-[4/3]">
                 <Image
-                    className="rounded-t" fill
+                    className="rounded-t-[5px]" fill
                     sizes="50vw,(min-width: 520px) 33vw,(min-width: 1024px) 25vw"
                     src={imgUrl} style={{objectFit: 'cover'}}
                     alt={name}/>

@@ -40,3 +40,15 @@ export async function fetchCategory(id: number): Promise<Category> {
 
     return category;
 }
+
+export async function fetchCategoriesSlug(): Promise<string[]> {
+    const res = await fetchStrapi('/categories?fields=slug&pagination[limit]=-1');
+
+    if (!res.ok) {
+        throw new Error(await res.json())
+    }
+
+    const { data } = await res.json();
+
+    return data.map((category: any): string => category.attributes.slug + '-' + category.id);
+}

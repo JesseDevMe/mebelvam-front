@@ -11,7 +11,7 @@ interface ModuleCardProps extends furModule {
 const ModuleCard: FC<ModuleCardProps> = ({ id, name, count, imageUrl }) => {
 
     return (
-        <Link href={`/product/${id}`} className="relative border border-[#E9E9E9] rounded bg-fon min-h-[250px]
+        <Link href={`/product/${id}`} className="relative border border-[#E9E9E9] rounded-[5px] bg-fon min-h-[250px]
                 shadow-[0px_4px_7px_0px_rgba(182,182,178,0.25)] md:shadow-[0px_7px_30px_0px_rgba(182,182,178,0.20)]">
             <div className="relative overflow-hidden w-full aspect-[1/1] shrink-0">
                 <Image

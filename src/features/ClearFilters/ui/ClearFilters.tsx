@@ -35,7 +35,8 @@ const ClearFilters: FC<ClearFiltersProps> = ({}) => {
 
     return (
         <div
-            className="py-2.5 px-10 bg-fon rounded text-dark w-fit border border-dark cursor-pointer"
+            className="py-2.5 px-10 bg-fon rounded text-dark w-fit border border-dark cursor-pointer hover:bg-white
+                hover:text-accent hover:border-accent"
             onClick={clickHandler}
         >
             Сбросить

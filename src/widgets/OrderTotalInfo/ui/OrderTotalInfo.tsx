@@ -128,7 +128,8 @@ const OrderTotalInfo: FC<OrderTotalInfoProps> = ({}) => {
         <div className="relative border rounded bg-fon shadow-[0px_7px_30px_0px_rgba(41,42,45,0.10)] px-5 py-[30px] lg:min-w-[350px]">
             <div
                 onClick={submitHandler}
-                className="block cursor-pointer rounded bg-dark py-4 text-center text-light font-montserrat text-base font-semibold"
+                className="block cursor-pointer rounded bg-dark hover:bg-black py-4 text-center text-light
+                    font-montserrat text-base font-semibold"
             >
                 {(status === STATUS.NO_ACTION || status === STATUS.FAILED) &&
                     'Оформить заказ'

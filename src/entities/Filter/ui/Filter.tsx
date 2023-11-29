@@ -73,7 +73,7 @@ const Filter: FC<FilterProps> = ({ title, slug, values }) => {
             max-w-[400px] md:max-w-fit relative`}
         >
             <h3
-                className="flex justify-between items-center cursor-pointer gap-x-2.5"
+                className="flex justify-between items-center cursor-pointer gap-x-2.5 hover:text-accent"
                 onClick={handleToggle}
             >
                 <span className={isOpen ? 'text-accent' : ''}>{title}</span>
