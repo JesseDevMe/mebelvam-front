@@ -33,9 +33,10 @@ const CardSwitch: FC<CardSwitchProps> = ({ furniture }) => {
                 </ul>
                 {furniture.collectionId &&
                     <Link href={'/catalog/collections/' + furniture.collectionId}
-                       className="text-end cursor-pointer font-montserrat font-semibold md:text-base lg:text-xl"
+                       className="md:self-center hidden cursor-pointer font-montserrat
+                        font-bold min-[500px]:inline-block md:text-base lg:text-xl hover:text-accent"
                     >
-                        Посмотреть все модули коллекции
+                        Все модули коллекции
                     </Link>
                 }
             </div>

@@ -77,7 +77,7 @@ const Page: FC<PageProps> = async ({ params }) => {
                 <CardSlider imagesUrl={furniture.imagesUrl}/>
                 <CardInfo furniture={furniture}/>
             </div>
-            <div className="flex flex-col gap-12 mt-[50px] lg:flex-row justify-between">
+            <div className="flex flex-col gap-12 mt-[30px] min-[500px]:mt-[50px] lg:flex-row justify-between">
                 <div className="grow">
                     <CardSwitch
                     furniture={furniture}

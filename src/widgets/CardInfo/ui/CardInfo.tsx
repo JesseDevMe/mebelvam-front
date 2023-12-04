@@ -6,6 +6,7 @@ import {addToFavorites, deleteFromFavorites, getFavorites, routesSyncFavorites} 
 import {routesUpdateFavorites} from "@/shared/Utils/RouteHandlers";
 import {CardAddCart} from "@/features/CardAddCart";
 import useUserStore from "@/entities/User/store/useUserStore";
+import Link from "next/link";
 
 interface CardInfoProps {
     furniture: Furniture;
@@ -145,7 +146,16 @@ const CardInfo: FC<CardInfoProps> = ({ furniture }) => {
                     }
                 </div>
             </div>
-            <CardAddCart furnitureId={furniture.id} curVariant={curVariant} curAttr={curAttr}/>
+            <div className="">
+                <CardAddCart furnitureId={furniture.id} curVariant={curVariant} curAttr={curAttr}/>
+                {furniture.collectionId &&
+                    <Link href={'/catalog/collections/' + furniture.collectionId}
+                          className="block mt-5 cursor-pointer font-bold min-[500px]:hidden text-center"
+                    >
+                        Все модули коллекции
+                    </Link>
+                }
+            </div>
         </div>
     );
 };

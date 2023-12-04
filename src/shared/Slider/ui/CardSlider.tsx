@@ -32,13 +32,14 @@ const CardSlider: FC<CardSliderProps> = ({ imagesUrl, aspect }) => {
 
     return (
         <div className="flex gap-7">
-            <div className="hidden lg:flex flex-col gap-2.5">
+            <div className="hidden lg:flex shrink-0 flex-col gap-2.5 max-h-[390px] h-full w-20 overflow-y-auto
+                scrollbar-none">
                 {
                     imagesUrl.map( (imageUrl, index) =>
                         <div
                             onClick={() => swiperRef.current?.swiper.slideTo(index)}
                             key={index}
-                            className={`relative w-[78px] h-[78px] will-change-transform transition-transform cursor-pointer ${index === curSlideIndex ? 'border-2 border-dark' : ' hover:scale-110'}`}
+                            className={`shrink-0 relative w-[78px] h-[78px] will-change-transform transition-transform cursor-pointer ${index === curSlideIndex ? 'border-2 border-dark' : ' hover:scale-110'}`}
                         >
                             <Image
                                 fill className="object-cover"
@@ -46,6 +47,7 @@ const CardSlider: FC<CardSliderProps> = ({ imagesUrl, aspect }) => {
                                 src={imageUrl} alt=''
                             />
                         </div>
+
                     )
                 }
             </div>

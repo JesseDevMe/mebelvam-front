@@ -14,7 +14,9 @@ const Feedback: FC<FeedbackProps> = ({}) => {
         <div className="relative">
             <div id="feedback" className="rounded-[10px] max-w-[1520px] w-full mx-auto relative overflow-hidden pt-8 lg:py-[50px] pb-4 bg-[rgba(242,242,241,0.80)]">
                 <Image src={bg} fill style={{objectFit: "cover", zIndex: -1}} alt=""/>
-                <h2 className="text-center text-xl font-montserrat font-semibold lg:text-2xl mb-5">Отзывы</h2>
+                <h2 className="text-center text-xl font-montserrat font-semibold lg:text-2xl mb-5 hover:text-accent">
+                    <a target="_blank" href="https://forum.sevastopol.info/viewtopic.php?f=52&t=301612">Отзывы</a>
+                </h2>
 
                 <div className="px-7 md:pl-12 lg:px-20 flex gap-x-7 overflow-auto snap-mandatory snap-x
                             scroll-smooth will-change-scroll pb-8 select-none">
