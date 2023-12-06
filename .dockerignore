@@ -1,0 +1,13 @@
+.dockerignore
+.env
+.env.local
+.git
+.gitignore
+.idea
+.next
+docker-compose*
+compose*
+Dockerfile*
+node_modules
+LICENSE
+README.md
