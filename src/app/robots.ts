@@ -6,7 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: '*',
             allow: '/',
             disallow: ['/my', '/policy', '/search', '/cart', '/favorites', '/connect', '/api', '/admin'],
-        },
-        sitemap: 'https://mebelvam-sev.ru/sitemap.xml',
+        }
     }
 }

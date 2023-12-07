@@ -22,6 +22,7 @@ interface ConsultationFormProps {
 
 const ConsultationForm: FC<ConsultationFormProps> = ({}) => {
     const [status, setStatus] = useState<STATUS>(STATUS.NO_ACTION);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const {
         register,
@@ -47,6 +48,7 @@ const ConsultationForm: FC<ConsultationFormProps> = ({}) => {
                     throw new Error();
                 } else {
                     setStatus(STATUS.DONE);
+                    setIsModalOpen(true);
                     return res.json();
                 }
             })
@@ -120,6 +122,25 @@ const ConsultationForm: FC<ConsultationFormProps> = ({}) => {
                 <span className="text-red-600 ">Не получилось оставить заявку. Пожалуйста, попробуйте позже или позвоните нам по
                     нижеуказанному номеру. С радостью поможем вам!
                 </span>
+            }
+
+            {status === STATUS.DONE &&
+                <div
+                    onClick={() => setIsModalOpen(false)}
+                    className={`${isModalOpen ? 'flex' : 'hidden'} fixed p-2.5 left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.667)] z-[110]`}
+                >
+                    <div className="relative bg-fon border rounded-[5px] m-auto max-h-[400px] max-w-[400px] p-14 text-center">
+                        <h3 className="text-xl font-montserrat font-semibold">Спасибо! <br/> Ваш запрос успешно отправлен</h3>
+                        <p className="mt-6">
+                            Ожидайте звонка от нашего менеджера
+                        </p>
+
+                        <svg onClick={() => {setIsModalOpen(false)}} className="absolute top-5 right-5 cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 19L19 1.32233" stroke="#292A2D" strokeWidth="2" strokeLinecap="round"/>
+                            <path d="M1 1L19 18.6777" stroke="#292A2D" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                    </div>
+                </div>
             }
         </form>
     );

@@ -127,7 +127,8 @@ const StillQuestions: FC<StillQuestionsProps> = ({ telephone }) => {
                 {status === STATUS.DONE &&
                     <div
                         onClick={() => setIsModalOpen(false)}
-                        className={`${isModalOpen ? 'flex' : 'hidden'} fixed p-2.5 left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.667)] z-[110]`}
+                        className={`${isModalOpen ? 'flex' : 'hidden'} fixed p-2.5 left-0 top-0 w-full h-full 
+                            bg-[rgba(0,0,0,0.667)] z-[110]`}
                     >
                         <div className="relative bg-fon border rounded-[5px] m-auto max-h-[400px] max-w-[400px] p-14">
                             <h3 className="text-xl font-montserrat font-semibold">Спасибо! <br/> Ваш запрос успешно отправлен</h3>
