@@ -1,7 +1,5 @@
 .dockerignore
 .git
-.env.local
-.env
 .gitignore
 .idea
 .next
