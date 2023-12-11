@@ -7,7 +7,6 @@ const nextConfig = {
                 port: process.env.STRAPI_PORT,
             },
         ],
-
     }
 }
 
