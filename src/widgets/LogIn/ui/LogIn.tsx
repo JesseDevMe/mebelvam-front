@@ -26,7 +26,7 @@ interface LogInProps {
     registerHandler: () => void;
 }
 
-const strapiPublicUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+const strapiPublicUrl = process.env.NEXT_PUBLIC_STRAPI_PUBLIC_URL;
 
 const LogIn: FC<LogInProps> = ({ resetHandler, registerHandler }) => {
     const [status, setStatus] = useState<STATUS>(STATUS.NO_ACTION);
